@@ -12,7 +12,7 @@ class ListingSerializer(serializers.ModelSerializer):
             "availability", "photo_urls", "status", "verification_notes",
             "created_at", "updated_at",
         ]
-        read_only_fields = ["id", "status", "verification_notes", "created_at", "updated_at"]
+        read_only_fields = ["id", "host", "status", "verification_notes", "created_at", "updated_at"]
 
 
 class KnownSiteSerializer(serializers.ModelSerializer):

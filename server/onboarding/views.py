@@ -10,10 +10,13 @@ EMPTY_TWIML = '<?xml version="1.0" encoding="UTF-8"?><Response></Response>'
 
 
 def _signature_valid(request) -> bool:
-    """docs/TRD.md §6 NFR — webhook signature validation. Skipped only when no
-    auth token is configured yet (local dev before Twilio credentials exist)."""
+    """docs/TRD.md §6 NFR — webhook signature validation. Fails closed: with
+    no Twilio auth token configured, every request is rejected rather than
+    silently trusted — there's nothing to validate against, so there's
+    nothing to accept. Configure TWILIO_AUTH_TOKEN (real, or Twilio's test
+    credentials for local dev) before this endpoint will accept anything."""
     if not settings.TWILIO_AUTH_TOKEN:
-        return settings.DEBUG
+        return False
     validator = RequestValidator(settings.TWILIO_AUTH_TOKEN)
     signature = request.headers.get("X-Twilio-Signature", "")
     url = request.build_absolute_uri()

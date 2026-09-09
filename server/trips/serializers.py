@@ -15,7 +15,7 @@ class TripSerializer(serializers.ModelSerializer):
     class Meta:
         model = Trip
         fields = ["id", "tourist", "budget", "interests", "start_date", "end_date", "status", "created_at", "itinerary_items"]
-        read_only_fields = ["id", "status", "created_at"]
+        read_only_fields = ["id", "tourist", "status", "created_at"]
 
 
 class BookingSerializer(serializers.ModelSerializer):
