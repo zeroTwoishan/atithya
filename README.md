@@ -12,9 +12,35 @@ An agentic AI platform to digitize India's invisible tourism economy — Smart I
 
 ## Stack
 
-React 19 + Vite + Tailwind v4 (frontend) · Django 5 + DRF (backend) · LangGraph + Anthropic Claude (agents) · PostgreSQL + pgvector · Twilio WhatsApp Sandbox.
+React 19 + Vite + Tailwind v4 + Phosphor Icons (frontend) · Django 6 + DRF (backend) · LangGraph + Anthropic Claude (agents) · PostgreSQL + pgvector · Twilio WhatsApp Sandbox.
 
-Code lands here on hackathon day — see `docs/BUILD_PLAN.md` for the hour-by-hour plan.
+The repo is scaffolded (`server/`, `client/`) — real feature work (agents, wired-up screens, seed data) happens on hackathon day, see `docs/BUILD_PLAN.md` for the hour-by-hour plan.
+
+## Getting Started
+
+```bash
+# Database (Postgres + pgvector)
+docker compose up -d
+
+# Backend
+cd server
+python -m venv venv && ./venv/Scripts/activate  # source venv/bin/activate on macOS/Linux
+pip install -r requirements.txt
+cp .env.example .env                             # fill in real keys before hackathon day
+python manage.py migrate
+python manage.py create_demo_users
+python manage.py seed_demo_data
+python manage.py createsuperuser                 # for /admin/
+python manage.py runserver
+
+# Frontend (separate terminal)
+cd client
+npm install
+cp .env.example .env
+npm run dev
+```
+
+Backend on `http://localhost:8000` (DRF browsable API + `/admin/`), frontend on `http://localhost:5173`.
 
 ## Original problem statement
 

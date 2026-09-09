@@ -45,7 +45,7 @@ Frontend and backend choices below match this team's own established conventions
 |---|---|---|
 | Frontend | **React 19 + Vite**, plain JS (not TS — matches team convention, one less build-time failure mode under time pressure) | One SPA, three role-gated route trees (`/tourist`, `/host`, `/gov`) rather than three separate apps — shared auth/API-client code, less duplicated setup |
 | Styling | **Tailwind CSS v4** (CSS-first `@theme`, not `tailwind.config.js`) | Design tokens from [[UI_UX_DESIGN]] go directly into `index.css` `@theme` blocks — one per archetype (warm-marketplace vars, precision-console vars) |
-| Icons | **`lucide-react`** | Real SVG React components — no webfont-ligature icon fonts (avoids the "icon renders as literal text" class of bug entirely) |
+| Icons | **`@phosphor-icons/react`** | Real SVG React components — no webfont-ligature icon fonts (avoids the "icon renders as literal text" class of bug entirely) |
 | Routing / data | `react-router-dom` · `@tanstack/react-query` + `axios` for API calls · `motion` for the few animations that matter (day-stepper transitions, chat message entry) · `sonner` for toasts · `clsx` + `tailwind-merge` (`cn()` util) | Standard team toolkit — don't introduce alternatives |
 | API | **Django 5.1+ with Django REST Framework** | Per-domain apps: `accounts`, `listings`, `trips`, `onboarding`, `verification`, `analytics` — not one monolith app |
 | Auth | `djangorestframework-simplejwt` | Even for the 36h demo's 3 role-tokens (§4) — reuse the real auth library rather than hand-rolling token checks |
