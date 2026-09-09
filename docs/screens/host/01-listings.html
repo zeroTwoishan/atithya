@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bhraman Host Dashboard - Listings</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bhraman: {
+              canvas: '#F5E6D8',
+              sidebar: '#EED9C7',
+              sidebarHover: '#E5CCB7',
+              ink: '#2A211C',
+              inkMuted: '#6D5C52',
+              inkSubtle: '#9E8C81',
+              rust: '#BF4E30',
+              rustHover: '#A83F23',
+              forest: '#2F4B3C',
+              forestLight: '#E8EFEA',
+              forestText: '#233B2E',
+              amber: '#B46816',
+              amberLight: '#FBF2E6',
+              amberBorder: '#EED6BA',
+              flagRed: '#C93B2B',
+              flagRedBg: '#FDF2F0',
+              flagRedBorder: '#F5C8C2',
+              cardBorder: '#E6D2C0',
+              badgePending: '#69574D',
+              badgePendingBg: '#F0E5DC'
+            }
+          },
+          fontFamily: {
+            serif: ['Fraunces', 'Georgia', 'serif'],
+            sans: ['Inter', 'system-ui', 'sans-serif']
+          },
+          boxShadow: {
+            card: '0 4px 20px -2px rgba(42, 33, 28, 0.05), 0 1px 3px 0 rgba(42, 33, 28, 0.04)',
+            cardHover: '0 10px 28px -4px rgba(42, 33, 28, 0.09), 0 2px 6px 0 rgba(42, 33, 28, 0.04)',
+            btn: '0 2px 8px rgba(191, 78, 48, 0.25)'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .material-symbols-outlined.filled {
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    body {
+      background-color: #F5E6D8;
+      color: #2A211C;
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+    .serif-display {
+      font-family: 'Fraunces', Georgia, serif;
+    }
+    /* Subtle custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #F5E6D8;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #D8BFAB;
+      border-radius: 9999px;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex text-bhraman-ink antialiased selection:bg-bhraman-rust selection:text-white">
+
+  <!-- LEFT SIDEBAR NAVIGATION -->
+  <aside class="w-64 bg-bhraman-sidebar border-r border-bhraman-cardBorder flex flex-col justify-between shrink-0 fixed inset-y-0 left-0 z-30">
+    <div class="flex flex-col">
+      <!-- Brand Logo / Header -->
+      <div class="px-6 py-6 border-b border-bhraman-cardBorder/70 flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-bhraman-rust text-white flex items-center justify-center shadow-btn">
+            <span class="serif-display text-lg font-bold leading-none">भ</span>
+          </div>
+          <div>
+            <div class="serif-display text-xl font-bold tracking-tight text-bhraman-ink leading-none">Bhraman</div>
+            <span class="text-[10px] font-semibold uppercase tracking-wider text-bhraman-inkMuted block mt-0.5">Host Portal • Himachal</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation Links -->
+      <div class="px-3 py-6 space-y-1">
+        <div class="px-3 pb-2 text-[11px] font-bold uppercase tracking-wider text-bhraman-inkSubtle">
+          Property Management
+        </div>
+
+        <a href="#" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-white/70 text-bhraman-ink font-semibold shadow-sm border border-bhraman-cardBorder/60 transition-all">
+          <span class="material-symbols-outlined text-bhraman-rust text-[20px]">villa</span>
+          <span class="text-sm">Listings</span>
+          <span class="ml-auto bg-bhraman-rust/10 text-bhraman-rust text-[11px] font-bold px-2 py-0.5 rounded-full">4</span>
+        </a>
+
+        <a href="#" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-bhraman-inkMuted hover:text-bhraman-ink hover:bg-bhraman-sidebarHover/80 transition-colors font-medium">
+          <span class="material-symbols-outlined text-[20px]">calendar_month</span>
+          <span class="text-sm">Calendar & Stays</span>
+        </a>
+
+        <a href="#" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-bhraman-inkMuted hover:text-bhraman-ink hover:bg-bhraman-sidebarHover/80 transition-colors font-medium">
+          <span class="material-symbols-outlined text-[20px]">account_balance_wallet</span>
+          <span class="text-sm">Earnings & Payouts</span>
+        </a>
+
+        <a href="#" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-bhraman-inkMuted hover:text-bhraman-ink hover:bg-bhraman-sidebarHover/80 transition-colors font-medium">
+          <div class="relative">
+            <span class="material-symbols-outlined text-[20px]">auto_awesome</span>
+            <span class="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-bhraman-rust"></span>
+          </div>
+          <span class="text-sm">Pricing Copilot</span>
+          <span class="ml-auto text-[10px] font-semibold bg-[#DEC3AC] text-bhraman-ink px-1.5 py-0.5 rounded">AI</span>
+        </a>
+
+        <div class="pt-5 px-3 pb-2 text-[11px] font-bold uppercase tracking-wider text-bhraman-inkSubtle">
+          Community & Guests
+        </div>
+
+        <a href="#" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-bhraman-inkMuted hover:text-bhraman-ink hover:bg-bhraman-sidebarHover/80 transition-colors font-medium">
+          <span class="material-symbols-outlined text-[20px]">chat_bubble_outline</span>
+          <span class="text-sm">Guest Inquiries</span>
+          <span class="ml-auto bg-bhraman-forest text-white text-[10px] font-bold px-1.5 py-0.2 rounded-full">2</span>
+        </a>
+
+        <a href="#" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-bhraman-inkMuted hover:text-bhraman-ink hover:bg-bhraman-sidebarHover/80 transition-colors font-medium">
+          <span class="material-symbols-outlined text-[20px]">handshake</span>
+          <span class="text-sm">Artisan Collective</span>
+        </a>
+
+        <a href="#" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-bhraman-inkMuted hover:text-bhraman-ink hover:bg-bhraman-sidebarHover/80 transition-colors font-medium">
+          <span class="material-symbols-outlined text-[20px]">tune</span>
+          <span class="text-sm">Settings</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Sidebar Bottom: Village Fund Badge & Switch -->
+    <div class="p-4 border-t border-bhraman-cardBorder/70">
+      <div class="p-3 bg-white/60 rounded-xl border border-bhraman-cardBorder/60 mb-3">
+        <div class="flex items-center gap-2 text-xs font-semibold text-bhraman-forest">
+          <span class="material-symbols-outlined text-[16px]">eco</span>
+          <span>Eco-Tourism Certified</span>
+        </div>
+        <p class="text-[11px] text-bhraman-inkMuted mt-1 leading-relaxed">
+          100% direct payouts via Bhraman Tirthan Rural Tourism Trust.
+        </p>
+      </div>
+
+      <!-- Quick Switch to Guest View -->
+      <a href="#" class="flex items-center justify-between text-xs font-medium text-bhraman-inkMuted hover:text-bhraman-rust transition-colors px-1 py-1">
+        <span class="flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-[16px]">travel_explore</span>
+          Switch to Traveler view
+        </span>
+        <span class="material-symbols-outlined text-[14px]">arrow_outward</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT AREA -->
+  <div class="flex-1 ml-64 flex flex-col min-w-0">
+
+    <!-- TOP BAR -->
+    <header class="h-20 bg-bhraman-canvas/90 backdrop-blur border-b border-bhraman-cardBorder/70 px-8 flex items-center justify-between sticky top-0 z-20">
+      <!-- Search or Breadcrumb -->
+      <div class="flex items-center gap-3">
+        <div class="relative w-80">
+          <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-bhraman-inkSubtle text-[19px]">search</span>
+          <input type="text" placeholder="Search your listings, rooms, experiences..." 
+                 class="w-full bg-white/70 border border-bhraman-cardBorder rounded-xl pl-10 pr-4 py-2 text-sm text-bhraman-ink placeholder-bhraman-inkSubtle focus:outline-none focus:border-bhraman-rust focus:bg-white transition-all shadow-sm" />
+        </div>
+        <div class="h-5 w-px bg-bhraman-cardBorder"></div>
+        <div class="flex items-center gap-1.5 text-xs text-bhraman-inkMuted bg-bhraman-sidebar px-3 py-1.5 rounded-lg border border-bhraman-cardBorder">
+          <span class="w-2 h-2 rounded-full bg-bhraman-forest"></span>
+          <span>Tirthan Valley Belt • Peak Autumn Season</span>
+        </div>
+      </div>
+
+      <!-- Host Profile & Actions -->
+      <div class="flex items-center gap-4">
+        <!-- Notification Bell -->
+        <button class="relative w-10 h-10 rounded-xl bg-white/70 border border-bhraman-cardBorder hover:bg-white flex items-center justify-center text-bhraman-ink transition-colors shadow-sm">
+          <span class="material-symbols-outlined text-[20px]">notifications</span>
+          <span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-bhraman-rust"></span>
+        </button>
+
+        <!-- Help / Resource Icon -->
+        <button class="w-10 h-10 rounded-xl bg-white/70 border border-bhraman-cardBorder hover:bg-white flex items-center justify-center text-bhraman-ink transition-colors shadow-sm" title="Host Guidelines">
+          <span class="material-symbols-outlined text-[20px]">help_outline</span>
+        </button>
+
+        <!-- Host Profile Card -->
+        <div class="flex items-center gap-3 pl-2 border-l border-bhraman-cardBorder">
+          <div class="relative">
+            <img src="https://lh3.googleusercontent.com/aida/AEtjO1WwshsVH7uT9JaBZnRBRoXmMePrkBHbF-Wp1ZKvMzNhqihjviSSFewFvgRGWONl1E4aX_ylP-rldn2IFIHXSGyMykmBl-5kf8UFC43H-0tSB_BVB6uKk5AKR4-_JOAA6Pr8sNBHtUmYSyfXxlWJUh3oLWQnFCXlJynDZpMb3g0Bzv4o540peUWlOP5fz-7Zc89Oohb1zpT1_WKB7nraYSxuI3uS5yYflsodQe5ehpkQgSAGcyslClJlY_Uv" alt="Meera Devi" class="w-10 h-10 rounded-xl object-cover border border-bhraman-cardBorder shadow-sm" />
+            <span class="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-bhraman-forest border-2 border-bhraman-canvas" title="Active Online"></span>
+          </div>
+          <div class="text-left hidden lg:block">
+            <div class="text-sm font-bold text-bhraman-ink leading-tight flex items-center gap-1">
+              Meera Devi
+              <span class="material-symbols-outlined text-[16px] text-bhraman-rust filled" title="Verified Valley Elder & Host">verified</span>
+            </div>
+            <div class="text-[11px] text-bhraman-inkMuted leading-tight">Chehni Kothi & Jibhi Belt</div>
+          </div>
+        </div>
+
+        <!-- Primary CTA: + New listing (Rust accent ONLY) -->
+        <button class="flex items-center gap-2 bg-bhraman-rust hover:bg-bhraman-rustHover text-white px-4 py-2.5 rounded-xl font-semibold text-sm shadow-btn transition-all active:scale-[0.98]">
+          <span class="material-symbols-outlined text-[18px]">add</span>
+          <span>+ New listing</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- DASHBOARD BODY CONTAINER -->
+    <main class="p-8 max-w-7xl w-full mx-auto space-y-7">
+
+      <!-- SECTION 1: Page Headline & Quick Summary Metrics -->
+      <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2 text-xs uppercase tracking-wider font-bold text-bhraman-rust mb-1">
+            <span>Chehni Kothi & Shoja Homestays • Host Portal</span>
+          </div>
+          <h1 class="serif-display text-3xl lg:text-4xl font-bold text-bhraman-ink tracking-tight">
+            Listings & Experiences
+          </h1>
+          <p class="text-sm text-bhraman-inkMuted mt-1">
+            Manage your Himalayan rooms, slow craft workshops, and culinary thali experiences across Tirthan.
+          </p>
+        </div>
+
+        <!-- Copilot Insights pill -->
+        <div class="flex items-center gap-2 bg-white/80 border border-bhraman-cardBorder rounded-xl px-3.5 py-2 text-xs text-bhraman-ink shadow-sm">
+          <span class="material-symbols-outlined text-bhraman-rust text-[18px]">lightbulb</span>
+          <span>Autumn peak: <strong>+34% demand</strong> for Bukhari wood-stove rooms this week</span>
+        </div>
+      </div>
+
+      <!-- METRIC CARDS ROW (White cards, soft layered shadow, 16px radius) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- Stat 1 -->
+        <div class="bg-white rounded-2xl p-5 border border-bhraman-cardBorder shadow-card flex flex-col justify-between">
+          <div class="flex items-center justify-between text-bhraman-inkMuted text-xs font-semibold uppercase tracking-wider">
+            <span>Total Properties</span>
+            <span class="material-symbols-outlined text-[20px] text-bhraman-forest">cottage</span>
+          </div>
+          <div class="mt-3">
+            <div class="serif-display text-2xl lg:text-3xl font-bold text-bhraman-ink">4 Listings</div>
+            <div class="text-xs text-bhraman-inkMuted mt-1 flex items-center gap-1.5">
+              <span class="inline-block w-2 h-2 rounded-full bg-bhraman-forest"></span>
+              <span>2 Live</span>
+              <span class="text-bhraman-inkSubtle">•</span>
+              <span class="inline-block w-2 h-2 rounded-full bg-bhraman-amber"></span>
+              <span>1 Review</span>
+              <span class="text-bhraman-inkSubtle">•</span>
+              <span class="inline-block w-2 h-2 rounded-full bg-bhraman-badgePending"></span>
+              <span>1 Draft</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stat 2 -->
+        <div class="bg-white rounded-2xl p-5 border border-bhraman-cardBorder shadow-card flex flex-col justify-between">
+          <div class="flex items-center justify-between text-bhraman-inkMuted text-xs font-semibold uppercase tracking-wider">
+            <span>Bookings This Month</span>
+            <span class="material-symbols-outlined text-[20px] text-bhraman-rust">event_available</span>
+          </div>
+          <div class="mt-3">
+            <div class="serif-display text-2xl lg:text-3xl font-bold text-bhraman-ink">48 Stays / Sessions</div>
+            <div class="text-xs text-bhraman-forest font-medium mt-1 flex items-center gap-1">
+              <span class="material-symbols-outlined text-[16px]">trending_up</span>
+              <span>+18% vs September</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stat 3 -->
+        <div class="bg-white rounded-2xl p-5 border border-bhraman-cardBorder shadow-card flex flex-col justify-between">
+          <div class="flex items-center justify-between text-bhraman-inkMuted text-xs font-semibold uppercase tracking-wider">
+            <span>Occupancy Rate</span>
+            <span class="material-symbols-outlined text-[20px] text-bhraman-ink">pie_chart</span>
+          </div>
+          <div class="mt-3">
+            <div class="serif-display text-2xl lg:text-3xl font-bold text-bhraman-ink">84.5%</div>
+            <div class="text-xs text-bhraman-inkMuted mt-1">
+              High weekend demand in Gushaini belt
+            </div>
+          </div>
+        </div>
+
+        <!-- Stat 4 -->
+        <div class="bg-white rounded-2xl p-5 border border-bhraman-cardBorder shadow-card flex flex-col justify-between">
+          <div class="flex items-center justify-between text-bhraman-inkMuted text-xs font-semibold uppercase tracking-wider">
+            <span>Gross Monthly Payout</span>
+            <span class="material-symbols-outlined text-[20px] text-bhraman-forest">payments</span>
+          </div>
+          <div class="mt-3">
+            <div class="serif-display text-2xl lg:text-3xl font-bold text-bhraman-ink">₹1,18,400</div>
+            <div class="text-xs text-bhraman-forest font-medium mt-1 flex items-center gap-1">
+              <span class="material-symbols-outlined text-[16px]">check_circle</span>
+              <span>Next transfer on Nov 01</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 2: Filter Toolbar -->
+      <div class="bg-white rounded-2xl p-4 border border-bhraman-cardBorder shadow-card flex flex-wrap items-center justify-between gap-4">
+        <!-- Status Tabs -->
+        <div class="flex items-center gap-1.5 p-1 bg-bhraman-canvas rounded-xl border border-bhraman-cardBorder/60">
+          <button class="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-white text-bhraman-ink shadow-sm">
+            All Listings (4)
+          </button>
+          <button class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-bhraman-inkMuted hover:text-bhraman-ink transition-colors">
+            Live (2)
+          </button>
+          <button class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-bhraman-inkMuted hover:text-bhraman-ink transition-colors flex items-center gap-1.5">
+            Needs Review
+            <span class="w-2 h-2 rounded-full bg-bhraman-amber"></span>
+          </button>
+          <button class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-bhraman-inkMuted hover:text-bhraman-ink transition-colors">
+            Pending / Draft (1)
+          </button>
+        </div>
+
+        <!-- Filter Controls on Right -->
+        <div class="flex items-center gap-3">
+          <!-- Offering Type Filter -->
+          <div class="relative">
+            <select class="appearance-none bg-bhraman-canvas border border-bhraman-cardBorder rounded-xl pl-3 pr-8 py-2 text-xs font-semibold text-bhraman-ink focus:outline-none focus:border-bhraman-rust">
+              <option>All Offering Types</option>
+              <option>Kathkuni Homestays</option>
+              <option>Artisan Handloom Guilds</option>
+              <option>Slow Culinary Dham</option>
+              <option>Guided River Treks</option>
+            </select>
+            <span class="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-bhraman-inkMuted text-[16px] pointer-events-none">expand_more</span>
+          </div>
+
+          <!-- Sort -->
+          <div class="relative">
+            <select class="appearance-none bg-bhraman-canvas border border-bhraman-cardBorder rounded-xl pl-3 pr-8 py-2 text-xs font-semibold text-bhraman-ink focus:outline-none focus:border-bhraman-rust">
+              <option>Sort by: Most Active</option>
+              <option>Price: High to Low</option>
+              <option>Price: Low to High</option>
+              <option>Highest Bookings</option>
+            </select>
+            <span class="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-bhraman-inkMuted text-[16px] pointer-events-none">expand_more</span>
+          </div>
+
+          <!-- View Toggle -->
+          <div class="flex items-center bg-bhraman-canvas border border-bhraman-cardBorder rounded-xl p-1">
+            <button class="w-8 h-8 rounded-lg bg-white text-bhraman-ink flex items-center justify-center shadow-sm" title="Table View">
+              <span class="material-symbols-outlined text-[18px]">table_rows</span>
+            </button>
+            <button class="w-8 h-8 rounded-lg text-bhraman-inkMuted hover:text-bhraman-ink flex items-center justify-center transition-colors" title="Grid View">
+              <span class="material-symbols-outlined text-[18px]">grid_view</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 3: Main Listings Table Card -->
+      <div class="bg-white rounded-2xl border border-bhraman-cardBorder shadow-card overflow-hidden">
+        
+        <!-- Table Header -->
+        <div class="px-6 py-4 border-b border-bhraman-cardBorder/70 bg-white flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="serif-display text-lg font-bold text-bhraman-ink">Active Catalog & Inventory</span>
+            <span class="text-xs text-bhraman-inkMuted font-medium">(Updated 12 mins ago)</span>
+          </div>
+          <div class="text-xs text-bhraman-inkMuted">
+            Showing <strong class="text-bhraman-ink">4 of 4</strong> registered listings
+          </div>
+        </div>
+
+        <!-- Detailed Table -->
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="border-b border-bhraman-cardBorder/60 bg-bhraman-canvas/40 text-[11px] uppercase tracking-wider font-bold text-bhraman-inkMuted">
+                <th class="py-3.5 px-6">Listing & Details</th>
+                <th class="py-3.5 px-4">Offering Type</th>
+                <th class="py-3.5 px-4">Base Rate</th>
+                <th class="py-3.5 px-4">Status & Health</th>
+                <th class="py-3.5 px-4">This Month</th>
+                <th class="py-3.5 px-4">Rating</th>
+                <th class="py-3.5 px-6 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-bhraman-cardBorder/50 text-sm">
+
+              <!-- ROW 1: Homestay - LIVE -->
+              <tr class="hover:bg-bhraman-canvas/30 transition-colors group">
+                <!-- Thumbnail + Title -->
+                <td class="py-4 px-6">
+                  <div class="flex items-center gap-4">
+                    <div class="relative shrink-0">
+                      <img src="https://lh3.googleusercontent.com/aida/AEtjO1VXnp88Ekl48GAr8I65bQ_3bxMZdz4Q9OXkT1rzHf6l3XSYokyN0J3F-BwgesrTK2Nfd9w-fEzk7pUDxfNUjX9FsmYxc1AWoHJTyyC7CZEdHlBQqee0BU0fJxM0iFEdNf0YVtTN0nxrwV3syoJXNTVJzDHCu4kDvSUTfb2ax21IT_F4KJTU882fVq_ZASn134fAxyI21ozI2TcRPDUoj27CPHAtYEHHjG5KrMWAN-g2NJA9JNYPEufnjC8" alt="Himalayan Homestay" class="w-20 h-16 rounded-xl object-cover border border-bhraman-cardBorder shadow-sm" />
+                      <span class="absolute top-1 left-1 bg-black/60 backdrop-blur text-white text-[9px] font-bold px-1.5 py-0.5 rounded">
+                        4 rooms
+                      </span>
+                    </div>
+                    <div>
+                      <div class="font-bold text-bhraman-ink group-hover:text-bhraman-rust transition-colors text-base">
+                        Himalayan Homestay, Tirthan Valley
+                      </div>
+                      <div class="text-xs text-bhraman-inkMuted flex items-center gap-1.5 mt-0.5">
+                        <span class="material-symbols-outlined text-[14px]">location_on</span>
+                        <span>Near Chehni Kothi, Jibhi-Tirthan Belt</span>
+                      </div>
+                      <div class="text-[11px] text-bhraman-inkSubtle mt-1">
+                        Cedar wood architecture • Bukhari stove heating
+                      </div>
+                    </div>
+                  </div>
+                </td>
+
+                <!-- Tag -->
+                <td class="py-4 px-4 align-middle">
+                  <span class="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-lg bg-bhraman-canvas border border-bhraman-cardBorder text-bhraman-ink">
+                    <span class="material-symbols-outlined text-[14px] text-bhraman-inkMuted">cottage</span>
+                    Kathkuni Homestay
+                  </span>
+                </td>
+
+                <!-- Price -->
+                <td class="py-4 px-4 align-middle">
+                  <div class="font-bold text-bhraman-ink text-base">₹1,850</div>
+                  <div class="text-[11px] text-bhraman-inkMuted">per night / room</div>
+                </td>
+
+                <!-- Status Badge: Forest Green for LIVE -->
+                <td class="py-4 px-4 align-middle">
+                  <div class="space-y-1">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#E8EFEA] text-[#233B2E] border border-[#C2D8C9]">
+                      <span class="w-2 h-2 rounded-full bg-bhraman-forest"></span>
+                      Live
+                    </span>
+                    <div class="text-[11px] text-bhraman-forest font-medium flex items-center gap-1">
+                      <span class="material-symbols-outlined text-[13px]">calendar_today</span>
+                      Instant book enabled
+                    </div>
+                  </div>
+                </td>
+
+                <!-- Monthly Bookings -->
+                <td class="py-4 px-4 align-middle">
+                  <div class="font-bold text-bhraman-ink">22 bookings</div>
+                  <div class="text-[11px] text-bhraman-inkMuted">₹40,700 earned</div>
+                </td>
+
+                <!-- Rating -->
+                <td class="py-4 px-4 align-middle">
+                  <div class="flex items-center gap-1 font-bold text-bhraman-ink text-xs">
+                    <span class="material-symbols-outlined text-[16px] text-bhraman-amber filled">star</span>
+                    <span>4.92</span>
+                    <span class="text-bhraman-inkSubtle font-normal">(51)</span>
+                  </div>
+                </td>
+
+                <!-- Actions -->
+                <td class="py-4 px-6 text-right align-middle">
+                  <div class="flex items-center justify-end gap-1.5">
+                    <button class="p-2 rounded-xl text-bhraman-inkMuted hover:text-bhraman-ink hover:bg-bhraman-canvas border border-transparent hover:border-bhraman-cardBorder transition-all" title="Edit listing">
+                      <span class="material-symbols-outlined text-[18px]">edit</span>
+                    </button>
+                    <button class="p-2 rounded-xl text-bhraman-inkMuted hover:text-bhraman-ink hover:bg-bhraman-canvas border border-transparent hover:border-bhraman-cardBorder transition-all" title="Calendar">
+                      <span class="material-symbols-outlined text-[18px]">date_range</span>
+                    </button>
+                    <button class="p-2 rounded-xl text-bhraman-inkMuted hover:text-bhraman-ink hover:bg-bhraman-canvas border border-transparent hover:border-bhraman-cardBorder transition-all" title="More options">
+                      <span class="material-symbols-outlined text-[18px]">more_vert</span>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- ROW 2: Weaving Workshop - NEEDS REVIEW (With Flagged Note) -->
+              <tr class="hover:bg-bhraman-canvas/30 transition-colors group bg-bhraman-amberLight/20">
+                <!-- Thumbnail + Title -->
+                <td class="py-4 px-6">
+                  <div class="flex items-center gap-4">
+                    <div class="relative shrink-0">
+                      <img src="https://lh3.googleusercontent.com/aida/AEtjO1WwshsVH7uT9JaBZnRBRoXmMePrkBHbF-Wp1ZKvMzNhqihjviSSFewFvgRGWONl1E4aX_ylP-rldn2IFIHXSGyMykmBl-5kf8UFC43H-0tSB_BVB6uKk5AKR4-_JOAA6Pr8sNBHtUmYSyfXxlWJUh3oLWQnFCXlJynDZpMb3g0Bzv4o540peUWlOP5fz-7Zc89Oohb1zpT1_WKB7nraYSxuI3uS5yYflsodQe5ehpkQgSAGcyslClJlY_Uv" alt="Patti Weaving" class="w-20 h-16 rounded-xl object-cover border border-bhraman-cardBorder shadow-sm" />
+                      <span class="absolute top-1 left-1 bg-black/60 backdrop-blur text-white text-[9px] font-bold px-1.5 py-0.5 rounded">
+                        Artisan
+                      </span>
+                    </div>
+                    <div>
+                      <div class="font-bold text-bhraman-ink group-hover:text-bhraman-rust transition-colors text-base">
+                        Patti Weaving & Natural Walnut Dyeing
+                      </div>
+                      <div class="text-xs text-bhraman-inkMuted flex items-center gap-1.5 mt-0.5">
+                        <span class="material-symbols-outlined text-[14px]">location_on</span>
+                        <span>Shoja Village Handloom Guild</span>
+                      </div>
+                      <!-- The flagged notice in red text per user specification -->
+                      <div class="mt-2 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-bhraman-flagRedBg border border-bhraman-flagRedBorder text-bhraman-flagRed text-xs font-semibold">
+                        <span class="material-symbols-outlined text-[15px]">error</span>
+                        <span>Flagged: price 40% above regional median</span>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+
+                <!-- Tag -->
+                <td class="py-4 px-4 align-middle">
+                  <span class="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-lg bg-bhraman-canvas border border-bhraman-cardBorder text-bhraman-ink">
+                    <span class="material-symbols-outlined text-[14px] text-bhraman-inkMuted">palette</span>
+                    Indigenous Craft Guild
+                  </span>
+                </td>
+
+                <!-- Price -->
+                <td class="py-4 px-4 align-middle">
+                  <div class="font-bold text-bhraman-flagRed text-base">₹1,450</div>
+                  <div class="text-[11px] text-bhraman-inkMuted">per 3-hr session</div>
+                  <div class="text-[10px] text-bhraman-inkSubtle line-through">Rec: ₹950 - ₹1,050</div>
+                </td>
+
+                <!-- Status Badge: Amber for Needs review -->
+                <td class="py-4 px-4 align-middle">
+                  <div class="space-y-1">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-bhraman-amberLight text-bhraman-amber border border-bhraman-amberBorder">
+                      <span class="w-2 h-2 rounded-full bg-bhraman-amber"></span>
+                      Needs review
+                    </span>
+                    <div class="text-[11px] text-bhraman-amber font-medium flex items-center gap-1">
+                      <span class="material-symbols-outlined text-[13px]">price_change</span>
+                      Adjust via Copilot
+                    </div>
+                  </div>
+                </td>
+
+                <!-- Monthly Bookings -->
+                <td class="py-4 px-4 align-middle">
+                  <div class="font-bold text-bhraman-ink">7 bookings</div>
+                  <div class="text-[11px] text-bhraman-inkMuted">₹10,150 earned</div>
+                  <span class="text-[10px] text-bhraman-flagRed font-medium">-28% booking velocity</span>
+                </td>
+
+                <!-- Rating -->
+                <td class="py-4 px-4 align-middle">
+                  <div class="flex items-center gap-1 font-bold text-bhraman-ink text-xs">
+                    <span class="material-symbols-outlined text-[16px] text-bhraman-amber filled">star</span>
+                    <span>4.98</span>
+                    <span class="text-bhraman-inkSubtle font-normal">(64)</span>
+                  </div>
+                </td>
+
+                <!-- Actions -->
+                <td class="py-4 px-6 text-right align-middle">
+                  <div class="flex items-center justify-end gap-1.5">
+                    <button class="px-2.5 py-1.5 rounded-lg bg-bhraman-rust/10 hover:bg-bhraman-rust text-bhraman-rust hover:text-white text-xs font-semibold transition-all flex items-center gap-1" title="Fix pricing">
+                      <span class="material-symbols-outlined text-[15px]">auto_awesome</span>
+                      Fix price
+                    </button>
+                    <button class="p-2 rounded-xl text-bhraman-inkMuted hover:text-bhraman-ink hover:bg-bhraman-canvas border border-transparent hover:border-bhraman-cardBorder transition-all" title="Edit listing">
+                      <span class="material-symbols-outlined text-[18px]">edit</span>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- ROW 3: Himachali Dham - LIVE -->
+              <tr class="hover:bg-bhraman-canvas/30 transition-colors group">
+                <!-- Thumbnail + Title -->
+                <td class="py-4 px-6">
+                  <div class="flex items-center gap-4">
+                    <div class="relative shrink-0">
+                      <img src="https://lh3.googleusercontent.com/aida/AEtjO1WAkCkDlh6nmRHKIXaqm37tMqEd8q_1ZudP4G7oc6S8TUGLZ966xm_nAE-RZWyi8PdWxfFi3y0Gqfy6WsMxwbuVruhwyzZyTfI_9W5hqyexkmgnps4mqBTE_vv2bT9xEa_Q1-Dm4zvlTxJNIwFJfSBwnIcw-tQU78hSKv8WxfcpHQkv8LsE8XjjghNqCvnp2-Oy2rTy0eBavJ2k6ZWFkP7XBE1P42vAMrKGOIxGmyBtvZZHcDS4DE69mPSU" alt="Sunset Kandi Dham" class="w-20 h-16 rounded-xl object-cover border border-bhraman-cardBorder shadow-sm" />
+                      <span class="absolute top-1 left-1 bg-black/60 backdrop-blur text-white text-[9px] font-bold px-1.5 py-0.5 rounded">
+                        Culinary
+                      </span>
+                    </div>
+                    <div>
+                      <div class="font-bold text-bhraman-ink group-hover:text-bhraman-rust transition-colors text-base">
+                        Sunset Kandi Dham in Kathkuni Balcony
+                      </div>
+                      <div class="text-xs text-bhraman-inkMuted flex items-center gap-1.5 mt-0.5">
+                        <span class="material-symbols-outlined text-[14px]">location_on</span>
+                        <span>Gushaini Riverbed Viewpoint</span>
+                      </div>
+                      <div class="text-[11px] text-bhraman-inkSubtle mt-1">
+                        7-course sacred mountain meal cooked on pine embers
+                      </div>
+                    </div>
+                  </div>
+                </td>
+
+                <!-- Tag -->
+                <td class="py-4 px-4 align-middle">
+                  <span class="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-lg bg-bhraman-canvas border border-bhraman-cardBorder text-bhraman-ink">
+                    <span class="material-symbols-outlined text-[14px] text-bhraman-inkMuted">restaurant</span>
+                    Traditional Culinary Art
+                  </span>
+                </td>
+
+                <!-- Price -->
+                <td class="py-4 px-4 align-middle">
+                  <div class="font-bold text-bhraman-ink text-base">₹650</div>
+                  <div class="text-[11px] text-bhraman-inkMuted">per authentic thali</div>
+                </td>
+
+                <!-- Status Badge: Forest Green for LIVE -->
+                <td class="py-4 px-4 align-middle">
+                  <div class="space-y-1">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#E8EFEA] text-[#233B2E] border border-[#C2D8C9]">
+                      <span class="w-2 h-2 rounded-full bg-bhraman-forest"></span>
+                      Live
+                    </span>
+                    <div class="text-[11px] text-bhraman-forest font-medium flex items-center gap-1">
+                      <span class="material-symbols-outlined text-[13px]">bolt</span>
+                      High popularity
+                    </div>
+                  </div>
+                </td>
+
+                <!-- Monthly Bookings -->
+                <td class="py-4 px-4 align-middle">
+                  <div class="font-bold text-bhraman-ink">19 bookings</div>
+                  <div class="text-[11px] text-bhraman-inkMuted">₹12,350 earned</div>
+                </td>
+
+                <!-- Rating -->
+                <td class="py-4 px-4 align-middle">
+                  <div class="flex items-center gap-1 font-bold text-bhraman-ink text-xs">
+                    <span class="material-symbols-outlined text-[16px] text-bhraman-amber filled">star</span>
+                    <span>5.0</span>
+                    <span class="text-bhraman-inkSubtle font-normal">(82)</span>
+                  </div>
+                </td>
+
+                <!-- Actions -->
+                <td class="py-4 px-6 text-right align-middle">
+                  <div class="flex items-center justify-end gap-1.5">
+                    <button class="p-2 rounded-xl text-bhraman-inkMuted hover:text-bhraman-ink hover:bg-bhraman-canvas border border-transparent hover:border-bhraman-cardBorder transition-all" title="Edit listing">
+                      <span class="material-symbols-outlined text-[18px]">edit</span>
+                    </button>
+                    <button class="p-2 rounded-xl text-bhraman-inkMuted hover:text-bhraman-ink hover:bg-bhraman-canvas border border-transparent hover:border-bhraman-cardBorder transition-all" title="Calendar">
+                      <span class="material-symbols-outlined text-[18px]">date_range</span>
+                    </button>
+                    <button class="p-2 rounded-xl text-bhraman-inkMuted hover:text-bhraman-ink hover:bg-bhraman-canvas border border-transparent hover:border-bhraman-cardBorder transition-all" title="More options">
+                      <span class="material-symbols-outlined text-[18px]">more_vert</span>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- ROW 4: Fly-Fishing Walk - PENDING / DRAFT -->
+              <tr class="hover:bg-bhraman-canvas/30 transition-colors group opacity-90">
+                <!-- Thumbnail + Title -->
+                <td class="py-4 px-6">
+                  <div class="flex items-center gap-4">
+                    <div class="relative shrink-0">
+                      <img src="https://lh3.googleusercontent.com/aida/AEtjO1VHHk6sPrS963uluABcCsRa0-27UonXaTh6SI-kOhv49nCu6BHkOXCgOH_XHfHBPNX3uepkS94yrwSfw9VRLrtt75-lo7KGeFb-IVwo5ZwwVneaIZnua7Io4W0Oh-j_EvQoSiyasO6-6VZM0vNiOChHoCl66ELbmq0UtozlgGY1G2sHaYfwqBzvpb5SAEc4wMZRb7t5asCkTENBjW1Hx5xtQEqe8ud9C5rRSIBCzxlU2RlTJdqbQfyhUxvC" alt="Fly Fishing River Walk" class="w-20 h-16 rounded-xl object-cover border border-bhraman-cardBorder shadow-sm" />
+                      <span class="absolute top-1 left-1 bg-black/60 backdrop-blur text-white text-[9px] font-bold px-1.5 py-0.5 rounded">
+                        Co-Host
+                      </span>
+                    </div>
+                    <div>
+                      <div class="font-bold text-bhraman-ink group-hover:text-bhraman-rust transition-colors text-base">
+                        Sunrise Fly-Fishing & River Walk with Roshan Ji
+                      </div>
+                      <div class="text-xs text-bhraman-inkMuted flex items-center gap-1.5 mt-0.5">
+                        <span class="material-symbols-outlined text-[14px]">location_on</span>
+                        <span>Nagini • Tirthan Anglers Association Zone</span>
+                      </div>
+                      <div class="text-[11px] text-bhraman-inkSubtle mt-1">
+                        Catch & Release permit pending forest ranger signature
+                      </div>
+                    </div>
+                  </div>
+                </td>
+
+                <!-- Tag -->
+                <td class="py-4 px-4 align-middle">
+                  <span class="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-lg bg-bhraman-canvas border border-bhraman-cardBorder text-bhraman-ink">
+                    <span class="material-symbols-outlined text-[14px] text-bhraman-inkMuted">hiking</span>
+                    Guided Eco-Trek
+                  </span>
+                </td>
+
+                <!-- Price -->
+                <td class="py-4 px-4 align-middle">
+                  <div class="font-bold text-bhraman-ink text-base">₹1,400</div>
+                  <div class="text-[11px] text-bhraman-inkMuted">per guest (incl. gear)</div>
+                </td>
+
+                <!-- Status Badge: Pending / Gray-Brown -->
+                <td class="py-4 px-4 align-middle">
+                  <div class="space-y-1">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-bhraman-badgePendingBg text-bhraman-badgePending border border-[#DECFBE]">
+                      <span class="w-2 h-2 rounded-full bg-bhraman-badgePending"></span>
+                      Pending approval
+                    </span>
+                    <div class="text-[11px] text-bhraman-inkSubtle font-medium flex items-center gap-1">
+                      <span class="material-symbols-outlined text-[13px]">hourglass_empty</span>
+                      Permit submission in review
+                    </div>
+                  </div>
+                </td>
+
+                <!-- Monthly Bookings -->
+                <td class="py-4 px-4 align-middle">
+                  <div class="font-bold text-bhraman-inkSubtle">—</div>
+                  <div class="text-[11px] text-bhraman-inkSubtle">Awaiting release</div>
+                </td>
+
+                <!-- Rating -->
+                <td class="py-4 px-4 align-middle">
+                  <div class="text-xs text-bhraman-inkSubtle font-medium">
+                    New Listing
+                  </div>
+                </td>
+
+                <!-- Actions -->
+                <td class="py-4 px-6 text-right align-middle">
+                  <div class="flex items-center justify-end gap-1.5">
+                    <button class="px-2.5 py-1.5 rounded-lg bg-bhraman-canvas hover:bg-white text-bhraman-ink border border-bhraman-cardBorder text-xs font-semibold transition-all" title="Review draft">
+                      Resume setup
+                    </button>
+                    <button class="p-2 rounded-xl text-bhraman-inkMuted hover:text-bhraman-ink hover:bg-bhraman-canvas border border-transparent hover:border-bhraman-cardBorder transition-all" title="Edit listing">
+                      <span class="material-symbols-outlined text-[18px]">edit</span>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Table Footer / Pagination -->
+        <div class="px-6 py-4 border-t border-bhraman-cardBorder/70 bg-bhraman-canvas/30 flex items-center justify-between">
+          <div class="text-xs text-bhraman-inkMuted">
+            Showing <span class="font-bold text-bhraman-ink">1–4</span> of 4 listings • Need help with photography? <a href="#" class="text-bhraman-rust underline font-semibold hover:text-bhraman-rustHover">Request a Bhraman Field Fellow</a>
+          </div>
+          <div class="flex items-center gap-2">
+            <button class="px-3 py-1.5 rounded-xl border border-bhraman-cardBorder bg-white text-xs font-semibold text-bhraman-inkMuted hover:text-bhraman-ink disabled:opacity-40 transition-colors" disabled>
+              Previous
+            </button>
+            <button class="w-8 h-8 rounded-xl bg-bhraman-rust text-white text-xs font-bold flex items-center justify-center shadow-btn">
+              1
+            </button>
+            <button class="px-3 py-1.5 rounded-xl border border-bhraman-cardBorder bg-white text-xs font-semibold text-bhraman-inkMuted hover:text-bhraman-ink disabled:opacity-40 transition-colors" disabled>
+              Next
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 4: Bhraman Pricing Copilot & Rural Trust Callout Card -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- Pricing Copilot Recommendation Card -->
+        <div class="lg:col-span-2 bg-white rounded-2xl p-6 border border-bhraman-cardBorder shadow-card flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-xl bg-bhraman-rust/10 text-bhraman-rust flex items-center justify-center">
+                  <span class="material-symbols-outlined text-[18px]">auto_awesome</span>
+                </div>
+                <div>
+                  <h3 class="serif-display text-base font-bold text-bhraman-ink leading-tight">Bhraman Pricing Copilot</h3>
+                  <span class="text-[11px] text-bhraman-inkMuted">Real-time Tirthan & Kullu Belt rate recommendations</span>
+                </div>
+              </div>
+              <span class="text-[11px] font-bold text-bhraman-forest bg-[#E8EFEA] border border-[#C2D8C9] px-2.5 py-0.5 rounded-full">
+                Active Optimization
+              </span>
+            </div>
+
+            <p class="text-xs text-bhraman-inkMuted leading-relaxed">
+              Your craft workshop <strong class="text-bhraman-ink">"Patti Weaving & Natural Walnut Dyeing"</strong> is currently listed at ₹1,450. In Shoja and Jibhi, travelers book handloom experiences faster at ₹950 – ₹1,050 with raw wool kit included.
+            </p>
+
+            <div class="mt-4 p-3.5 bg-bhraman-canvas/70 rounded-xl border border-bhraman-cardBorder flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="text-xs">
+                  <span class="text-bhraman-inkSubtle block">Suggested Autumn Rate</span>
+                  <span class="text-base font-bold text-bhraman-ink">₹990 <span class="text-xs text-bhraman-forest font-semibold">(Est. +3.2x bookings)</span></span>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <button class="px-3 py-1.5 text-xs font-semibold text-bhraman-inkMuted hover:text-bhraman-ink">
+                  Ignore
+                </button>
+                <button class="px-3.5 py-1.5 rounded-xl bg-bhraman-rust hover:bg-bhraman-rustHover text-white text-xs font-bold shadow-btn transition-colors">
+                  Apply to Listing
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Host Support & Valley Community Hub -->
+        <div class="bg-bhraman-sidebar/70 rounded-2xl p-6 border border-bhraman-cardBorder shadow-card flex flex-col justify-between">
+          <div>
+            <div class="flex items-center gap-2 mb-2 text-bhraman-rust font-bold text-xs uppercase tracking-wider">
+              <span class="material-symbols-outlined text-[18px]">verified_user</span>
+              <span>Host Community Guarantee</span>
+            </div>
+            <h4 class="serif-display text-lg font-bold text-bhraman-ink leading-snug">
+              Protected by Bhraman Village Fund
+            </h4>
+            <p class="text-xs text-bhraman-inkMuted mt-2 leading-relaxed">
+              Every guest booking includes automatic ₹50,000 property protection and direct support for rural artisan cooperatives.
+            </p>
+          </div>
+
+          <div class="mt-4 pt-4 border-t border-bhraman-cardBorder/70 flex items-center justify-between">
+            <div class="flex -space-x-2">
+              <img src="https://lh3.googleusercontent.com/aida/AEtjO1WwshsVH7uT9JaBZnRBRoXmMePrkBHbF-Wp1ZKvMzNhqihjviSSFewFvgRGWONl1E4aX_ylP-rldn2IFIHXSGyMykmBl-5kf8UFC43H-0tSB_BVB6uKk5AKR4-_JOAA6Pr8sNBHtUmYSyfXxlWJUh3oLWQnFCXlJynDZpMb3g0Bzv4o540peUWlOP5fz-7Zc89Oohb1zpT1_WKB7nraYSxuI3uS5yYflsodQe5ehpkQgSAGcyslClJlY_Uv" class="w-7 h-7 rounded-full border-2 border-white object-cover" />
+              <img src="https://lh3.googleusercontent.com/aida/AEtjO1VHHk6sPrS963uluABcCsRa0-27UonXaTh6SI-kOhv49nCu6BHkOXCgOH_XHfHBPNX3uepkS94yrwSfw9VRLrtt75-lo7KGeFb-IVwo5ZwwVneaIZnua7Io4W0Oh-j_EvQoSiyasO6-6VZM0vNiOChHoCl66ELbmq0UtozlgGY1G2sHaYfwqBzvpb5SAEc4wMZRb7t5asCkTENBjW1Hx5xtQEqe8ud9C5rRSIBCzxlU2RlTJdqbQfyhUxvC" class="w-7 h-7 rounded-full border-2 border-white object-cover" />
+              <div class="w-7 h-7 rounded-full bg-bhraman-rust text-white text-[10px] font-bold flex items-center justify-center border-2 border-white">
+                +42
+              </div>
+            </div>
+            <a href="#" class="text-xs font-bold text-bhraman-ink hover:text-bhraman-rust flex items-center gap-1">
+              Host Forum <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="mt-auto px-8 py-6 border-t border-bhraman-cardBorder/70 text-xs text-bhraman-inkMuted flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <span class="serif-display font-bold text-bhraman-ink">Bhraman</span>
+        <span>•</span>
+        <span>Rural Himalayan Tourism Network</span>
+        <span>•</span>
+        <span>Himachal Pradesh, India</span>
+      </div>
+      <div class="flex items-center gap-6">
+        <a href="#" class="hover:text-bhraman-ink transition-colors">Tirthan Host Guidelines</a>
+        <a href="#" class="hover:text-bhraman-ink transition-colors">Safety Protocols</a>
+        <a href="#" class="hover:text-bhraman-ink transition-colors">Direct Payout Terms</a>
+      </div>
+    </footer>
+
+  </div>
+
+</body>
+</html>

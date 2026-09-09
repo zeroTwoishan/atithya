@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Bhraman Trip Planner Chat</title>
+  <!-- Google Fonts: Fraunces (humanist serif) & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Material Symbols Outlined -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bhraman: {
+              canvas: '#F5E6D8',
+              surface: '#FFFFFF',
+              surfaceSubtle: '#FDF9F5',
+              ink: '#2A211C',
+              inkMuted: '#6B5D55',
+              inkLight: '#998B82',
+              rust: '#BF4E30',
+              rustHover: '#A84126',
+              rustSubtle: '#F7E7E2',
+              forest: '#2F4B3C',
+              forestSubtle: '#E8EFEA',
+              border: '#EAD8C7',
+              borderCard: '#F0E3D7',
+            }
+          },
+          fontFamily: {
+            serif: ['Fraunces', 'serif'],
+            sans: ['Inter', 'sans-serif'],
+          },
+          boxShadow: {
+            'warm-card': '0 2px 4px rgba(42, 33, 28, 0.03), 0 8px 24px rgba(42, 33, 28, 0.06), 0 1px 2px rgba(42, 33, 28, 0.02)',
+            'warm-sm': '0 1px 3px rgba(42, 33, 28, 0.05), 0 4px 12px rgba(42, 33, 28, 0.03)',
+            'input-bar': '0 -4px 20px rgba(42, 33, 28, 0.06)',
+            'float-btn': '0 4px 14px rgba(191, 78, 48, 0.35)',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .font-fraunces {
+      font-family: 'Fraunces', serif;
+      letter-spacing: -0.025em;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 450, 'GRAD' 0, 'opsz' 20;
+      vertical-align: middle;
+    }
+    .material-symbols-filled {
+      font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 20;
+      vertical-align: middle;
+    }
+    /* Hide scrollbar for tabs */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="bg-[#F5E6D8] text-[#2A211C] font-sans antialiased min-h-screen flex justify-center selection:bg-[#BF4E30]/20 selection:text-[#BF4E30]">
+
+  <!-- Mobile Screen Container (390px viewport simulation) -->
+  <div class="w-full max-w-[420px] bg-[#F5E6D8] min-h-screen flex flex-col relative shadow-2xl border-x border-[#EAD8C7]">
+    
+    <!-- Top System & Status Header -->
+    <header class="sticky top-0 z-40 bg-[#F5E6D8]/95 backdrop-blur-md border-b border-[#EAD8C7]/80 pt-3 pb-2.5 px-4 transition-all">
+      <!-- Title row -->
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <button class="w-9 h-9 rounded-full bg-white/80 border border-[#EAD8C7] flex items-center justify-center text-[#2A211C] hover:bg-white active:scale-95 transition">
+            <span class="material-symbols-outlined text-[20px]">arrow_back</span>
+          </button>
+          <div>
+            <div class="flex items-center gap-1.5">
+              <h1 class="font-fraunces text-[19px] font-semibold text-[#2A211C] leading-none">Plan a trip</h1>
+              <span class="inline-block w-2 h-2 rounded-full bg-[#2F4B3C] animate-pulse"></span>
+            </div>
+            <p class="text-[11px] text-[#6B5D55] font-medium tracking-tight mt-0.5">Bhraman AI • Pahadi Curator</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-1.5">
+          <button class="w-8 h-8 rounded-full flex items-center justify-center text-[#6B5D55] hover:text-[#2A211C] hover:bg-white/50 transition">
+            <span class="material-symbols-outlined text-[20px]">bookmark_border</span>
+          </button>
+          <button class="w-8 h-8 rounded-full flex items-center justify-center text-[#6B5D55] hover:text-[#2A211C] hover:bg-white/50 transition">
+            <span class="material-symbols-outlined text-[20px]">more_vert</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Live Trip Context / Filter Chips Row -->
+      <div class="flex items-center gap-2 mt-3 overflow-x-auto no-scrollbar pb-0.5">
+        <div class="inline-flex items-center gap-1.5 bg-white border border-[#EAD8C7] rounded-full px-3 py-1 shadow-sm shrink-0">
+          <span class="material-symbols-outlined text-[15px] text-[#BF4E30]">payments</span>
+          <span class="text-[12px] font-semibold text-[#2A211C]">₹15,000 Budget</span>
+        </div>
+        <div class="inline-flex items-center gap-1.5 bg-white border border-[#EAD8C7] rounded-full px-3 py-1 shadow-sm shrink-0">
+          <span class="material-symbols-outlined text-[15px] text-[#2F4B3C]">calendar_month</span>
+          <span class="text-[12px] font-medium text-[#2A211C]">4 Days / 3 Nights</span>
+        </div>
+        <div class="inline-flex items-center gap-1.5 bg-white border border-[#EAD8C7] rounded-full px-3 py-1 shadow-sm shrink-0">
+          <span class="material-symbols-outlined text-[15px] text-[#6B5D55]">near_me</span>
+          <span class="text-[12px] font-medium text-[#2A211C]">Ex-Delhi (Volvo)</span>
+        </div>
+        <div class="inline-flex items-center gap-1.5 bg-[#E8EFEA] border border-[#2F4B3C]/20 rounded-full px-2.5 py-1 shrink-0">
+          <span class="material-symbols-filled text-[13px] text-[#2F4B3C]">verified</span>
+          <span class="text-[11px] font-semibold text-[#2F4B3C]">Kathkuni Verified</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Scrollable Chat Area -->
+    <main class="flex-1 overflow-y-auto px-4 pt-4 pb-28 space-y-4">
+      
+      <!-- Timestamp pill -->
+      <div class="flex justify-center">
+        <span class="text-[11px] font-medium tracking-wide uppercase text-[#998B82] bg-[#EAD8C7]/50 px-3 py-0.5 rounded-full">
+          Today • 10:24 AM
+        </span>
+      </div>
+
+      <!-- User Message Bubble -->
+      <div class="flex justify-end">
+        <div class="max-w-[85%] bg-white rounded-2xl rounded-tr-sm p-3.5 shadow-warm-sm border border-[#EAD8C7]">
+          <p class="text-[14px] leading-relaxed text-[#2A211C] font-normal">
+            Budget ₹15,000, 4 days, want mountains and authentic homestays, traveling from Delhi
+          </p>
+          <div class="flex items-center justify-end gap-1 mt-1.5">
+            <span class="text-[10px] text-[#998B82]">10:24 AM</span>
+            <span class="material-symbols-outlined text-[13px] text-[#2F4B3C]">done_all</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI Agent Response Group -->
+      <div class="flex items-start gap-2.5">
+        <!-- Bhraman Avatar Icon -->
+        <div class="w-8 h-8 rounded-full bg-[#2A211C] text-[#F5E6D8] flex items-center justify-center font-fraunces font-bold text-sm shrink-0 mt-1 shadow-sm">
+          भ
+        </div>
+
+        <div class="flex-1 space-y-3 max-w-[92%]">
+          
+          <!-- AI Conversational Note -->
+          <div class="bg-white rounded-2xl rounded-tl-sm p-4 shadow-warm-sm border border-[#EAD8C7]">
+            <p class="font-fraunces italic text-[15px] leading-snug text-[#BF4E30] font-medium mb-1.5">
+              Namaste Rahul!
+            </p>
+            <p class="text-[13.5px] leading-relaxed text-[#2A211C]">
+              I’ve crafted a serene 4-day slow journey balancing the quiet cedar valley of <strong class="font-semibold text-[#2A211C]">Tirthan</strong> with an excursion to <strong class="font-semibold text-[#2A211C]">Kasol & Parvati</strong>. You’ll stay at Meera Devi’s heritage kathkuni home with fire-cooked Pahadi meals, comfortably within your budget at <span class="font-semibold text-[#2F4B3C]">₹11,400 total estimated spend</span> (leaving a safe ₹3,600 buffer).
+            </p>
+          </div>
+
+          <!-- PROPOSED ITINERARY CARD (White, layered soft shadow, 16px radius) -->
+          <div class="bg-white rounded-[16px] p-4 shadow-warm-card border border-[#F0E3D7] space-y-4">
+            
+            <!-- Card Header -->
+            <div class="flex items-start justify-between border-b border-[#F0E3D7] pb-3">
+              <div>
+                <span class="text-[10.5px] font-bold uppercase tracking-wider text-[#BF4E30]">Curated Route Proposal</span>
+                <h3 class="font-fraunces text-[18px] font-semibold text-[#2A211C] leading-snug mt-0.5">
+                  4-Day Tirthan & Parvati Slow Journey
+                </h3>
+              </div>
+              <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10.5px] font-semibold bg-[#E8EFEA] text-[#2F4B3C] border border-[#2F4B3C]/15 shrink-0">
+                Eco-Certified
+              </span>
+            </div>
+
+            <!-- Day-by-Day Timeline Breakdown -->
+            <div class="relative pl-5 space-y-3.5 before:absolute before:left-[7px] before:top-2 before:bottom-2 before:w-[2px] before:bg-[#EAD8C7]">
+              
+              <!-- Day 1 -->
+              <div class="relative group">
+                <span class="absolute -left-5 top-1 w-3 h-3 rounded-full bg-[#BF4E30] border-2 border-white shadow-sm"></span>
+                <div class="flex items-baseline justify-between">
+                  <h4 class="text-[13px] font-bold text-[#2A211C]">Day 1 • Overnight Volvo & River Arrival</h4>
+                  <span class="text-[11px] text-[#6B5D55] font-medium">Aut ➔ Gushaini</span>
+                </div>
+                <p class="text-[12px] text-[#6B5D55] leading-relaxed mt-0.5">
+                  Overnight Volvo from Kashmere Gate to Aut Tunnel. Scenic riverside cab to Tirthan Valley, settling into cedar orchards.
+                </p>
+              </div>
+
+              <!-- Day 2 -->
+              <div class="relative group">
+                <span class="absolute -left-5 top-1 w-3 h-3 rounded-full bg-[#2F4B3C] border-2 border-white shadow-sm"></span>
+                <div class="flex items-baseline justify-between">
+                  <h4 class="text-[13px] font-bold text-[#2A211C]">Day 2 • Chhoie Waterfall & Forest Trail</h4>
+                  <span class="text-[11px] text-[#2F4B3C] font-semibold">GHNP Eco-Zone</span>
+                </div>
+                <p class="text-[12px] text-[#6B5D55] leading-relaxed mt-0.5">
+                  Gentle pine trek to Chhoie sacred falls; evening riverside chai with local elder fishermen.
+                </p>
+              </div>
+
+              <!-- Day 3 (Blending Kasol/Parvati Valley) -->
+              <div class="relative group">
+                <span class="absolute -left-5 top-1 w-3 h-3 rounded-full bg-[#2F4B3C] border-2 border-white shadow-sm"></span>
+                <div class="flex items-baseline justify-between">
+                  <h4 class="text-[13px] font-bold text-[#2A211C]">Day 3 • Jalori Pass & Kasol Day Trail</h4>
+                  <span class="text-[11px] text-[#6B5D55] font-medium">Parvati Belt Excursion</span>
+                </div>
+                <p class="text-[12px] text-[#6B5D55] leading-relaxed mt-0.5">
+                  Morning drive over Jalori Pass to Kasol and old Chalal wooden village. Fresh herbal siddu tasting and artisan shawls.
+                </p>
+              </div>
+
+              <!-- Day 4 -->
+              <div class="relative group">
+                <span class="absolute -left-5 top-1 w-3 h-3 rounded-full bg-[#2A211C] border-2 border-white shadow-sm"></span>
+                <div class="flex items-baseline justify-between">
+                  <h4 class="text-[13px] font-bold text-[#2A211C]">Day 4 • Orchard Morning & Return</h4>
+                  <span class="text-[11px] text-[#6B5D55] font-medium">Evening Bus</span>
+                </div>
+                <p class="text-[12px] text-[#6B5D55] leading-relaxed mt-0.5">
+                  Apple orchard stroll with host Meera Devi; evening cab transfer to Aut for boarding return Volvo to Delhi.
+                </p>
+              </div>
+
+            </div>
+
+            <!-- Cost Summary Strip inside itinerary -->
+            <div class="bg-[#F5E6D8]/60 rounded-xl p-2.5 flex items-center justify-between border border-[#EAD8C7]">
+              <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-[18px] text-[#BF4E30]">savings</span>
+                <div>
+                  <div class="text-[11px] font-semibold text-[#2A211C]">Estimated Budget Spend</div>
+                  <div class="text-[10px] text-[#6B5D55]">Stay + Transit + 2 Guided Treks</div>
+                </div>
+              </div>
+              <div class="text-right">
+                <div class="text-[14px] font-bold text-[#2A211C]">₹11,400</div>
+                <div class="text-[10px] text-[#2F4B3C] font-semibold">₹3,600 buffer left</div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- VERIFIED HOMESTAY LISTING CARD (Meera Devi's Himalayan Homestay) -->
+          <div class="bg-white rounded-[16px] overflow-hidden shadow-warm-card border border-[#F0E3D7]">
+            <!-- Homestay Real Photo Container -->
+            <div class="relative h-44 w-full overflow-hidden">
+              <img 
+                src="https://lh3.googleusercontent.com/aida/AEtjO1VXnp88Ekl48GAr8I65bQ_3bxMZdz4Q9OXkT1rzHf6l3XSYokyN0J3F-BwgesrTK2Nfd9w-fEzk7pUDxfNUjX9FsmYxc1AWoHJTyyC7CZEdHlBQqee0BU0fJxM0iFEdNf0YVtTN0nxrwV3syoJXNTVJzDHCu4kDvSUTfb2ax21IT_F4KJTU882fVq_ZASn134fAxyI21ozI2TcRPDUoj27CPHAtYEHHjG5KrMWAN-g2NJA9JNYPEufnjC8" 
+                alt="Meera Devi's Himalayan Homestay, Tirthan Valley" 
+                class="w-full h-full object-cover object-center"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20"></div>
+
+              <!-- Top floating badges -->
+              <div class="absolute top-3 left-3">
+                <span class="inline-flex items-center gap-1 bg-[#2F4B3C] text-white text-[11px] font-semibold px-2.5 py-1 rounded-full shadow-md backdrop-blur-sm">
+                  <span class="material-symbols-filled text-[13px]">verified</span>
+                  Verified Rural Homestay
+                </span>
+              </div>
+
+              <div class="absolute top-3 right-3">
+                <button class="w-7 h-7 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-[#BF4E30] hover:bg-white transition">
+                  <span class="material-symbols-outlined text-[16px]">favorite_border</span>
+                </button>
+              </div>
+
+              <!-- Bottom overlay: Price badge -->
+              <div class="absolute bottom-2.5 right-3 bg-[#2A211C]/90 backdrop-blur-md text-white px-2.5 py-1 rounded-lg border border-white/10 shadow-sm flex items-baseline gap-1">
+                <span class="font-fraunces text-[16px] font-bold text-white">₹1,850</span>
+                <span class="text-[10px] text-white/80">/ night</span>
+              </div>
+            </div>
+
+            <!-- Homestay Details Body -->
+            <div class="p-4 space-y-3">
+              <div class="flex items-start justify-between gap-2">
+                <div>
+                  <h4 class="font-fraunces text-[17px] font-semibold text-[#2A211C] leading-snug">
+                    Meera Devi's Himalayan Homestay
+                  </h4>
+                  <p class="text-[12px] text-[#6B5D55] flex items-center gap-1 mt-0.5">
+                    <span class="material-symbols-outlined text-[14px] text-[#BF4E30]">location_on</span>
+                    Near Chehni Kothi, Tirthan Valley
+                  </p>
+                </div>
+
+                <!-- Star Rating Badge -->
+                <div class="flex items-center gap-1 bg-[#F5E6D8] px-2 py-0.5 rounded-md shrink-0 border border-[#EAD8C7]">
+                  <span class="material-symbols-filled text-[13px] text-[#BF4E30]">star</span>
+                  <span class="text-[12px] font-bold text-[#2A211C]">4.92</span>
+                  <span class="text-[10px] text-[#6B5D55]">(51)</span>
+                </div>
+              </div>
+
+              <!-- Feature Tags (Kathkuni, Bukhari Heating, Dham Thali) -->
+              <div class="flex flex-wrap gap-1.5 pt-1">
+                <span class="inline-flex items-center gap-1 text-[11px] font-medium bg-[#FDF9F5] text-[#2A211C] px-2 py-0.5 rounded-md border border-[#EAD8C7]">
+                  <span class="material-symbols-outlined text-[13px] text-[#6B5D55]">cottage</span>
+                  Kathkuni Cedar Wood
+                </span>
+                <span class="inline-flex items-center gap-1 text-[11px] font-medium bg-[#FDF9F5] text-[#2A211C] px-2 py-0.5 rounded-md border border-[#EAD8C7]">
+                  <span class="material-symbols-outlined text-[13px] text-[#6B5D55]">fireplace</span>
+                  Bukhari Heating
+                </span>
+                <span class="inline-flex items-center gap-1 text-[11px] font-medium bg-[#E8EFEA] text-[#2F4B3C] px-2 py-0.5 rounded-md border border-[#2F4B3C]/20">
+                  <span class="material-symbols-outlined text-[13px]">restaurant</span>
+                  Kangri Dham Included
+                </span>
+              </div>
+
+              <!-- Breakdown calculation -->
+              <div class="pt-2 border-t border-[#F0E3D7] flex items-center justify-between text-[11.5px]">
+                <span class="text-[#6B5D55]">3 nights accommodation</span>
+                <span class="font-semibold text-[#2A211C]">₹5,550 total</span>
+              </div>
+
+              <!-- Primary CTA (Terracotta/Rust, 10px radius) -->
+              <button class="w-full bg-[#BF4E30] hover:bg-[#A84126] active:scale-[0.99] text-white font-medium text-[13.5px] py-2.5 px-4 rounded-[10px] flex items-center justify-center gap-2 shadow-float-btn transition">
+                <span>Reserve with ₹1,000 Token</span>
+                <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Suggested Quick Inquiries / Action Pill Chips -->
+          <div class="space-y-1.5 pt-1">
+            <p class="text-[11px] font-medium text-[#998B82] uppercase tracking-wider px-1">Suggested inquiries</p>
+            <div class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
+              <button class="bg-white border border-[#EAD8C7] hover:border-[#BF4E30] text-[#2A211C] text-[12px] font-medium px-3 py-1.5 rounded-full shadow-sm whitespace-nowrap transition active:scale-95 flex items-center gap-1">
+                <span class="material-symbols-outlined text-[14px] text-[#BF4E30]">sync_alt</span>
+                Swap Kasol day for Jibhi waterfall
+              </button>
+              <button class="bg-white border border-[#EAD8C7] hover:border-[#BF4E30] text-[#2A211C] text-[12px] font-medium px-3 py-1.5 rounded-full shadow-sm whitespace-nowrap transition active:scale-95 flex items-center gap-1">
+                <span class="material-symbols-outlined text-[14px] text-[#2F4B3C]">directions_bus</span>
+                Volvo bus timings from Majnu ka Tilla
+              </button>
+              <button class="bg-white border border-[#EAD8C7] hover:border-[#BF4E30] text-[#2A211C] text-[12px] font-medium px-3 py-1.5 rounded-full shadow-sm whitespace-nowrap transition active:scale-95 flex items-center gap-1">
+                <span class="material-symbols-outlined text-[14px] text-[#6B5D55]">ramen_dining</span>
+                Add Siddu & Thali meal plan
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Bottom Fixed Chat Input Bar -->
+    <div class="fixed bottom-0 left-0 right-0 max-w-[420px] mx-auto bg-[#F5E6D8]/95 backdrop-blur-lg border-t border-[#EAD8C7] px-3.5 pt-2.5 pb-5 z-50 shadow-input-bar">
+      
+      <!-- Input Wrapper -->
+      <div class="bg-white border border-[#EAD8C7] rounded-full pl-3.5 pr-1.5 py-1.5 flex items-center gap-2 shadow-warm-sm focus-within:border-[#BF4E30] transition">
+        <!-- Attachment / Plus icon -->
+        <button class="w-8 h-8 rounded-full flex items-center justify-center text-[#6B5D55] hover:text-[#2A211C] hover:bg-[#F5E6D8] transition shrink-0">
+          <span class="material-symbols-outlined text-[20px]">add_circle_outline</span>
+        </button>
+
+        <!-- Text Input -->
+        <input 
+          type="text" 
+          placeholder="Ask to adjust itinerary or add activities..." 
+          value=""
+          class="w-full text-[13px] text-[#2A211C] placeholder-[#998B82] bg-transparent focus:outline-none font-sans"
+        />
+
+        <!-- Voice button -->
+        <button class="w-8 h-8 rounded-full flex items-center justify-center text-[#6B5D55] hover:text-[#2A211C] hover:bg-[#F5E6D8] transition shrink-0">
+          <span class="material-symbols-outlined text-[19px]">mic</span>
+        </button>
+
+        <!-- Circular Rust Send Button (~10px / circular for send action as requested) -->
+        <button class="w-9 h-9 rounded-full bg-[#BF4E30] hover:bg-[#A84126] active:scale-95 text-white flex items-center justify-center shadow-float-btn transition shrink-0">
+          <span class="material-symbols-outlined text-[18px]">send</span>
+        </button>
+      </div>
+
+      <!-- Quick Context Micro-footer -->
+      <div class="flex items-center justify-center gap-1.5 mt-2 text-[10.5px] text-[#998B82]">
+        <span class="material-symbols-outlined text-[12px] text-[#2F4B3C]">shield</span>
+        <span>100% direct payouts to Himachal rural hosts</span>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

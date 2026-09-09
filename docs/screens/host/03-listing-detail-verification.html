@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bhraman Himachal • Host Portal — Himalayan Homestay Verification</title>
+<!-- Fonts: Newsreader for editorial serif titles, Inter for high-clarity UI/labels -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "primary-fixed": "#ffdbd2",
+            "inverse-on-surface": "#ffede5",
+            "surface-container-highest": "#f0dfd7",
+            "error": "#ba1a1a",
+            "surface": "#fff8f5",
+            "on-tertiary-fixed-variant": "#004e5d",
+            "on-secondary-fixed": "#042014",
+            "tertiary-fixed-dim": "#79d3ec",
+            "secondary": "#486554",
+            "on-background": "#221a15",
+            "primary-container": "#bf4e30",
+            "outline": "#8b716b",
+            "inverse-surface": "#382e29",
+            "on-error": "#ffffff",
+            "surface-container-lowest": "#ffffff",
+            "surface-dim": "#e7d7cf",
+            "on-primary-fixed-variant": "#852409",
+            "secondary-fixed-dim": "#aeceba",
+            "background": "#fff8f5",
+            "surface-tint": "#a53b1f",
+            "outline-variant": "#dec0b8",
+            "on-error-container": "#93000a",
+            "on-tertiary-container": "#eefaff",
+            "error-container": "#ffdad6",
+            "inverse-primary": "#ffb4a1",
+            "secondary-fixed": "#caead6",
+            "on-surface-variant": "#57423c",
+            "on-primary-container": "#fff6f4",
+            "primary": "#9e361a",
+            "tertiary-container": "#007d94",
+            "surface-container-low": "#fff1ea",
+            "on-secondary-container": "#4c6959",
+            "surface-variant": "#f0dfd7",
+            "tertiary": "#006275",
+            "primary-fixed-dim": "#ffb4a1",
+            "tertiary-fixed": "#afecff",
+            "on-tertiary-fixed": "#001f26",
+            "surface-container-high": "#f6e5dd",
+            "on-secondary": "#ffffff",
+            "surface-bright": "#fff8f5",
+            "surface-container": "#fceae2",
+            "on-primary": "#ffffff",
+            "secondary-container": "#c7e7d3",
+            "on-tertiary": "#ffffff",
+            "on-surface": "#221a15",
+            "on-secondary-fixed-variant": "#314d3e",
+            "on-primary-fixed": "#3c0800"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "2xl": "1rem",
+            "3xl": "1.5rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "pad-pill": "0.375rem 0.875rem",
+            "margin-mobile": "1rem",
+            "gutter-mobile": "0.75rem",
+            "stack-loose": "1.5rem",
+            "stack-base": "1rem",
+            "stack-section": "2.5rem",
+            "pad-input": "0.875rem 1rem",
+            "pad-card": "1.25rem",
+            "stack-tight": "0.5rem"
+          },
+          "fontFamily": {
+            "label-sm": ["Inter", "sans-serif"],
+            "headline-sm": ["Newsreader", "serif"],
+            "headline-md": ["Newsreader", "serif"],
+            "title-md": ["Inter", "sans-serif"],
+            "display-mobile": ["Newsreader", "serif"],
+            "display-lg": ["Newsreader", "serif"],
+            "body-md": ["Inter", "sans-serif"],
+            "body-lg": ["Inter", "sans-serif"],
+            "label-md": ["Inter", "sans-serif"],
+            "headline-lg": ["Newsreader", "serif"]
+          },
+          "fontSize": {
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600" }],
+            "headline-sm": ["20px", { "lineHeight": "26px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+            "headline-md": ["24px", { "lineHeight": "30px", "letterSpacing": "-0.015em", "fontWeight": "500" }],
+            "title-md": ["18px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "display-mobile": ["32px", { "lineHeight": "38px", "letterSpacing": "-0.025em", "fontWeight": "600" }],
+            "display-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.03em", "fontWeight": "600" }],
+            "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "label-md": ["13px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "headline-lg": ["28px", { "lineHeight": "34px", "letterSpacing": "-0.02em", "fontWeight": "500" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    body {
+      background-color: #F5E6D8;
+      color: #2A211C;
+    }
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 20px;
+      line-height: 1;
+      display: inline-block;
+      text-transform: none;
+      letter-spacing: normal;
+      word-wrap: normal;
+      white-space: nowrap;
+      direction: ltr;
+      -webkit-font-smoothing: antialiased;
+      vertical-align: middle;
+    }
+    .card-sunken {
+      background: #FFFFFF;
+      border: 1px solid #E5D5C5;
+      box-shadow: 0 4px 20px -2px rgba(42, 33, 28, 0.06), 0 2px 6px -1px rgba(42, 33, 28, 0.04);
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #dec0b8;
+      border-radius: 9999px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+  </style>
+</head>
+<body class="min-h-screen font-body-md text-body-md antialiased overflow-x-hidden">
+<!-- ========================================================================= -->
+<!-- LEFT FIXED SIDEBAR NAVIGATION (SHARED COMPONENT: SideNavBar)             -->
+<!-- ========================================================================= -->
+<aside class="fixed left-0 top-0 h-screen w-64 flex flex-col justify-between p-4 border-r border-outline-variant bg-surface-container-low dark:bg-surface-container-low z-30 select-none">
+<!-- Header / Brand -->
+<div>
+<div class="flex items-center gap-3 px-2 py-3 border-b border-outline-variant/60 pb-4 mb-4">
+<div class="w-10 h-10 rounded-xl bg-primary-container text-on-primary-container flex items-center justify-center font-serif text-lg font-bold shadow-sm ring-2 ring-primary/20">
+<span class="material-symbols-outlined text-white" data-icon="cabin">cabin</span>
+</div>
+<div class="flex flex-col">
+<span class="text-headline-sm font-headline-sm font-semibold text-primary dark:text-primary-container tracking-tight leading-snug">Bhraman Host</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant font-medium tracking-wide">Himachal Rural Chapter</span>
+</div>
+</div>
+<!-- Quick Add CTA -->
+<button class="w-full mb-5 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-primary text-on-primary font-label-md text-label-md font-semibold shadow-sm hover:bg-primary-container transition-all active:scale-[0.98]">
+<span class="material-symbols-outlined text-base" data-icon="add_circle">add_circle</span>
+        Add Homestay
+      </button>
+<!-- Main Navigation Tabs -->
+<nav aria-label="Host Management Navigation" class="space-y-1.5">
+<!-- Active Tab: Listings -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-secondary-container text-on-secondary-container dark:bg-secondary-container dark:text-on-secondary-container font-semibold transition-transform active:scale-[0.98]" href="#listings">
+<span class="material-symbols-outlined text-secondary" data-icon="cottage" style="font-variation-settings: 'FILL' 1;">cottage</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold flex-1">Listings</span>
+<span class="text-[11px] px-2 py-0.5 rounded-full bg-surface-container-highest text-on-surface-variant font-semibold">4</span>
+</a>
+<!-- Calendar & Stays -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all duration-150 active:scale-[0.98]" href="#calendar">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="calendar_month">calendar_month</span>
+<span class="font-label-md text-label-md">Calendar &amp; Stays</span>
+</a>
+<!-- Earnings & Payouts -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all duration-150 active:scale-[0.98]" href="#earnings">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="payments">payments</span>
+<span class="font-label-md text-label-md">Earnings &amp; Payouts</span>
+</a>
+<!-- Pricing Copilot -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all duration-150 active:scale-[0.98]" href="#pricing-copilot">
+<span class="material-symbols-outlined text-tertiary" data-icon="auto_awesome" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<span class="font-label-md text-label-md flex-1">Pricing Copilot</span>
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+</a>
+<!-- Community Desk Divider -->
+<div class="pt-4 pb-1">
+<p class="px-4 text-[10px] font-semibold text-outline tracking-wider uppercase font-label-sm">Community Desk</p>
+</div>
+<a class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all duration-150" href="#inquiries">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="forum">forum</span>
+<span class="font-label-md text-label-md flex-1">Guest Inquiries</span>
+<span class="text-[11px] px-1.5 py-0.2 rounded-full bg-primary-container text-on-primary font-bold">2</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all duration-150" href="#artisan-collective">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="palette">palette</span>
+<span class="font-label-md text-label-md">Artisan Collective</span>
+</a>
+</nav>
+</div>
+<!-- Sidebar Footer -->
+<div class="space-y-3 pt-4 border-t border-outline-variant/60">
+<div class="p-3 rounded-xl bg-white/75 border border-outline-variant/60 shadow-xs">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-secondary text-base" data-icon="verified_user" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+<span class="text-[11px] font-semibold text-secondary font-label-sm tracking-wide uppercase">Himachal Eco-Trust</span>
+</div>
+<p class="text-[11px] text-on-surface-variant leading-tight mb-2">Kathkuni conservation badge verified for season 2024–25.</p>
+<a class="text-[11px] text-primary font-semibold hover:underline flex items-center gap-1 font-label-sm" href="#">
+          Traveler View Guarantee <span class="material-symbols-outlined text-xs" data-icon="north_east">north_east</span>
+</a>
+</div>
+<nav class="space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container text-label-md font-label-md transition-colors" href="#community-care">
+<span class="material-symbols-outlined text-lg" data-icon="nature_people">nature_people</span>
+          Community Care
+        </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container text-label-md font-label-md transition-colors" href="#settings">
+<span class="material-symbols-outlined text-lg" data-icon="settings">settings</span>
+          Host Settings
+        </a>
+</nav>
+</div>
+</aside>
+<!-- ========================================================================= -->
+<!-- MAIN WORKSPACE CANVAS (Offset left by 64 = 16rem for fixed sidebar)       -->
+<!-- ========================================================================= -->
+<div class="pl-64 flex flex-col min-h-screen">
+<!-- ======================================================================= -->
+<!-- TOP NAVIGATION BAR (SHARED COMPONENT: TopNavBar)                       -->
+<!-- ======================================================================= -->
+<header class="sticky top-0 z-20 flex justify-between items-center w-full px-8 py-3 border-b border-outline-variant bg-surface dark:bg-surface shadow-sm backdrop-blur-md bg-opacity-95">
+<!-- Left: Breadcrumb / Identity -->
+<div class="flex items-center gap-4">
+<div class="flex items-baseline gap-2">
+<span class="text-headline-md font-headline-md font-bold text-primary tracking-tight">Bhraman Himachal</span>
+<span class="text-label-sm font-label-sm text-secondary uppercase tracking-widest bg-secondary-container px-2 py-0.5 rounded-full font-semibold">Host Portal</span>
+</div>
+<div class="h-4 w-px bg-outline-variant hidden lg:block"></div>
+<!-- Breadcrumbs -->
+<nav class="hidden lg:flex items-center gap-2 text-label-md font-label-md text-on-surface-variant">
+<a class="hover:text-primary transition-colors" href="#">Dashboard</a>
+<span class="material-symbols-outlined text-sm text-outline" data-icon="chevron_right">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">Listings</a>
+<span class="material-symbols-outlined text-sm text-outline" data-icon="chevron_right">chevron_right</span>
+<span class="text-on-surface font-semibold truncate max-w-xs">Himalayan Homestay (BHM-8842)</span>
+</nav>
+</div>
+<!-- Center-Right Navigation Links & Actions -->
+<div class="flex items-center gap-4">
+<div class="hidden xl:flex items-center gap-6 border-r border-outline-variant pr-6">
+<a class="text-primary font-semibold border-b-2 border-primary pb-1 font-label-md text-label-md" href="#tirthan">Tirthan Valley</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors duration-150 font-label-md text-label-md" href="#jibhi">Jibhi Cluster</a>
+</div>
+<!-- Trailing Actions -->
+<div class="flex items-center gap-2">
+<button class="p-2 rounded-xl text-on-surface-variant hover:bg-surface-container transition-colors duration-150" title="Notifications">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 rounded-xl text-on-surface-variant hover:bg-surface-container transition-colors duration-150" title="Help Desk">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+<a class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-secondary hover:bg-secondary-container/40 rounded-lg border border-secondary/30 transition-colors font-label-sm" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="visibility">visibility</span>
+            Preview Traveler View
+          </a>
+<button class="hidden sm:inline-flex items-center gap-1 px-3 py-1.5 text-xs font-semibold text-on-surface hover:bg-surface-container rounded-lg border border-outline-variant transition-colors font-label-sm">
+            Save Draft
+          </button>
+<button class="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-white bg-primary hover:bg-primary-container rounded-xl shadow-xs transition-all active:scale-[0.98] font-label-md">
+<span class="material-symbols-outlined text-sm" data-icon="publish">publish</span>
+            Publish Updates
+          </button>
+</div>
+<!-- Host Profile Pill -->
+<div class="flex items-center gap-3 pl-3 border-l border-outline-variant">
+<div class="relative">
+<img alt="Portrait of local Himachali host Padma Devi wearing traditional pattu" class="w-9 h-9 rounded-full object-cover ring-2 ring-primary/30" data-alt="Authentic close-up documentary portrait of Padma Devi, a respected Himachali village elder and homestay host, wearing traditional handwoven Pattu wool shawl, warm smiling gaze under gentle ambient daylight, rich earthy tones reflecting rural mountain hospitality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDs5NijvQ3PhLhaZGQKGYApc33X3inp5MAg0cCDZITzbNXs5izs-LxUylHIoASFEj241NDfC0uFt5r0p9gtai-ATGxCl4YGdQ_k3zanTV2PiRw-au9fFyunsKApxI2mVseZmZlmwgt8Ee5lL8-DrOT81jdOIUy8rSLunDmD3vmGfX8SzfD0RmVhU-bFtQHMK1-vui8gS6X0EwOgtLK9FK56RZZa4lKBjQZS0a-Bc4y-_bGAJalY7tBuRA_ZhD7izMk4oRI84yY-xYgP"/>
+<span class="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-secondary ring-2 ring-white" title="Verified Host"></span>
+</div>
+<div class="hidden 2xl:flex flex-col text-left">
+<span class="text-label-md font-label-md font-bold text-on-surface leading-tight">Meera Devi</span>
+<span class="text-[11px] text-on-surface-variant font-label-sm">Chehni Kothi Belt</span>
+</div>
+</div>
+</div>
+</header>
+<!-- ======================================================================= -->
+<!-- CONTENT CANVAS: EDITORIAL LISTING & VERIFICATION                       -->
+<!-- ======================================================================= -->
+<main class="flex-1 p-8 max-w-7xl w-full mx-auto space-y-6">
+<!-- ===================================================================== -->
+<!-- TOP HEADER TITLE BLOCK                                                -->
+<!-- ===================================================================== -->
+<section class="card-sunken rounded-2xl p-6 bg-white">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-5 border-b border-outline-variant/60">
+<div class="space-y-1.5">
+<div class="flex flex-wrap items-center gap-2">
+<span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-secondary/10 text-secondary border border-secondary/20 flex items-center gap-1 font-label-sm">
+<span class="material-symbols-outlined text-xs" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</span>
+                Kathkuni Timber Architecture
+              </span>
+<span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#F5E6D8] text-on-surface-variant border border-outline-variant font-label-sm">
+                Chehni Kothi Belt, Jibhi-Tirthan
+              </span>
+<span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#F5E6D8] text-on-surface-variant border border-outline-variant font-label-sm">
+                4 Rooms • Up to 8 Guests
+              </span>
+<!-- Amber Verification Badge -->
+<span class="px-3 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-900 border border-amber-300 flex items-center gap-1.5 animate-pulse font-label-sm">
+<span class="material-symbols-outlined text-xs text-amber-700" data-icon="warning" style="font-variation-settings: 'FILL' 1;">warning</span>
+                Needs Review
+              </span>
+</div>
+<h1 class="text-headline-lg font-headline-lg font-bold text-on-surface tracking-tight mt-1">
+              Himalayan Homestay, Tirthan Valley
+            </h1>
+<p class="text-label-md font-label-md text-on-surface-variant">
+              Listing ID: <span class="font-mono text-primary font-semibold">BHM-8842</span> • Supervised by Kullu Zila Community Tourism Board
+            </p>
+</div>
+<!-- Quick Stats Bar -->
+<div class="flex items-center gap-4 bg-surface-container-low px-4 py-3 rounded-xl border border-outline-variant/70 self-start lg:self-auto">
+<div class="text-left">
+<div class="flex items-center gap-1 text-primary font-bold font-label-md">
+<span class="material-symbols-outlined text-amber-600 text-base" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-on-surface">4.92</span>
+<span class="text-outline text-xs font-normal">(51 reviews)</span>
+</div>
+<span class="text-[11px] text-on-surface-variant font-label-sm">Guest Delight Index</span>
+</div>
+<div class="h-7 w-px bg-outline-variant"></div>
+<div class="text-left">
+<div class="font-bold text-on-surface font-label-md">22 stays</div>
+<span class="text-[11px] text-secondary font-label-sm font-semibold">Autumn Season</span>
+</div>
+<div class="h-7 w-px bg-outline-variant"></div>
+<div class="text-left">
+<div class="font-bold text-primary font-label-md">₹1,850</div>
+<span class="text-[11px] text-outline font-label-sm">Base / night</span>
+</div>
+</div>
+</div>
+<!-- Sub-bar with instant actions -->
+<div class="pt-4 flex flex-wrap items-center justify-between gap-3 text-label-md font-label-md text-on-surface-variant">
+<div class="flex items-center gap-4 text-xs">
+<span class="flex items-center gap-1 text-secondary font-semibold">
+<span class="material-symbols-outlined text-sm" data-icon="eco">eco</span> 100% Plastic Neutral Homestay
+            </span>
+<span class="text-outline-variant">•</span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm" data-icon="water_drop">water_drop</span> Natural Spring Water Verified
+            </span>
+<span class="text-outline-variant">•</span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm" data-icon="local_fire_department">local_fire_department</span> Bukhari Heating Inspected
+            </span>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-xs text-outline">Last saved by Meera Devi: Today at 08:42 AM</span>
+</div>
+</div>
+</section>
+<!-- ===================================================================== -->
+<!-- PROMINENT VERIFICATION ALERT CARD (CRITICAL USER MANDATE)             -->
+<!-- ===================================================================== -->
+<section class="rounded-2xl border-2 border-amber-400 bg-amber-50/90 p-5 shadow-sm">
+<div class="flex flex-col md:flex-row items-start gap-4">
+<div class="w-11 h-11 rounded-xl bg-amber-200 text-amber-900 flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-2xl text-amber-800" data-icon="rule" style="font-variation-settings: 'FILL' 1;">rule</span>
+</div>
+<div class="flex-1 space-y-2">
+<div class="flex flex-wrap items-center justify-between gap-2">
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded text-[11px] font-bold bg-amber-300 text-amber-950 uppercase tracking-wider font-label-sm">Resolution Required</span>
+<h2 class="text-title-md font-title-md font-bold text-amber-950">
+                  Verification Alert • Contradictory Amenities Detected
+                </h2>
+</div>
+<span class="text-xs font-semibold text-amber-800">Triggered by Himachal Rural Tourism AI Audit</span>
+</div>
+<p class="text-body-md font-body-md text-amber-950 leading-relaxed">
+              Needs review: your listing description highlights <strong>"no wifi — digital detox sanctuary"</strong> in the English overview, but your amenities section lists <strong>"high-speed optical fiber wifi available"</strong>. Please confirm internet availability to protect remote eco-travelers and workationers from false expectations.
+            </p>
+<div class="bg-white/80 rounded-xl p-3 border border-amber-200 text-xs text-amber-900 flex items-start gap-2">
+<span class="material-symbols-outlined text-sm text-amber-700 mt-0.5 shrink-0" data-icon="shield">shield</span>
+<span><strong>Himachal Rural Tourism Guidelines (§4.2):</strong> High-altitude remote properties must explicitly disclose true connectivity. Discrepancies cause safety dispatch issues during seasonal landslides and snowstorms.</span>
+</div>
+<!-- Resolution CTA row -->
+<div class="pt-2 flex flex-wrap items-center gap-3">
+<button class="px-4 py-2 rounded-xl bg-[#BF4E30] hover:bg-[#A54127] text-white font-label-md text-label-md font-bold shadow-xs transition-all active:scale-[0.98] flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm" data-icon="check_circle">check_circle</span>
+                Keep "Digital Detox Sanctuary (No Wifi)"
+              </button>
+<button class="px-4 py-2 rounded-xl bg-white border border-amber-400 text-amber-950 hover:bg-amber-100 font-label-md text-label-md font-semibold transition-colors flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm" data-icon="wifi">wifi</span>
+                Confirm 100 Mbps BSNL Fiber Wifi
+              </button>
+<button class="px-3 py-2 rounded-xl text-xs font-semibold text-amber-800 hover:text-amber-950 underline underline-offset-4 font-label-sm">
+                Edit Amenities Checklist Directly
+              </button>
+</div>
+</div>
+</div>
+</section>
+<!-- ===================================================================== -->
+<!-- PHOTO GALLERY STRIP / CURATED VISUALS                                 -->
+<!-- ===================================================================== -->
+<section class="card-sunken rounded-2xl p-6 bg-white space-y-4">
+<div class="flex items-center justify-between pb-2 border-b border-outline-variant/60">
+<div>
+<h3 class="text-headline-sm font-headline-sm font-bold text-on-surface">Homestay Visual Portfolio</h3>
+<p class="text-body-md font-body-md text-on-surface-variant">Verified high-definition mountain documentation with authentic architectural and culinary captures.</p>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-3 py-1.5 rounded-lg border border-outline-variant text-xs font-semibold text-on-surface hover:bg-surface-container transition-colors flex items-center gap-1 font-label-sm">
+<span class="material-symbols-outlined text-sm" data-icon="swap_vert">swap_vert</span>
+              Reorder Photos
+            </button>
+<button class="px-3.5 py-1.5 rounded-lg bg-secondary text-white text-xs font-semibold hover:bg-secondary/90 transition-colors flex items-center gap-1 font-label-sm shadow-xs">
+<span class="material-symbols-outlined text-sm" data-icon="add_photo_alternate">add_photo_alternate</span>
+              + Upload High-Res (Auto 2G Optimized)
+            </button>
+</div>
+</div>
+<!-- 3-Column Visual Grid featuring user photos -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-1">
+<!-- Image 1: Exterior Sanctuary -->
+<div class="group relative rounded-xl overflow-hidden border border-outline-variant/80 bg-surface-container shadow-xs">
+<div class="aspect-[4/3] w-full overflow-hidden bg-surface-dim">
+<img alt="Kathkuni cedarwood sanctuary in apple orchard" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" data-alt="Spectacular two-story traditional Himachali Kathkuni timber and hand-cut stone homestay nestled among lush green apple orchards with vibrant red apples. Surrounding slate-roof mountain house features ornate wooden hand-carved balconies adorned with marigold garlands. In the background, majestic snow-capped Himalayan mountain ridges rise under golden sunset skies, with stone pathways and flowerbeds in foreground." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqmNfLDbehalMjZ5AnJl7oFQV-T8CvWehe95VHlHAfjNZlkFls87pGC61wi6mvAtp6q1OG1IkEI8yUy12kLZy26jdyz2pVq6_rNYOgEvDpeSxjukf96BXWRdU4319Des2_9y_kFVteC24Zptma5V9zAfbXIFsaPbNWIR6ZaoPaKqncjFRAtuGYOeK9Dzkm6Oqoj-9crKOiIooy3ITqijjoDiQe8jH5_-sJ4QYAv9ljZa2gM-_gpuv1xrQSeqit2qmJlUJHnjZvxF9n"/>
+</div>
+<div class="absolute top-3 left-3 bg-black/60 backdrop-blur-sm text-white text-[11px] font-semibold px-2.5 py-1 rounded-full flex items-center gap-1 font-label-sm">
+<span class="material-symbols-outlined text-xs text-amber-400" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span> Hero Cover
+            </div>
+<div class="p-3 bg-white border-t border-outline-variant/60">
+<div class="flex items-center justify-between">
+<span class="text-xs font-semibold text-on-surface font-label-md">Exterior Architecture &amp; Orchard</span>
+<span class="text-[11px] text-secondary font-bold font-label-sm">Verified 4K</span>
+</div>
+<p class="text-[11px] text-on-surface-variant mt-0.5">Kathkuni slate masonry, Chehni ridge view</p>
+</div>
+</div>
+<!-- Image 2: Dining Balcony Feast -->
+<div class="group relative rounded-xl overflow-hidden border border-outline-variant/80 bg-surface-container shadow-xs">
+<div class="aspect-[4/3] w-full overflow-hidden bg-surface-dim">
+<img alt="Pahadi Dham festive thali on balcony" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" data-alt="Sumptuous traditional Pahadi Dham festive thali meal served in ornate brass bowls and hammered brass platters on a rustic sunlit wooden balcony table. Steaming bhaturu breads, spiced madra, slow-cooked red rice, and mountain chutneys overlook terraced green Himalayan valleys, gentle winding rivers, and snow-dusted ridges. Two smiling local Himachali women in traditional attire sit comfortably in background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2yWXhNRtoXnSiAz4QUeHoACIdgoRd3RrG4-EVCqyjMqjnU5PLucESZv45D4KmyjV84Ow6AyrB5LTP4SITOW5xP4N2pFcyAMihNFFqkDS-KuqRXQKMyEBG97kjzIzT0tdVfqq7IDrqrmb220y_ECpcO1v4mdK969mY8fgv6CPO7Mh5OfSAAZlyo2s-_4ZIo9y3Rhf_Nl4Znf6P9YnhKJZ5N7ms0ku4UVgVuSrPRO6jS4Eu2qNrExxU2tE0nOCq5274mdbpHFZOr5Rh"/>
+</div>
+<div class="absolute top-3 left-3 bg-black/60 backdrop-blur-sm text-white text-[11px] font-semibold px-2.5 py-1 rounded-full flex items-center gap-1 font-label-sm">
+<span class="material-symbols-outlined text-xs text-secondary-container" data-icon="restaurant">restaurant</span> Dining Experience
+            </div>
+<div class="p-3 bg-white border-t border-outline-variant/60">
+<div class="flex items-center justify-between">
+<span class="text-xs font-semibold text-on-surface font-label-md">Traditional Balcony Dham Feast</span>
+<span class="text-[11px] text-secondary font-bold font-label-sm">Verified</span>
+</div>
+<p class="text-[11px] text-on-surface-variant mt-0.5">Brass thali service, terraced farm perspective</p>
+</div>
+</div>
+<!-- Image 3: Handloom Workshop -->
+<div class="group relative rounded-xl overflow-hidden border border-outline-variant/80 bg-surface-container shadow-xs">
+<div class="aspect-[4/3] w-full overflow-hidden bg-surface-dim">
+<img alt="Patti handloom weaving in wooden workshop" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" data-alt="Intimate warm indoor artisan workshop scene of a senior Himachali woman weaver joyfully operating an authentic heavy wooden handloom. Richly colored wool yarns in red, yellow, and deep teal hang in rustic wooden alcoves in the background. She weaves an intricate geometric Kullu pattu shawl with natural mountain daylight streaming through wooden lattice windows." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVr03LPmYjReUipaHqo2t7CZ6Tflb60ZZL-FoLaAY9o_ierxPTNNFRw2RNtnqEjbZD3wrgv8surv956jCdI2dz-BZKKRG1CPSEnYCseKU2k-Swm-FKhdYJTOGytozS-KP3X5LzqRvJFNeNf7kUEAo7p4Ud549LiiGfQS6WKDTGJIxI4AJniL31mM_rrTqF4oEMAysNowLRZtezJ_gUB0vjlVJhgy3JEkqhKGDXr4iL1E2zDEa9a95xxvXe6aykL5FKqo07NHQ_iTRg"/>
+</div>
+<div class="absolute top-3 left-3 bg-black/60 backdrop-blur-sm text-white text-[11px] font-semibold px-2.5 py-1 rounded-full flex items-center gap-1 font-label-sm">
+<span class="material-symbols-outlined text-xs text-secondary-container" data-icon="brush">brush</span> Cultural Workshop
+            </div>
+<div class="p-3 bg-white border-t border-outline-variant/60">
+<div class="flex items-center justify-between">
+<span class="text-xs font-semibold text-on-surface font-label-md">Patti &amp; Shawl Handloom Room</span>
+<span class="text-[11px] text-secondary font-bold font-label-sm">Verified</span>
+</div>
+<p class="text-[11px] text-on-surface-variant mt-0.5">Meera Devi guild workshop, traditional shuttle</p>
+</div>
+</div>
+</div>
+</section>
+<!-- ===================================================================== -->
+<!-- TWO-COLUMN EDITORIAL FORM LAYOUT                                      -->
+<!-- ===================================================================== -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- =================================================================== -->
+<!-- COLUMN 1: LEFT 60% (7/12 COLS) — NARRATIVE, ROOMS, ECO HIGHLIGHTS   -->
+<!-- =================================================================== -->
+<div class="lg:col-span-7 space-y-6">
+<!-- Editable Title Card -->
+<div class="card-sunken rounded-2xl p-6 bg-white space-y-4">
+<div class="flex items-center justify-between">
+<label class="text-title-md font-title-md font-bold text-on-surface" for="listing-title">Listing Headline</label>
+<span class="text-xs text-outline font-label-sm">Appears in global search results</span>
+</div>
+<input class="w-full rounded-xl border border-outline-variant px-4 py-2.5 text-headline-sm font-headline-sm font-semibold text-on-surface focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 transition-all" id="listing-title" type="text" value="Himalayan Homestay, Tirthan Valley"/>
+<p class="text-xs text-on-surface-variant flex items-center gap-1.5 font-label-sm">
+<span class="material-symbols-outlined text-sm text-secondary" data-icon="check_circle">check_circle</span>
+              Geo-verified: Gushaini — Chehni Road, Kullu District, HP (PIN: 175123)
+            </p>
+</div>
+<!-- Dual-Language Editorial Narrative -->
+<div class="card-sunken rounded-2xl p-6 bg-white space-y-5">
+<div class="flex items-center justify-between border-b border-outline-variant/60 pb-3">
+<div>
+<h3 class="text-title-md font-title-md font-bold text-on-surface">Dual-Language Listing Narrative</h3>
+<p class="text-body-md font-body-md text-on-surface-variant">Parallel editorial storytelling for urban domestic and international slow travelers.</p>
+</div>
+<span class="text-xs bg-secondary/10 text-secondary font-semibold px-2.5 py-1 rounded-full font-label-sm">Bilingual Verified</span>
+</div>
+<!-- English Narrative -->
+<div class="space-y-2">
+<div class="flex items-center justify-between">
+<span class="text-xs font-bold text-on-surface uppercase tracking-wider font-label-sm flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm text-primary" data-icon="translate">translate</span> English Description
+                </span>
+<span class="text-[11px] text-outline font-label-sm">348 characters</span>
+</div>
+<textarea class="w-full rounded-xl border border-outline-variant p-3.5 text-body-md font-body-md text-on-surface focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 transition-all leading-relaxed bg-[#FFF8F5]" rows="4">Handcrafted cedarwood and dry-stone masonry sanctuary nestled among heritage apple orchards overlooking the pristine Tirthan river. Cozy bukhari wood-stoves keep the winter chill at bay while Meera Devi serves authentic slow-cooked Kangri Dham feasts. Step out directly onto Great Himalayan National Park eco-trails...</textarea>
+</div>
+<!-- Hindi (Devanagari) Narrative -->
+<div class="space-y-2 pt-2">
+<div class="flex items-center justify-between">
+<span class="text-xs font-bold text-on-surface uppercase tracking-wider font-label-sm flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm text-secondary" data-icon="language">language</span> हिंदी विवरण (Devanagari Authentic)
+                </span>
+<span class="text-[11px] text-outline font-label-sm">देओदार और काठकुणी शिल्प</span>
+</div>
+<textarea class="w-full rounded-xl border border-outline-variant p-3.5 text-body-md font-body-md text-on-surface focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 transition-all leading-relaxed bg-[#FFF8F5]" rows="4">तीर्थन घाटी के शांत देवदार जंगलों और सेब के बगीचों के बीच पारंपरिक काठकुणी शैली में निर्मित घर। कड़ाके की ठंड में बुखारी की गर्माहट और मीरा देवी के हाथ से बना पारंपरिक हिमाचली धाम। ग्रेट हिमालयन नेशनल पार्क के ट्रैकिंग ट्रेल्स के बिल्कुल समीप...</textarea>
+</div>
+<div class="p-3 bg-surface-container-low rounded-xl border border-outline-variant/60 flex items-center justify-between text-xs">
+<span class="text-on-surface-variant font-label-sm">Need help with Pahadi folk dialect translation?</span>
+<button class="text-primary font-bold hover:underline font-label-sm">Request Dialect Review</button>
+</div>
+</div>
+<!-- Room Architecture & Spatial Blueprint -->
+<div class="card-sunken rounded-2xl p-6 bg-white space-y-4">
+<div class="flex items-center justify-between border-b border-outline-variant/60 pb-3">
+<div>
+<h3 class="text-title-md font-title-md font-bold text-on-surface">Living Quarters &amp; Kathkuni Architecture</h3>
+<p class="text-body-md font-body-md text-on-surface-variant">Verified spatial configuration and indigenous architectural safety.</p>
+</div>
+<span class="text-xs font-bold text-secondary font-label-sm bg-secondary-container px-2.5 py-1 rounded-full">Earthquake-Resilient</span>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+<div class="p-3 rounded-xl bg-surface-container-low border border-outline-variant/80 text-center">
+<span class="material-symbols-outlined text-primary text-2xl mb-1" data-icon="bed">bed</span>
+<div class="text-sm font-bold text-on-surface font-label-md">4 Rooms</div>
+<div class="text-[11px] text-on-surface-variant font-label-sm">Cedarwood floors</div>
+</div>
+<div class="p-3 rounded-xl bg-surface-container-low border border-outline-variant/80 text-center">
+<span class="material-symbols-outlined text-secondary text-2xl mb-1" data-icon="bathtub">bathtub</span>
+<div class="text-sm font-bold text-on-surface font-label-md">4 Attached</div>
+<div class="text-[11px] text-on-surface-variant font-label-sm">Solar geysers</div>
+</div>
+<div class="p-3 rounded-xl bg-surface-container-low border border-outline-variant/80 text-center">
+<span class="material-symbols-outlined text-amber-700 text-2xl mb-1" data-icon="fireplace">fireplace</span>
+<div class="text-sm font-bold text-on-surface font-label-md">Traditional</div>
+<div class="text-[11px] text-on-surface-variant font-label-sm">Bukhari stove</div>
+</div>
+<div class="p-3 rounded-xl bg-surface-container-low border border-outline-variant/80 text-center">
+<span class="material-symbols-outlined text-tertiary text-2xl mb-1" data-icon="water">water</span>
+<div class="text-sm font-bold text-on-surface font-label-md">Spring Fed</div>
+<div class="text-[11px] text-on-surface-variant font-label-sm">Gravity mineral line</div>
+</div>
+</div>
+<!-- Eco-Heritage Highlights Tags -->
+<div class="pt-3 border-t border-outline-variant/60">
+<span class="text-xs font-bold text-on-surface uppercase tracking-wider font-label-sm block mb-2">Verified Eco-Heritage Highlights</span>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 rounded-full text-xs font-semibold bg-secondary/10 text-secondary border border-secondary/30 flex items-center gap-1 font-label-sm">
+<span class="material-symbols-outlined text-xs" data-icon="forest">forest</span> 100% Kathkuni Architecture
+                </span>
+<span class="px-3 py-1 rounded-full text-xs font-semibold bg-secondary/10 text-secondary border border-secondary/30 flex items-center gap-1 font-label-sm">
+<span class="material-symbols-outlined text-xs" data-icon="potted_plant">potted_plant</span> Organic Kitchen Garden
+                </span>
+<span class="px-3 py-1 rounded-full text-xs font-semibold bg-secondary/10 text-secondary border border-secondary/30 flex items-center gap-1 font-label-sm">
+<span class="material-symbols-outlined text-xs" data-icon="kayaking">kayaking</span> Direct Trout River Access
+                </span>
+<span class="px-3 py-1 rounded-full text-xs font-semibold bg-secondary/10 text-secondary border border-secondary/30 flex items-center gap-1 font-label-sm">
+<span class="material-symbols-outlined text-xs" data-icon="recycling">recycling</span> Plastic-Free Zone
+                </span>
+</div>
+</div>
+</div>
+</div>
+<!-- =================================================================== -->
+<!-- COLUMN 2: RIGHT 40% (5/12 COLS) — PRICING ENGINE, BOOKINGS, HOSTS   -->
+<!-- =================================================================== -->
+<div class="lg:col-span-5 space-y-6">
+<!-- Pricing & Dynamic Copilot Engine -->
+<div class="card-sunken rounded-2xl p-6 bg-white space-y-4">
+<div class="flex items-center justify-between border-b border-outline-variant/60 pb-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="currency_rupee">currency_rupee</span>
+<h3 class="text-title-md font-title-md font-bold text-on-surface">Pricing &amp; Season Engine</h3>
+</div>
+<span class="text-[11px] font-bold text-tertiary bg-tertiary/10 px-2 py-0.5 rounded-full font-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-xs" data-icon="auto_awesome">auto_awesome</span> Copilot Active
+              </span>
+</div>
+<!-- Base Price -->
+<div class="space-y-1.5">
+<label class="text-xs font-bold text-on-surface uppercase tracking-wider font-label-sm" for="base-price">Base Price per Room / Night</label>
+<div class="relative">
+<span class="absolute left-3.5 top-2.5 text-on-surface font-bold">₹</span>
+<input class="w-full rounded-xl border border-outline-variant pl-8 pr-4 py-2 text-title-md font-title-md font-bold text-on-surface focus:border-primary-container focus:ring-2 focus:ring-primary-container/20" id="base-price" type="number" value="1850"/>
+<span class="absolute right-3.5 top-2.5 text-xs text-outline font-label-sm">INR / night</span>
+</div>
+</div>
+<!-- Copilot Surge Recommendation Pill Box -->
+<div class="p-3.5 rounded-xl bg-[#F4F9F6] border border-secondary/30 space-y-2">
+<div class="flex items-center justify-between">
+<span class="text-xs font-bold text-secondary font-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-xs" data-icon="trending_up">trending_up</span> Autumn Foliage Surge Rec
+                </span>
+<span class="text-xs font-bold text-secondary font-label-sm">+18% booking velocity</span>
+</div>
+<p class="text-xs text-on-surface-variant leading-relaxed">
+                Copilot recommends <strong>₹2,100 / night</strong> for coming weekends due to Kullu Dussehra &amp; apple harvest arrivals in Jibhi.
+              </p>
+<button class="w-full py-2 px-3 rounded-lg bg-secondary text-white text-xs font-bold font-label-md hover:bg-secondary/90 transition-all shadow-xs flex items-center justify-center gap-1.5">
+<span class="material-symbols-outlined text-xs" data-icon="auto_fix_high">auto_fix_high</span>
+                Apply Copilot Rate (₹2,100)
+              </button>
+</div>
+<!-- Meal Plan Add-ons -->
+<div class="pt-2 border-t border-outline-variant/60 space-y-2.5">
+<span class="text-xs font-bold text-on-surface uppercase tracking-wider font-label-sm block">Artisanal Pahadi Meal Add-ons</span>
+<div class="flex items-center justify-between p-2.5 rounded-lg bg-surface-container-low border border-outline-variant/60">
+<div class="flex flex-col">
+<span class="text-xs font-bold text-on-surface font-label-md">Himachali Dham Dinner</span>
+<span class="text-[11px] text-on-surface-variant font-label-sm">Slow-cooked brass vessel feast</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-xs font-bold text-primary font-label-md">₹350 / person</span>
+<input checked="" class="rounded text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
+</div>
+</div>
+<div class="flex items-center justify-between p-2.5 rounded-lg bg-surface-container-low border border-outline-variant/60">
+<div class="flex flex-col">
+<span class="text-xs font-bold text-on-surface font-label-md">Fresh Tirthan Trout Breakfast</span>
+<span class="text-[11px] text-on-surface-variant font-label-sm">Local herb marinated caught daily</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-xs font-bold text-primary font-label-md">₹250 / person</span>
+<input checked="" class="rounded text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
+</div>
+</div>
+</div>
+</div>
+<!-- Availability & Booking Controls -->
+<div class="card-sunken rounded-2xl p-6 bg-white space-y-4">
+<h3 class="text-title-md font-title-md font-bold text-on-surface border-b border-outline-variant/60 pb-3">Availability Controls</h3>
+<!-- Instant Booking Toggle -->
+<div class="flex items-center justify-between">
+<div>
+<div class="text-xs font-bold text-on-surface font-label-md">Instant Booking</div>
+<p class="text-[11px] text-on-surface-variant font-label-sm">Allows verified ID travelers to book without pre-approval</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-outline-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-secondary"></div>
+</label>
+</div>
+<!-- Winter Pruning Closure Toggle -->
+<div class="flex items-center justify-between pt-2 border-t border-outline-variant/60">
+<div>
+<div class="text-xs font-bold text-on-surface font-label-md">Seasonal Winter Closure</div>
+<p class="text-[11px] text-on-surface-variant font-label-sm">Scheduled: Nov 28 – Dec 15 for orchard pruning</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-outline-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="pt-2">
+<label class="text-xs font-bold text-on-surface uppercase tracking-wider font-label-sm block mb-1">Minimum Stay Rule</label>
+<select class="w-full rounded-xl border border-outline-variant px-3 py-2 text-xs font-label-md text-on-surface focus:border-primary">
+<option selected="">2 nights minimum (Recommended for eco-travel pace)</option>
+<option>1 night minimum</option>
+<option>3 nights minimum (Peak holiday weeks)</option>
+</select>
+</div>
+</div>
+<!-- Host & Local Guide Assignment -->
+<div class="card-sunken rounded-2xl p-6 bg-white space-y-4">
+<h3 class="text-title-md font-title-md font-bold text-on-surface border-b border-outline-variant/60 pb-3">Host &amp; Local Lineage</h3>
+<!-- Primary Host -->
+<div class="flex items-center gap-3 p-3 rounded-xl bg-surface-container-low border border-outline-variant/70">
+<div class="w-12 h-12 rounded-full bg-primary/20 text-primary flex items-center justify-center font-bold text-lg shrink-0">
+                MD
+              </div>
+<div class="flex-1">
+<div class="flex items-center gap-1">
+<span class="text-xs font-bold text-on-surface font-label-md">Meera Devi</span>
+<span class="material-symbols-outlined text-secondary text-sm" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+<p class="text-[11px] text-on-surface-variant font-label-sm">Primary Host • Kullu Handloom Guild &amp; Village Elder</p>
+<span class="text-[10px] text-secondary font-semibold font-label-sm">Spoken: Kullvi, Hindi, Basic English</span>
+</div>
+</div>
+<!-- Co-host / Angling Guide -->
+<div class="flex items-center gap-3 p-3 rounded-xl bg-surface-container-low border border-outline-variant/70">
+<div class="w-12 h-12 rounded-full bg-secondary/20 text-secondary flex items-center justify-center font-bold text-lg shrink-0">
+                RT
+              </div>
+<div class="flex-1">
+<div class="flex items-center gap-1">
+<span class="text-xs font-bold text-on-surface font-label-md">Roshan Thakur</span>
+<span class="material-symbols-outlined text-secondary text-sm" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+<p class="text-[11px] text-on-surface-variant font-label-sm">Co-Host &amp; Angling Guide • Certified GHNP Valley Guide</p>
+<span class="text-[10px] text-secondary font-semibold font-label-sm">Spoken: English, Hindi, Punjabi</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- ===================================================================== -->
+<!-- BOTTOM PERSISTENT ACTION / VERIFICATION DOCK                          -->
+<!-- ===================================================================== -->
+<section class="card-sunken rounded-2xl p-5 bg-white flex flex-col sm:flex-row items-center justify-between gap-4 sticky bottom-4 shadow-xl z-10 border-2 border-outline-variant/80">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-amber-100 text-amber-900 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-xl text-amber-800" data-icon="pending_actions">pending_actions</span>
+</div>
+<div>
+<h4 class="text-sm font-bold text-on-surface font-label-md">1 Verification Flag Awaiting Confirmation</h4>
+<p class="text-xs text-on-surface-variant font-label-sm">Resolve wifi discrepancy to obtain "Verified Rural Sanctuary" traveler stamp.</p>
+</div>
+</div>
+<div class="flex items-center gap-3 w-full sm:w-auto justify-end">
+<button class="px-4 py-2.5 rounded-xl border border-outline text-xs font-semibold text-on-surface hover:bg-surface-container transition-colors font-label-md">
+            Discard Changes
+          </button>
+<button class="px-6 py-2.5 rounded-xl bg-[#BF4E30] hover:bg-[#A54127] text-white text-xs font-bold shadow-sm transition-all active:scale-[0.98] flex items-center gap-1.5 font-label-md">
+<span class="material-symbols-outlined text-sm" data-icon="verified">verified</span>
+            Resolve Flag &amp; Update Listing
+          </button>
+</div>
+</section>
+</main>
+</div>
+</body></html>

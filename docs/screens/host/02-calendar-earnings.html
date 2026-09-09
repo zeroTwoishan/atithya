@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Host Dashboard - Calendar &amp; Earnings | Bhraman Himachal</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "tertiary": "#006275",
+            "tertiary-fixed": "#afecff",
+            "on-surface": "#221a15",
+            "inverse-surface": "#382e29",
+            "tertiary-fixed-dim": "#79d3ec",
+            "surface-container-high": "#f6e5dd",
+            "tertiary-container": "#007d94",
+            "secondary-fixed-dim": "#aeceba",
+            "secondary": "#486554",
+            "on-surface-variant": "#57423c",
+            "secondary-fixed": "#caead6",
+            "surface-dim": "#e7d7cf",
+            "secondary-container": "#c7e7d3",
+            "inverse-primary": "#ffb4a1",
+            "on-tertiary-container": "#eefaff",
+            "error": "#ba1a1a",
+            "surface-tint": "#a53b1f",
+            "on-primary-fixed-variant": "#852409",
+            "surface-variant": "#f0dfd7",
+            "surface-container": "#fceae2",
+            "surface": "#fff8f5",
+            "primary-fixed-dim": "#ffb4a1",
+            "inverse-on-surface": "#ffede5",
+            "on-secondary-container": "#4c6959",
+            "on-secondary-fixed-variant": "#314d3e",
+            "surface-container-highest": "#f0dfd7",
+            "on-tertiary-fixed-variant": "#004e5d",
+            "on-tertiary-fixed": "#001f26",
+            "on-primary": "#ffffff",
+            "error-container": "#ffdad6",
+            "primary-fixed": "#ffdbd2",
+            "on-tertiary": "#ffffff",
+            "on-error-container": "#93000a",
+            "background": "#fff8f5",
+            "primary-container": "#bf4e30",
+            "on-primary-fixed": "#3c0800",
+            "on-background": "#221a15",
+            "outline-variant": "#dec0b8",
+            "primary": "#9e361a",
+            "on-secondary-fixed": "#042014",
+            "outline": "#8b716b",
+            "on-primary-container": "#fff6f4",
+            "on-error": "#ffffff",
+            "on-secondary": "#ffffff",
+            "surface-container-lowest": "#ffffff",
+            "surface-container-low": "#fff1ea",
+            "surface-bright": "#fff8f5"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "stack-loose": "1.5rem",
+            "stack-base": "1rem",
+            "stack-section": "2.5rem",
+            "gutter-mobile": "0.75rem",
+            "stack-tight": "0.5rem",
+            "margin-mobile": "1rem",
+            "pad-input": "0.875rem 1rem",
+            "pad-card": "1.25rem",
+            "pad-pill": "0.375rem 0.875rem"
+          },
+          "fontFamily": {
+            "title-md": ["Inter"],
+            "body-lg": ["Inter"],
+            "headline-lg": ["Newsreader"],
+            "headline-md": ["Newsreader"],
+            "label-md": ["Inter"],
+            "headline-sm": ["Newsreader"],
+            "label-sm": ["Inter"],
+            "display-mobile": ["Newsreader"],
+            "display-lg": ["Newsreader"],
+            "body-md": ["Inter"]
+          },
+          "fontSize": {
+            "title-md": ["18px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "headline-lg": ["28px", { "lineHeight": "34px", "letterSpacing": "-0.02em", "fontWeight": "500" }],
+            "headline-md": ["24px", { "lineHeight": "30px", "letterSpacing": "-0.015em", "fontWeight": "500" }],
+            "label-md": ["13px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "headline-sm": ["20px", { "lineHeight": "26px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600" }],
+            "display-mobile": ["32px", { "lineHeight": "38px", "letterSpacing": "-0.025em", "fontWeight": "600" }],
+            "display-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.03em", "fontWeight": "600" }],
+            "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .tabular-numbers {
+      font-variant-numeric: tabular-nums;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface antialiased min-h-screen flex flex-col font-body-md selection:bg-primary-container selection:text-on-primary-container">
+<!-- ================= TOP APP BAR (Shared Component: TopNavBar) ================= -->
+<header class="bg-surface border-b border-outline-variant shadow-sm sticky top-0 z-40">
+<div class="flex justify-between items-center w-full px-6 py-3">
+<!-- Left: Logo & Search Bar -->
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-xl bg-primary-container text-on-primary-container flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">cottage</span>
+</div>
+<div>
+<div class="text-headline-sm font-headline-sm text-primary leading-tight font-bold">Bhraman Himachal</div>
+<div class="text-label-sm font-label-sm text-on-surface-variant tracking-wider">HIMACHAL RURAL CHAPTER</div>
+</div>
+</div>
+<!-- Search Bar (on_left as specified in JSON) -->
+<div class="relative hidden lg:block w-72">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-outline text-lg" data-icon="search">search</span>
+<input class="w-full bg-surface-container-lowest text-on-surface placeholder:text-outline border border-outline-variant rounded-xl pl-9 pr-3 py-2 text-label-md font-label-md focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-all duration-150" placeholder="Search stays, guest arrivals, dates..." type="text"/>
+</div>
+</div>
+<!-- Center: Navigation Links from JSON -->
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-on-surface-variant hover:text-on-surface text-label-md font-label-md transition-colors duration-150" href="#tirthan">Tirthan Valley</a>
+<a class="text-on-surface-variant hover:text-on-surface text-label-md font-label-md transition-colors duration-150" href="#jibhi">Jibhi Cluster</a>
+<div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary-container text-on-secondary-container text-label-sm font-label-sm border border-secondary/20">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span>Peak Autumn Season</span>
+</div>
+</nav>
+<!-- Right Actions & Host Profile -->
+<div class="flex items-center gap-3">
+<button class="hidden sm:inline-flex items-center gap-2 bg-primary-container text-on-primary-container hover:bg-primary px-3.5 py-2 rounded-xl text-label-md font-label-md shadow-sm transition-all duration-150 active:scale-[0.98]">
+<span class="material-symbols-outlined text-base">add</span>
+<span>Add Blockout / Stay</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container rounded-xl transition-colors duration-150 relative" title="Notifications">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-primary-container ring-2 ring-surface"></span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container rounded-xl transition-colors duration-150" title="Help Desk">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+<div class="h-6 w-px bg-outline-variant mx-1"></div>
+<!-- Profile badge -->
+<div class="flex items-center gap-2.5 pl-1 cursor-pointer">
+<img alt="Portrait of local Himachali host Padma Devi wearing traditional pattu" class="w-9 h-9 rounded-full object-cover border border-outline-variant shadow-sm" data-alt="Authentic portrait photograph of Meera Devi, an experienced local Himachali host wearing a soft woolen Himalayan pattu shawl in deep terracotta and moss colors with a traditional silver pin, with gentle mountain sunlight highlighting her welcoming expression in Chehni Kothi village." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0vjDTsd8AE2i8gOCA30oEPgLIqe0SxLeUqqnKU10ulX68HUt8VLRaczuYLb83ThjjK6eG19lUeTwqA_H6ZYrw8aYQOjZAwEGDTtN8kwm28hXAqoULKmbPTGUcFzle_kdlHf2Lw3bdPz4MVXC3ul5LEnxa1_-nasen8XHjqjbhaPUu4TFGLNVgBz9tQnlQNolKSfLgi2GE5Lm7YZvnuYInVEpY2NayPzY1ijApd966qYS8BVSYprjLGApxzYOkXzPs1NE3cGMUmCHH"/>
+<div class="hidden xl:block text-left">
+<div class="text-label-md font-label-md text-on-surface font-semibold leading-tight">Meera Devi</div>
+<div class="text-label-sm font-label-sm text-secondary font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span>Chehni Kothi Belt</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- ================= MAIN LAYOUT WITH FIXED DRAWER SIDEBAR ================= -->
+<div class="flex flex-1 relative">
+<!-- SIDE NAV BAR (Shared Component: SideNavBar) -->
+<!-- Mapped with style_bg_color, style_shell_layout, style_active_navigation, etc. -->
+<aside class="fixed left-0 top-14 h-[calc(100vh-3.5rem)] w-64 bg-surface-container-low flex flex-col justify-between p-4 border-r border-outline-variant z-30 overflow-y-auto">
+<!-- Top Grouping -->
+<div class="flex flex-col gap-6">
+<!-- Insignia Header -->
+<div class="flex items-center gap-3 px-2 pt-2">
+<div class="w-10 h-10 rounded-xl bg-surface-variant flex items-center justify-center border border-outline-variant text-primary shadow-sm" title="Handcrafted wooden Bhraman Himachal insignia badge">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">nature_people</span>
+</div>
+<div>
+<div class="text-headline-sm font-headline-sm text-primary font-bold">Bhraman Host</div>
+<div class="text-label-sm font-label-sm text-on-surface-variant">Himachal Rural Chapter</div>
+</div>
+</div>
+<!-- Primary Host Navigation Tabs (Intent: Calendar & Stays is ACTIVE) -->
+<nav class="flex flex-col gap-1.5">
+<!-- 1. Listings (Inactive) -->
+<a class="flex items-center justify-between px-4 py-3 rounded-xl text-on-surface-variant hover:bg-surface-container hover:text-on-surface active:scale-[0.98] transition-transform duration-100" href="#listings">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined" data-icon="cottage">cottage</span>
+<span class="text-label-md font-label-md">Listings</span>
+</div>
+<span class="text-label-sm font-label-sm bg-surface-variant text-on-surface-variant px-2 py-0.5 rounded-full">4</span>
+</a>
+<!-- 2. Calendar & Stays (ACTIVE: mapped with style_active_navigation) -->
+<a class="flex items-center justify-between px-4 py-3 rounded-xl bg-secondary-container text-on-secondary-container font-semibold active:scale-[0.98] transition-transform duration-100" href="#calendar">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined" data-icon="calendar_month" style="font-variation-settings: 'FILL' 1;">calendar_month</span>
+<span class="text-label-md font-label-md">Calendar &amp; Stays</span>
+</div>
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+</a>
+<!-- 3. Earnings & Payouts (Inactive) -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:bg-surface-container hover:text-on-surface active:scale-[0.98] transition-transform duration-100" href="#earnings">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="text-label-md font-label-md">Earnings &amp; Payouts</span>
+</a>
+<!-- 4. Pricing Copilot (Inactive) -->
+<a class="flex items-center justify-between px-4 py-3 rounded-xl text-on-surface-variant hover:bg-surface-container hover:text-on-surface active:scale-[0.98] transition-transform duration-100" href="#copilot">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined" data-icon="auto_awesome">auto_awesome</span>
+<span class="text-label-md font-label-md">Pricing Copilot</span>
+</div>
+<span class="text-label-sm font-label-sm bg-primary-container text-on-primary-container px-1.5 py-0.5 rounded font-bold">AI</span>
+</a>
+</nav>
+<!-- CTA from JSON -->
+<div class="px-2">
+<button class="w-full py-2.5 px-4 rounded-xl bg-surface-container-lowest text-primary border border-outline-variant font-label-md text-label-md hover:bg-surface-container active:scale-[0.98] transition-all duration-150 flex items-center justify-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-base">add_home</span>
+<span>Add Homestay</span>
+</button>
+</div>
+<!-- Secondary Section -->
+<div class="pt-2 border-t border-outline-variant flex flex-col gap-1">
+<div class="px-3 py-1 text-label-sm font-label-sm text-outline uppercase tracking-wider">Community Desk</div>
+<a class="flex items-center justify-between px-4 py-2 rounded-xl text-on-surface-variant hover:bg-surface-container text-label-md font-label-md" href="#inquiries">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-lg">forum</span>
+<span>Guest Inquiries</span>
+</div>
+<span class="text-label-sm bg-primary-container text-on-primary-container px-1.5 rounded-full text-xs font-semibold">2</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 rounded-xl text-on-surface-variant hover:bg-surface-container text-label-md font-label-md" href="#collective">
+<span class="material-symbols-outlined text-lg">local_florist</span>
+<span>Artisan Collective</span>
+</a>
+</div>
+</div>
+<!-- Footer & Sustainability Certificate -->
+<div class="flex flex-col gap-3 pt-4 border-t border-outline-variant">
+<!-- JSON Footer Tabs: Community Care, Host Settings -->
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-4 py-2 rounded-xl text-on-surface-variant hover:bg-surface-container text-label-md font-label-md" href="#care">
+<span class="material-symbols-outlined text-lg" data-icon="nature_people">nature_people</span>
+<span>Community Care</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 rounded-xl text-on-surface-variant hover:bg-surface-container text-label-md font-label-md" href="#settings">
+<span class="material-symbols-outlined text-lg" data-icon="settings">settings</span>
+<span>Host Settings</span>
+</a>
+</nav>
+<!-- Eco-Trust Card -->
+<div class="p-3 bg-surface-container rounded-xl border border-outline-variant text-left">
+<div class="flex items-center gap-1.5 text-secondary text-label-sm font-label-sm font-semibold mb-1">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">eco</span>
+<span>Eco-Tourism Certified</span>
+</div>
+<p class="text-label-sm font-label-sm text-on-surface-variant leading-relaxed">
+            100% direct payouts via Bhraman Tirthan Rural Tourism Trust.
+          </p>
+<a class="mt-2 text-label-sm font-label-sm text-primary font-semibold hover:underline inline-flex items-center gap-1" href="#traveler">
+<span>Switch to Traveler view</span>
+<span class="material-symbols-outlined text-xs">arrow_forward</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- ================= MAIN CONTENT CANVAS ================= -->
+<main class="ml-64 flex-1 p-8 overflow-x-hidden min-h-[calc(100vh-3.5rem)]">
+<div class="max-w-7xl mx-auto space-y-8">
+<!-- Header & Quick Stats -->
+<div class="space-y-6">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<span class="text-label-sm font-label-sm tracking-widest text-primary font-bold uppercase">CHEHNI KOTHI &amp; SHOJA HOMESTAYS • HOST PORTAL</span>
+<h1 class="text-display-lg font-headline-lg text-on-surface mt-1">Calendar &amp; Monthly Earnings</h1>
+<p class="text-body-md font-body-md text-on-surface-variant max-w-2xl mt-1.5">
+                Manage room availability, guest check-ins, and seasonal revenue optimization across your Tirthan Valley properties.
+              </p>
+</div>
+<!-- Quick Action controls -->
+<div class="flex items-center gap-3">
+<button class="bg-surface-container-lowest border border-outline-variant text-on-surface px-4 py-2.5 rounded-xl font-label-md text-label-md hover:bg-surface-container shadow-sm flex items-center gap-2 transition-all">
+<span class="material-symbols-outlined text-base">ios_share</span>
+<span>Export ICS / Taxes</span>
+</button>
+<button class="bg-primary-container text-on-primary-container px-4 py-2.5 rounded-xl font-label-md text-label-md hover:bg-primary shadow-sm flex items-center gap-2 transition-all">
+<span class="material-symbols-outlined text-base">sync</span>
+<span>Sync External OTAs</span>
+</button>
+</div>
+</div>
+<!-- Quick Metrics Bar -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-surface-container-lowest border border-outline-variant p-4 rounded-2xl shadow-sm">
+<div class="text-label-sm font-label-sm text-outline uppercase tracking-wider">October Bookings</div>
+<div class="text-headline-md font-headline-md text-on-surface mt-1 tabular-numbers font-bold">28 Nights</div>
+<div class="text-label-sm font-label-sm text-secondary flex items-center gap-1 mt-0.5">
+<span class="material-symbols-outlined text-xs">trending_up</span>
+<span>Full valley autumn run</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant p-4 rounded-2xl shadow-sm">
+<div class="text-label-sm font-label-sm text-outline uppercase tracking-wider">Occupancy Rate</div>
+<div class="text-headline-md font-headline-md text-on-surface mt-1 tabular-numbers font-bold">88.5%</div>
+<div class="text-label-sm font-label-sm text-secondary flex items-center gap-1 mt-0.5">
+<span class="material-symbols-outlined text-xs">done_all</span>
+<span>+12% vs. Kullu regional avg</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant p-4 rounded-2xl shadow-sm">
+<div class="text-label-sm font-label-sm text-outline uppercase tracking-wider">Arrivals This Week</div>
+<div class="text-headline-md font-headline-md text-on-surface mt-1 tabular-numbers font-bold">4 Check-ins</div>
+<div class="text-label-sm font-label-sm text-primary flex items-center gap-1 mt-0.5">
+<span class="material-symbols-outlined text-xs">luggage</span>
+<span>Next arrival today 11:30 AM</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant p-4 rounded-2xl shadow-sm">
+<div class="text-label-sm font-label-sm text-outline uppercase tracking-wider">Gushaini Valley Weather</div>
+<div class="text-headline-md font-headline-md text-on-surface mt-1 tabular-numbers font-bold">18°C Sunny</div>
+<div class="text-label-sm font-label-sm text-on-surface-variant flex items-center gap-1 mt-0.5">
+<span class="material-symbols-outlined text-xs text-amber-600">sunny</span>
+<span>Crisp autumn apple season</span>
+</div>
+</div>
+</div>
+</div>
+<!-- ================= MAIN TWO-COLUMN DASHBOARD GRID ================= -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- LEFT COLUMN (Availability & Calendar Grid) ~62% (8 Cols) -->
+<div class="lg:col-span-8 space-y-6">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-2xl p-6 shadow-sm">
+<!-- Calendar Controls Header -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-outline-variant">
+<div class="flex items-center gap-3">
+<div class="flex items-center bg-surface-container rounded-xl p-1 border border-outline-variant">
+<button class="w-8 h-8 flex items-center justify-center text-on-surface-variant hover:bg-surface rounded-lg transition-colors" title="Previous Month">
+<span class="material-symbols-outlined text-lg">chevron_left</span>
+</button>
+<span class="px-3 text-headline-sm font-headline-sm text-on-surface font-semibold">October 2024</span>
+<button class="w-8 h-8 flex items-center justify-center text-on-surface-variant hover:bg-surface rounded-lg transition-colors" title="Next Month">
+<span class="material-symbols-outlined text-lg">chevron_right</span>
+</button>
+</div>
+<button class="text-label-md font-label-md px-3 py-1.5 bg-surface-container text-on-surface border border-outline-variant rounded-xl hover:bg-surface transition-colors">
+                    Today
+                  </button>
+</div>
+<!-- Right View & Property Selectors -->
+<div class="flex items-center gap-3 flex-wrap">
+<select class="bg-surface-container text-on-surface text-label-md font-label-md border border-outline-variant rounded-xl px-3 py-1.5 focus:outline-none focus:border-primary-container">
+<option>All Listings (4)</option>
+<option>Meera Devi's Wooden Homestay (3 rooms)</option>
+<option>Patti Weaving Heritage Cottage</option>
+<option>Chehni Tower View Attic</option>
+</select>
+<div class="flex items-center bg-surface-container p-1 rounded-xl border border-outline-variant">
+<button class="px-3 py-1 rounded-lg bg-surface-container-lowest shadow-sm text-label-sm font-label-sm font-semibold text-primary">Month</button>
+<button class="px-3 py-1 rounded-lg text-label-sm font-label-sm text-on-surface-variant hover:text-on-surface">Week</button>
+<button class="px-3 py-1 rounded-lg text-label-sm font-label-sm text-on-surface-variant hover:text-on-surface">Gantt</button>
+</div>
+</div>
+</div>
+<!-- Calendar Legend Bar -->
+<div class="flex flex-wrap items-center gap-4 py-4 text-label-sm font-label-sm text-on-surface-variant border-b border-outline-variant">
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-primary-container"></span>
+<span>Booked Stay</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary"></span>
+<span>Eco-Trek Arrival</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-outline-variant"></span>
+<span>Maintenance / Bukhari Block</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full border border-outline"></span>
+<span>Available (₹1,650/nt)</span>
+</div>
+</div>
+<!-- Weekday Columns Header -->
+<div class="grid grid-cols-7 gap-px bg-outline-variant/60 rounded-xl overflow-hidden mt-4 border border-outline-variant">
+<div class="bg-surface-container-high py-2 text-center text-label-sm font-label-sm text-on-surface-variant font-bold">Sun</div>
+<div class="bg-surface-container-high py-2 text-center text-label-sm font-label-sm text-on-surface-variant font-bold">Mon</div>
+<div class="bg-surface-container-high py-2 text-center text-label-sm font-label-sm text-on-surface-variant font-bold">Tue</div>
+<div class="bg-surface-container-high py-2 text-center text-label-sm font-label-sm text-on-surface-variant font-bold">Wed</div>
+<div class="bg-surface-container-high py-2 text-center text-label-sm font-label-sm text-on-surface-variant font-bold">Thu</div>
+<div class="bg-surface-container-high py-2 text-center text-label-sm font-label-sm text-on-surface-variant font-bold">Fri</div>
+<div class="bg-surface-container-high py-2 text-center text-label-sm font-label-sm text-on-surface-variant font-bold">Sat</div>
+<!-- October 2024 Days: Starts on Tuesday (Oct 1) -->
+<!-- Prev Month Buffer (Sep 29, 30) -->
+<div class="bg-surface-container-low min-h-[92px] p-2 opacity-50">
+<span class="text-label-sm font-label-sm tabular-numbers text-outline">29</span>
+</div>
+<div class="bg-surface-container-low min-h-[92px] p-2 opacity-50">
+<span class="text-label-sm font-label-sm tabular-numbers text-outline">30</span>
+</div>
+<!-- Oct 01 -->
+<div class="bg-surface-container-lowest min-h-[92px] p-2 flex flex-col justify-between hover:bg-surface-container transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-label-md font-label-md tabular-numbers font-semibold text-on-surface">1</span>
+<span class="text-label-sm font-label-sm tabular-numbers text-outline">₹1.6k</span>
+</div>
+</div>
+<!-- Oct 02 (Gandhi Jayanti) -->
+<div class="bg-surface-container-lowest min-h-[92px] p-2 flex flex-col justify-between hover:bg-surface-container transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-label-md font-label-md tabular-numbers font-semibold text-on-surface">2</span>
+<span class="text-label-sm font-label-sm tabular-numbers text-outline">₹1.8k</span>
+</div>
+<div class="text-[10px] text-secondary font-medium truncate">Holiday Surge</div>
+</div>
+<!-- Oct 03 to 07: Rahul Sharma Booking -->
+<div class="bg-surface-container-lowest min-h-[92px] p-2 flex flex-col justify-between hover:bg-surface-container transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-label-md font-label-md tabular-numbers font-semibold text-primary">3</span>
+<span class="w-2 h-2 rounded-full bg-secondary" title="Check-in day"></span>
+</div>
+<div class="bg-primary-container text-on-primary-container rounded-lg p-1.5 text-[11px] font-semibold leading-tight shadow-sm">
+                    Rahul Sharma • 2G
+                  </div>
+</div>
+<div class="bg-surface-container-lowest min-h-[92px] p-2 flex flex-col justify-between hover:bg-surface-container transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-label-md font-label-md tabular-numbers font-semibold text-primary">4</span>
+</div>
+<div class="bg-primary-container/90 text-on-primary-container rounded-lg p-1 text-[10px] truncate">
+                    Himalayan Homestay
+                  </div>
+</div>
+<div class="bg-surface-container-lowest min-h-[92px] p-2 flex flex-col justify-between hover:bg-surface-container transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-label-md font-label-md tabular-numbers font-semibold text-primary">5</span>
+</div>
+<div class="bg-primary-container/90 text-on-primary-container rounded-lg p-1 text-[10px] truncate">
+                    Stay Day 3
+                  </div>
+</div>
+<!-- Row 2 -->
+<div class="bg-surface-container-lowest min-h-[92px] p-2 flex flex-col justify-between hover:bg-surface-container transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-label-md font-label-md tabular-numbers font-semibold text-primary">6</span>
+</div>
+<div class="bg-primary-container/90 text-on-primary-container rounded-lg p-1 text-[10px] truncate">
+                    Valley Hike add-on
+                  </div>
+</div>
+<div class="bg-surface-container-lowest min-h-[92px] p-2 flex flex-col justify-between hover:bg-surface-container transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-label-md font-label-md tabular-numbers font-semibold text-primary">7</span>
+<span class="text-[10px] text-outline">Checkout</span>
+</div>
+<div class="bg-secondary-container text-on-secondary-container rounded p-1 text-[10px] font-semibold">
+                    Depart 11 AM
+                  </div>
+</div>
+<div class="bg-surface-container-lowest min-h-[92px] p-2 flex flex-col justify-between hover:bg-surface-container transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-label-md font-label-md tabular-numbers font-semibold text-on-surface">8</span>
+<span class="text-label-sm font-label-sm tabular-numbers text-outline">₹1.6k</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest min-h-[92px] p-2 flex flex-col justify-between hover:bg-surface-container transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-label-md font-label-md tabular-numbers font-semibold text-on-surface">9</span>
+<span class="text-label-sm font-label-sm tabular-numbers text-outline">₹1.6k</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest min-h-[92px] p-2 flex flex-col justify-between hover:bg-surface-container transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-label-md font-label-md tabular-numbers font-semibold text-on-surface">10</span>
+<span class="text-label-sm font-label-sm tabular-numbers text-outline">₹1.7k</span>
+</div>
+</div>
+<!-- Oct 11 to 14: Ananya Iyer Booking -->
+<div class="bg-surface-container-lowest min-h-[92px] p-2 flex flex-col justify-between hover:bg-surface-container transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-label-md font-label-md tabular-numbers font-semibold text-primary">11</span>
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+</div>
+<div class="bg-primary-container text-on-primary-container rounded-lg p-1.5 text-[11px] font-semibold leading-tight shadow-sm">
+                    Ananya Iyer • 4G
+                  </div>
+</div>
+<div class="bg-surface-container-lowest min-h-[92px] p-2 flex flex-col justify-between hover:bg-surface-container transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-label-md font-label-md tabular-numbers font-semibold text-primary">12</span>
+</div>
+<div class="bg-primary-container/90 text-on-primary-container rounded-lg p-1 text-[10px] truncate">
+                    Kathkuni Balcony
+                  </div>
+</div>
+<!-- Row 3 -->
+<div class="bg-surface-container-lowest min-h-[92px] p-2 flex flex-col justify-between hover:bg-surface-container transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-label-md font-label-md tabular-numbers font-semibold text-primary">13</span>
+</div>
+<div class="bg-primary-container/90 text-on-primary-container rounded-lg p-1 text-[10px] truncate">
+                    Himachali Dham (N)
+                  </div>
+</div>
+<div class="bg-surface-container-lowest min-h-[92px] p-2 flex flex-col justify-between hover:bg-surface-container transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-label-md font-label-md tabular-numbers font-semibold text-primary">14</span>
+<span class="text-[10px] text-outline">Checkout</span>
+</div>
+<div class="bg-secondary-container text-on-secondary-container rounded p-1 text-[10px] font-semibold">
+                    Depart 12 PM
+                  </div>
+</div>
+<!-- Oct 15 Blocked: Winter Bukhari Chimney Cleaning -->
+<div class="bg-surface-variant/40 min-h-[92px] p-2 flex flex-col justify-between border-dashed border-outline-variant hover:bg-surface-variant transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-label-md font-label-md tabular-numbers font-semibold text-outline">15</span>
+<span class="material-symbols-outlined text-xs text-outline">build</span>
+</div>
+<div class="bg-outline/20 text-on-surface rounded p-1 text-[10px] font-medium leading-tight">
+                    Bukhari Chimney Prep
+                  </div>
+</div>
+<div class="bg-surface-container-lowest min-h-[92px] p-2 flex flex-col justify-between hover:bg-surface-container transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-label-md font-label-md tabular-numbers font-semibold text-on-surface">16</span>
+<span class="text-label-sm font-label-sm tabular-numbers text-outline">₹1.6k</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest min-h-[92px] p-2 flex flex-col justify-between hover:bg-surface-container transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-label-md font-label-md tabular-numbers font-semibold text-on-surface">17</span>
+<span class="text-label-sm font-label-sm tabular-numbers text-outline">₹1.8k</span>
+</div>
+</div>
+<!-- Oct 18 to 22: Kabir Malhotra Booking -->
+<div class="bg-surface-container-lowest min-h-[92px] p-2 flex flex-col justify-between hover:bg-surface-container transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-label-md font-label-md tabular-numbers font-semibold text-primary">18</span>
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+</div>
+<div class="bg-primary-container text-on-primary-container rounded-lg p-1.5 text-[11px] font-semibold leading-tight shadow-sm">
+                    Kabir Malhotra • 2G
+                  </div>
+</div>
+<div class="bg-surface-container-lowest min-h-[92px] p-2 flex flex-col justify-between hover:bg-surface-container transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-label-md font-label-md tabular-numbers font-semibold text-primary">19</span>
+</div>
+<div class="bg-primary-container/90 text-on-primary-container rounded-lg p-1 text-[10px] truncate">
+                    Cedar Suite
+                  </div>
+</div>
+<!-- Row 4 -->
+<div class="bg-surface-container-lowest min-h-[92px] p-2 flex flex-col justify-between hover:bg-surface-container transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-label-md font-label-md tabular-numbers font-semibold text-primary">20</span>
+</div>
+<div class="bg-primary-container/90 text-on-primary-container rounded-lg p-1 text-[10px] truncate">
+                    Weaving Session
+                  </div>
+</div>
+<div class="bg-surface-container-lowest min-h-[92px] p-2 flex flex-col justify-between hover:bg-surface-container transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-label-md font-label-md tabular-numbers font-semibold text-primary">21</span>
+</div>
+<div class="bg-primary-container/90 text-on-primary-container rounded-lg p-1 text-[10px] truncate">
+                    Stay Day 4
+                  </div>
+</div>
+<div class="bg-surface-container-lowest min-h-[92px] p-2 flex flex-col justify-between hover:bg-surface-container transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-label-md font-label-md tabular-numbers font-semibold text-primary">22</span>
+<span class="text-[10px] text-outline">Checkout</span>
+</div>
+<div class="bg-secondary-container text-on-secondary-container rounded p-1 text-[10px] font-semibold">
+                    Depart 10 AM
+                  </div>
+</div>
+<div class="bg-surface-container-lowest min-h-[92px] p-2 flex flex-col justify-between hover:bg-surface-container transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-label-md font-label-md tabular-numbers font-semibold text-on-surface">23</span>
+<span class="text-label-sm font-label-sm tabular-numbers text-outline">₹1.8k</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest min-h-[92px] p-2 flex flex-col justify-between hover:bg-surface-container transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-label-md font-label-md tabular-numbers font-semibold text-on-surface">24</span>
+<span class="text-label-sm font-label-sm tabular-numbers text-outline">₹1.8k</span>
+</div>
+</div>
+<!-- Oct 25 to 28: Dr. Sen Booking -->
+<div class="bg-surface-container-lowest min-h-[92px] p-2 flex flex-col justify-between hover:bg-surface-container transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-label-md font-label-md tabular-numbers font-semibold text-primary">25</span>
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+</div>
+<div class="bg-primary-container text-on-primary-container rounded-lg p-1.5 text-[11px] font-semibold leading-tight shadow-sm">
+                    Dr. Sen • Fly-Fishing
+                  </div>
+</div>
+<div class="bg-surface-container-lowest min-h-[92px] p-2 flex flex-col justify-between hover:bg-surface-container transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-label-md font-label-md tabular-numbers font-semibold text-primary">26</span>
+</div>
+<div class="bg-primary-container/90 text-on-primary-container rounded-lg p-1 text-[10px] truncate">
+                    Tirthan River Permit
+                  </div>
+</div>
+<!-- Row 5 -->
+<div class="bg-surface-container-lowest min-h-[92px] p-2 flex flex-col justify-between hover:bg-surface-container transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-label-md font-label-md tabular-numbers font-semibold text-primary">27</span>
+</div>
+<div class="bg-primary-container/90 text-on-primary-container rounded-lg p-1 text-[10px] truncate">
+                    Local Trout Dinner
+                  </div>
+</div>
+<div class="bg-surface-container-lowest min-h-[92px] p-2 flex flex-col justify-between hover:bg-surface-container transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-label-md font-label-md tabular-numbers font-semibold text-primary">28</span>
+<span class="text-[10px] text-outline">Checkout</span>
+</div>
+<div class="bg-secondary-container text-on-secondary-container rounded p-1 text-[10px] font-semibold">
+                    Depart 11 AM
+                  </div>
+</div>
+<div class="bg-surface-container-lowest min-h-[92px] p-2 flex flex-col justify-between hover:bg-surface-container transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-label-md font-label-md tabular-numbers font-semibold text-on-surface">29</span>
+<span class="text-label-sm font-label-sm tabular-numbers text-outline">₹1.8k</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest min-h-[92px] p-2 flex flex-col justify-between hover:bg-surface-container transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-label-md font-label-md tabular-numbers font-semibold text-on-surface">30</span>
+<span class="text-label-sm font-label-sm tabular-numbers text-outline">₹1.8k</span>
+</div>
+</div>
+<!-- Oct 31 (Thursday) -->
+<div class="bg-surface-container-lowest min-h-[92px] p-2 flex flex-col justify-between hover:bg-surface-container transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-label-md font-label-md tabular-numbers font-semibold text-on-surface">31</span>
+<span class="text-label-sm font-label-sm tabular-numbers text-outline">₹2.0k</span>
+</div>
+<div class="text-[10px] text-secondary font-medium">Diwali Week Start</div>
+</div>
+<!-- Next Month Fillers (Nov 1, 2) -->
+<div class="bg-surface-container-low min-h-[92px] p-2 opacity-50">
+<span class="text-label-sm font-label-sm tabular-numbers text-outline">1</span>
+</div>
+<div class="bg-surface-container-low min-h-[92px] p-2 opacity-50">
+<span class="text-label-sm font-label-sm tabular-numbers text-outline">2</span>
+</div>
+</div>
+<!-- Interactive Hint -->
+<div class="mt-4 flex items-center justify-between text-label-sm font-label-sm text-outline">
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm">touch_app</span>
+<span>Click any date to manually lock rooms or edit seasonal rates</span>
+</span>
+<span class="font-medium text-secondary">All dates synced with Tirthan Network</span>
+</div>
+</div>
+<!-- Homestay Atmosphere Feature Card (Using provided photographic context) -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-2xl overflow-hidden shadow-sm flex flex-col md:flex-row">
+<div class="md:w-5/12 relative min-h-[180px]">
+<img alt="Chehni Kothi Wooden Homestay in Apple Harvest Season" class="w-full h-full object-cover" data-alt="Stunning wide landscape photograph of a traditional multi-tier Himachali wooden and slate-roofed homestay surrounded by ripe red apple orchards in Chehni Kothi, Kullu district, framed by dramatic Himalayan mountain ridges illuminated in warm late-afternoon golden hour sunlight with marigolds in the garden." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8HdbQIXxdBY54X4KxD5Hzl5khjWOLHGTMND5e8eqeJuaUsMB27hz4Eci-JnzuK4JN-oUTUfi_jSKGkyC6A9OaRsfn1u2A2fiTZkm-R-Luzcd6vVU2IGzTmYs5Rqd8nwemhz4nXfR8VLhPlx7CndVSsnPvw0fBs3ELf-7ZhEm8GbmISACUUSRvysGcRgl7ZncN_1rogxSOvTuJO8hcVyC88l4II1Gx8yz5QqE700DcJ_9lCNX3dnpZN9jlV2IF8jB7nduq1tUUs3ih"/>
+<div class="absolute top-3 left-3 bg-inverse-surface/80 backdrop-blur-md text-inverse-on-surface text-label-sm font-label-sm px-2.5 py-1 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-xs text-amber-300">verified</span>
+<span>Chehni Kothi Heritage</span>
+</div>
+</div>
+<div class="p-5 md:w-7/12 flex flex-col justify-between space-y-3">
+<div>
+<div class="text-label-sm font-label-sm text-primary font-bold uppercase tracking-wider">Property Snapshot</div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface font-semibold mt-0.5">Meera Devi’s Kathkuni Sanctuary</h3>
+<p class="text-body-md font-body-md text-on-surface-variant mt-1 leading-snug">
+                    Handcrafted cedarwood joinery, solar-heated water, organic kitchen garden with wood-fired Bukhari fireplaces ready for chilly mountain nights.
+                  </p>
+</div>
+<div class="flex items-center justify-between pt-2 border-t border-outline-variant">
+<div class="text-label-sm font-label-sm text-on-surface-variant">
+                    Cleanliness Score: <span class="font-bold text-on-surface">4.98 ★</span> (82 reviews)
+                  </div>
+<a class="text-label-md font-label-md text-primary font-semibold hover:underline flex items-center gap-1" href="#viewhomestay">
+<span>Manage Listing</span>
+<span class="material-symbols-outlined text-sm">open_in_new</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+<!-- RIGHT RAIL STACK (~38% - 4 Cols) -->
+<div class="lg:col-span-4 space-y-6">
+<!-- CARD 1: Earnings this month -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-2xl p-6 shadow-sm space-y-5">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-8 h-8 rounded-xl bg-secondary-container text-on-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-lg">currency_rupee</span>
+</span>
+<h2 class="text-headline-sm font-headline-sm text-on-surface font-semibold">Monthly Gross Earnings</h2>
+</div>
+<span class="text-label-sm font-label-sm text-secondary font-bold bg-secondary-container/60 px-2 py-0.5 rounded-full">+18% vs Sep</span>
+</div>
+<div>
+<div class="text-label-sm font-label-sm text-outline uppercase tracking-wider">October 2024 (To Date)</div>
+<div class="text-display-mobile font-headline-lg text-primary tabular-numbers font-bold mt-0.5 tracking-tight">₹1,18,400</div>
+<!-- Payout Status Pill -->
+<div class="mt-3 p-3 bg-secondary-container/30 border border-secondary/20 rounded-xl">
+<div class="flex items-start gap-2">
+<span class="material-symbols-outlined text-secondary text-base mt-0.5" style="font-variation-settings: 'FILL' 1;">account_balance</span>
+<div>
+<div class="text-label-md font-label-md text-secondary font-semibold">Payout Scheduled</div>
+<div class="text-label-sm font-label-sm text-on-surface-variant mt-0.5">
+                        Nov 01, 2024 via Bhraman Tirthan Rural Tourism Trust direct account transfer.
+                      </div>
+</div>
+</div>
+</div>
+</div>
+<!-- Revenue Breakdown -->
+<div class="space-y-2.5 pt-2 border-t border-outline-variant">
+<div class="text-label-sm font-label-sm text-outline uppercase tracking-wider">Revenue Breakdown</div>
+<div class="flex items-center justify-between text-body-md font-body-md py-1">
+<span class="flex items-center gap-2 text-on-surface-variant">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+<span>Room Stays (28 nights)</span>
+</span>
+<span class="tabular-numbers font-semibold text-on-surface">₹94,500</span>
+</div>
+<div class="flex items-center justify-between text-body-md font-body-md py-1">
+<span class="flex items-center gap-2 text-on-surface-variant">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span>Himachali Dham Dinners</span>
+</span>
+<span class="tabular-numbers font-semibold text-on-surface">₹14,200</span>
+</div>
+<div class="flex items-center justify-between text-body-md font-body-md py-1">
+<span class="flex items-center gap-2 text-on-surface-variant">
+<span class="w-2 h-2 rounded-full bg-amber-600"></span>
+<span>Patti Weaving Workshops</span>
+</span>
+<span class="tabular-numbers font-semibold text-on-surface">₹9,700</span>
+</div>
+</div>
+<div class="pt-2">
+<a class="w-full py-2.5 px-3 rounded-xl border border-outline-variant text-on-surface-variant hover:text-on-surface hover:bg-surface-container font-label-md text-label-md flex items-center justify-center gap-2 transition-all" href="#ledger">
+<span class="material-symbols-outlined text-base">receipt_long</span>
+<span>View Payout Ledger &amp; GST Invoices</span>
+</a>
+</div>
+</div>
+<!-- CARD 2: Bhraman AI Pricing Copilot -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-2xl p-6 shadow-sm space-y-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-xl bg-primary-container text-on-primary-container flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+<div>
+<h2 class="text-headline-sm font-headline-sm text-on-surface font-semibold">Pricing Copilot</h2>
+<div class="text-[11px] text-outline">Dynamic Himalayan Rate Engine</div>
+</div>
+</div>
+<span class="bg-primary/10 text-primary text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Real-time</span>
+</div>
+<!-- Recommendation Callout -->
+<div class="p-4 rounded-xl bg-secondary-container/40 border border-secondary/30 space-y-3">
+<div class="flex items-start gap-2.5">
+<span class="material-symbols-outlined text-secondary text-lg mt-0.5">trending_up</span>
+<div>
+<div class="text-label-md font-label-md text-on-surface font-semibold leading-snug">
+                      Raise weekend rate to ₹1,800 / night
+                    </div>
+<p class="text-label-sm font-label-sm text-on-surface-variant mt-1 leading-relaxed">
+                      Regional autumn foliage demand in Tirthan is up <strong>22%</strong> this week.
+                    </p>
+</div>
+</div>
+<div class="bg-surface-container-lowest/80 p-2.5 rounded-lg text-label-sm font-label-sm text-secondary font-medium flex items-center justify-between">
+<span>Projected Impact:</span>
+<span class="font-bold tabular-numbers text-on-surface">+₹7,200 est. revenue (Oct 26–27)</span>
+</div>
+<div class="flex items-center gap-2 pt-1">
+<button class="flex-1 bg-primary-container hover:bg-primary text-on-primary-container py-2 rounded-xl text-label-md font-label-md font-semibold transition-all duration-150 shadow-sm active:scale-[0.98]">
+                    Apply Suggestion
+                  </button>
+<button class="px-3 py-2 border border-outline-variant rounded-xl text-label-md font-label-md text-on-surface-variant hover:bg-surface-container transition-all">
+                    Customise
+                  </button>
+</div>
+</div>
+<!-- Secondary AI Tip -->
+<div class="p-3.5 rounded-xl bg-surface-container border border-outline-variant flex items-start gap-2.5">
+<span class="material-symbols-outlined text-primary text-base mt-0.5">lightbulb</span>
+<div class="text-label-sm font-label-sm text-on-surface-variant leading-snug">
+<span class="font-semibold text-on-surface">Shoja Handloom Workshop:</span> 3 waitlisted guests for Oct 20 — <a class="text-primary font-semibold hover:underline" href="#openworkshop">open 1 extra evening session</a> for +₹2,400.
+                </div>
+</div>
+</div>
+<!-- CARD 3: Upcoming Arrivals & Key Handover -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-2xl p-6 shadow-sm space-y-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-8 h-8 rounded-xl bg-surface-variant text-on-surface-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-lg">key</span>
+</span>
+<h2 class="text-headline-sm font-headline-sm text-on-surface font-semibold">Upcoming Arrivals</h2>
+</div>
+<span class="text-label-sm font-label-sm text-outline">Next 48 Hours</span>
+</div>
+<div class="space-y-3">
+<!-- Guest 1 -->
+<div class="p-3.5 rounded-xl bg-surface-container-low border border-outline-variant flex items-start gap-3 hover:border-primary-container transition-colors">
+<div class="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-label-md flex-shrink-0">
+                    RS
+                  </div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between">
+<div class="text-label-md font-label-md font-semibold text-on-surface truncate">Rahul Sharma</div>
+<span class="text-label-sm font-label-sm bg-primary-container text-on-primary-container px-2 py-0.5 rounded-full font-bold">Today</span>
+</div>
+<div class="text-label-sm font-label-sm text-on-surface-variant mt-0.5">
+                      11:30 AM arrival • Aut Tunnel cab coordinated
+                    </div>
+<div class="flex items-center gap-2 mt-2 text-label-sm font-label-sm text-secondary font-medium">
+<span class="material-symbols-outlined text-xs">meeting_room</span>
+<span>Cedar Balcony Room 101</span>
+</div>
+</div>
+</div>
+<!-- Guest 2 -->
+<div class="p-3.5 rounded-xl bg-surface-container-low border border-outline-variant flex items-start gap-3 hover:border-primary-container transition-colors">
+<div class="w-10 h-10 rounded-full bg-secondary/10 text-secondary flex items-center justify-center font-bold text-label-md flex-shrink-0">
+                    PN
+                  </div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between">
+<div class="text-label-md font-label-md font-semibold text-on-surface truncate">Priya Nair</div>
+<span class="text-label-sm font-label-sm text-outline bg-surface-variant px-2 py-0.5 rounded-full">Tomorrow</span>
+</div>
+<div class="text-label-sm font-label-sm text-on-surface-variant mt-0.5">
+                      02:00 PM • Traditional tea welcome requested
+                    </div>
+<div class="flex items-center gap-2 mt-2 text-label-sm font-label-sm text-on-surface-variant font-medium">
+<span class="material-symbols-outlined text-xs">cottage</span>
+<span>Attic Loft Suite</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Host Quick Dial / Cab Coordination -->
+<div class="pt-1">
+<button class="w-full text-center text-label-sm font-label-sm text-primary font-semibold hover:underline flex items-center justify-center gap-1.5 py-1">
+<span class="material-symbols-outlined text-sm">phone_in_talk</span>
+<span>Contact Valley Driver Collective (Aut / Banjar)</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

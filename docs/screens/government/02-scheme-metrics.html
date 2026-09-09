@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+
+<html class="h-full bg-[#0e1319]" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HP Dept of Tourism - Bhraman Scheme &amp; Subsidies Console v3.4-GIS</title>
+<!-- Google Fonts: IBM Plex Sans & IBM Plex Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&amp;family=IBM+Plex+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 with Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration for Gov GIS Dark Archetype -->
+<script data-purpose="tailwind-config">
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              navy: '#0e1319',
+              dark: '#121821',
+              panel: '#161D26',
+              surface: '#1B232D',
+              border: '#283340',
+              borderLight: '#344252',
+              teal: '#2F8F86',
+              tealHover: '#38b2a3',
+              tealGlow: 'rgba(47, 143, 134, 0.15)',
+              textMuted: '#8B93A1',
+              textPrimary: '#E8EAED',
+              emerald: '#10b981',
+              amber: '#f59e0b',
+              red: '#ef4444'
+            }
+          },
+          fontFamily: {
+            sans: ['"IBM Plex Sans"', 'sans-serif'],
+            mono: ['"IBM Plex Mono"', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+<style data-purpose="custom-gis-styling">
+    /* Gov Analytical Hairline Borders & Scrollers */
+    * {
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+    }
+    body {
+      font-family: 'IBM Plex Sans', sans-serif;
+      color: #E8EAED;
+      background-color: #0e1319;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+    .font-tabular {
+      font-family: 'IBM Plex Mono', monospace;
+      font-variant-numeric: tabular-nums;
+    }
+    /* Custom Scrollbar for dense telemetry feeds */
+    ::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #121821;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #283340;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #2F8F86;
+    }
+    .hairline-b {
+      border-bottom: 1px solid #283340;
+    }
+    .hairline-r {
+      border-right: 1px solid #283340;
+    }
+    .hairline-l {
+      border-left: 1px solid #283340;
+    }
+    .hairline-t {
+      border-top: 1px solid #283340;
+    }
+    .hairline-all {
+      border: 1px solid #283340;
+    }
+  </style>
+</head>
+<body class="h-full flex flex-col antialiased select-none text-[12px]">
+<!-- BEGIN: TopHeaderBar -->
+<header class="h-12 bg-brand-dark hairline-b flex items-center justify-between px-3 z-30 shrink-0" data-purpose="top-header">
+<!-- Department Badge & System Node Status -->
+<div class="flex items-center space-x-3">
+<div class="flex items-center space-x-2">
+<div class="w-6 h-6 bg-brand-surface hairline-all flex items-center justify-center text-[10px] font-bold text-brand-teal font-mono">
+          HP
+        </div>
+<div class="leading-none">
+<div class="text-[10px] tracking-wider text-brand-textMuted uppercase font-semibold">HP DEPT OF TOURISM</div>
+<div class="text-[12px] font-medium text-brand-textPrimary flex items-center gap-1.5">
+            Bhraman Scheme &amp; Subsidies Console
+            <span class="text-[9px] px-1 py-0.5 bg-brand-surface hairline-all font-mono text-brand-textMuted">v3.4-GIS</span>
+</div>
+</div>
+</div>
+<div class="h-4 w-px bg-brand-border"></div>
+<!-- Live Connectivity Feed Indicator -->
+<div class="flex items-center space-x-1.5 px-2 py-0.5 bg-brand-panel hairline-all text-[11px] font-mono">
+<span class="w-1.5 h-1.5 rounded-full bg-brand-emerald animate-pulse"></span>
+<span class="text-brand-textMuted">PFMS / DBT Node:</span>
+<span class="text-brand-emerald font-semibold">ONLINE (8s)</span>
+</div>
+</div>
+<!-- Center Filters: State Jurisdiction & Scheme Track -->
+<div class="flex items-center space-x-2">
+<!-- Jurisdiction -->
+<div class="flex items-center bg-brand-panel hairline-all px-2 py-1 space-x-2 text-[11px]">
+<span class="text-brand-textMuted uppercase font-mono tracking-wider text-[10px]">JURISDICTION:</span>
+<div class="flex items-center space-x-1 cursor-pointer hover:text-white">
+<span class="w-1.5 h-1.5 rounded-full bg-brand-teal"></span>
+<span class="font-medium text-brand-textPrimary">Himachal Pradesh (Statewide)</span>
+<svg class="w-3.5 h-3.5 text-brand-textMuted" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+</div>
+<!-- Scheme Selector -->
+<div class="flex items-center bg-brand-panel hairline-all px-2 py-1 space-x-2 text-[11px]">
+<span class="text-brand-textMuted uppercase font-mono tracking-wider text-[10px]">SCHEME:</span>
+<div class="flex items-center space-x-1 cursor-pointer hover:text-white">
+<span class="font-medium text-brand-textPrimary">PMAY-G &amp; MUDRA Rural Track</span>
+<svg class="w-3.5 h-3.5 text-brand-textMuted" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+</div>
+<!-- Temporal Quarter -->
+<div class="flex items-center bg-brand-panel hairline-all px-2 py-1 space-x-2 text-[11px] font-mono">
+<svg class="w-3.5 h-3.5 text-brand-textMuted" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="text-brand-textPrimary">FY 2024-25 Q2 (Oct 2024)</span>
+</div>
+</div>
+<!-- Right Actions: Quick Segment Filters & Official Export -->
+<div class="flex items-center space-x-2">
+<div class="flex hairline-all overflow-hidden bg-brand-panel">
+<button class="px-2.5 py-1 text-[11px] bg-brand-surface text-brand-textMuted hover:text-white hairline-r transition-colors">All Units</button>
+<button class="px-2.5 py-1 text-[11px] bg-brand-teal text-white font-medium transition-colors">MUDRA Only</button>
+<button class="px-2.5 py-1 text-[11px] bg-brand-surface text-brand-textMuted hover:text-white transition-colors">NABARD Certified</button>
+</div>
+<!-- CAG/PFMS Report Export -->
+<button class="flex items-center space-x-1.5 px-2.5 py-1 bg-brand-teal/20 hover:bg-brand-teal/30 text-brand-teal border border-brand-teal transition-colors text-[11px] font-mono">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="font-medium">Export CAG/PFMS (.xlsx/.geojson)</span>
+</button>
+</div>
+</header>
+<!-- END: TopHeaderBar -->
+<div class="flex-1 flex overflow-hidden">
+<!-- BEGIN: LeftSidebar -->
+<aside class="w-56 bg-brand-dark hairline-r flex flex-col justify-between shrink-0" data-purpose="sidebar-nav">
+<div class="flex flex-col">
+<!-- Telemetry Status Sub-panel -->
+<div class="p-3 hairline-b bg-brand-panel/50">
+<div class="flex items-center justify-between font-mono text-[10px]">
+<span class="text-brand-textMuted uppercase tracking-wider">Tirthan IoT Feed</span>
+<span class="text-brand-emerald font-semibold">ONLINE (18s)</span>
+</div>
+<div class="mt-1 flex items-center space-x-2 font-mono text-[11px]">
+<div class="w-2 h-2 rounded-full bg-brand-emerald"></div>
+<span class="text-brand-textPrimary font-medium">98.4% Gateway Reach</span>
+</div>
+</div>
+<!-- Section: Spatial Analysis -->
+<div class="px-3 pt-3 pb-1">
+<span class="text-[10px] font-mono text-brand-textMuted uppercase tracking-wider font-semibold">Spatial Analysis</span>
+</div>
+<nav class="flex flex-col px-2 space-y-0.5">
+<!-- Heatmap & Zones -->
+<a class="flex items-center justify-between px-2.5 py-2 text-brand-textMuted hover:bg-brand-surface hover:text-white text-[12px] group" href="#">
+<div class="flex items-center space-x-2.5">
+<svg class="w-4 h-4 text-brand-textMuted group-hover:text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg>
+<span>Heatmap &amp; Zones</span>
+</div>
+<span class="text-[9px] px-1.5 py-0.2 bg-brand-surface hairline-all text-brand-teal font-mono">LIVE</span>
+</a>
+<!-- Scheme Metrics (ACTIVE) -->
+<a class="flex items-center justify-between px-2.5 py-2 bg-brand-panel hairline-all text-brand-teal font-medium text-[12px] relative" href="#">
+<div class="absolute left-0 top-0 bottom-0 w-[3px] bg-brand-teal"></div>
+<div class="flex items-center space-x-2.5 pl-0.5">
+<svg class="w-4 h-4 text-brand-teal" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="text-white">Scheme Metrics</span>
+</div>
+<span class="text-[9px] px-1 bg-brand-teal/20 text-brand-teal font-mono border border-brand-teal/40">PMAY-G</span>
+</a>
+<!-- Homestay Growth -->
+<a class="flex items-center justify-between px-2.5 py-2 text-brand-textMuted hover:bg-brand-surface hover:text-white text-[12px] group" href="#">
+<div class="flex items-center space-x-2.5">
+<svg class="w-4 h-4 text-brand-textMuted group-hover:text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg>
+<span>Homestay Growth</span>
+</div>
+<span class="text-[10px] font-mono text-brand-emerald">+14.2%</span>
+</a>
+<!-- Safety Advisories -->
+<a class="flex items-center justify-between px-2.5 py-2 text-brand-textMuted hover:bg-brand-surface hover:text-white text-[12px] group" href="#">
+<div class="flex items-center space-x-2.5">
+<svg class="w-4 h-4 text-brand-textMuted group-hover:text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg>
+<span>Safety Advisories</span>
+</div>
+<span class="text-[9px] px-1.5 bg-brand-red/20 text-brand-red font-mono border border-brand-red/40 font-bold">2 ALERTS</span>
+</a>
+</nav>
+<!-- Section: Governance & Compliance -->
+<div class="px-3 pt-4 pb-1">
+<span class="text-[10px] font-mono text-brand-textMuted uppercase tracking-wider font-semibold">Governance &amp; Compliance</span>
+</div>
+<nav class="flex flex-col px-2 space-y-0.5">
+<a class="flex items-center justify-between px-2.5 py-2 text-brand-textMuted hover:bg-brand-surface hover:text-white text-[12px] group" href="#">
+<div class="flex items-center space-x-2">
+<svg class="w-3.5 h-3.5 text-brand-textMuted group-hover:text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg>
+<span class="truncate">Kathkuni Registry</span>
+</div>
+<span class="text-[10px] font-mono text-brand-textMuted">842</span>
+</a>
+<a class="flex items-center justify-between px-2.5 py-2 text-brand-textMuted hover:bg-brand-surface hover:text-white text-[12px] group" href="#">
+<div class="flex items-center space-x-2">
+<svg class="w-3.5 h-3.5 text-brand-textMuted group-hover:text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg>
+<span class="truncate">Village Tax &amp; Payouts</span>
+</div>
+<span class="text-[10px] font-mono text-brand-textPrimary font-medium">₹1.84 Cr</span>
+</a>
+<a class="flex items-center justify-between px-2.5 py-2 text-brand-textMuted hover:bg-brand-surface hover:text-white text-[12px] group" href="#">
+<div class="flex items-center space-x-2">
+<svg class="w-3.5 h-3.5 text-brand-textMuted group-hover:text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg>
+<span class="truncate">DBT Subsidies Ledger</span>
+</div>
+<span class="text-[10px] font-mono text-brand-teal font-medium">₹3.42 Cr</span>
+</a>
+</nav>
+</div>
+<!-- Bottom Officer & Server Authentication Badge -->
+<div class="hairline-t bg-brand-panel p-2.5" data-purpose="officer-auth-panel">
+<div class="flex items-center justify-between text-[10px] font-mono text-brand-textMuted mb-1">
+<span>NIC GIS Server:</span>
+<span class="text-brand-textPrimary">Shimla Node #04</span>
+</div>
+<div class="flex items-center justify-between text-[10px] font-mono text-brand-textMuted mb-2">
+<span>Sensor/DBT Uptime:</span>
+<span class="text-brand-emerald">99.82%</span>
+</div>
+<div class="flex items-center space-x-2 pt-2 hairline-t">
+<div class="w-6 h-6 rounded bg-brand-surface hairline-all flex items-center justify-center font-mono font-bold text-brand-teal text-[10px]">
+            JD
+          </div>
+<div class="overflow-hidden leading-tight">
+<div class="text-[11px] font-semibold text-brand-textPrimary truncate">J. Dogra (IAS)</div>
+<div class="text-[9px] text-brand-textMuted truncate">Chief Secy (Tourism &amp; Rural)</div>
+</div>
+<svg class="w-3.5 h-3.5 text-brand-textMuted ml-auto" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+</div>
+</aside>
+<!-- END: LeftSidebar -->
+<!-- BEGIN: MainContentDashboard -->
+<main class="flex-1 bg-brand-navy flex flex-col overflow-y-auto" data-purpose="main-dashboard-canvas">
+<!-- Sub-Bar: Telemetry KPIs Strip (Top Row) -->
+<section class="grid grid-cols-5 hairline-b bg-brand-dark divide-x divide-brand-border" data-purpose="kpi-summary-strip">
+<!-- KPI 1 -->
+<div class="p-3 bg-brand-dark/90">
+<div class="flex items-center justify-between mb-1">
+<span class="text-[10px] uppercase font-mono tracking-wider text-brand-textMuted">Total MUDRA Disbursed</span>
+<svg class="w-3.5 h-3.5 text-brand-teal" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<div class="flex items-baseline space-x-2">
+<span class="text-2xl font-bold font-tabular text-brand-textPrimary">₹42.6L</span>
+<span class="text-[11px] font-mono text-brand-emerald font-semibold">+28.4% YoY</span>
+</div>
+<div class="mt-1 flex items-center justify-between text-[10px] font-mono text-brand-textMuted">
+<span>Target: ₹50.0L</span>
+<span class="text-brand-textPrimary">85.2% utilized</span>
+</div>
+</div>
+<!-- KPI 2 -->
+<div class="p-3 bg-brand-dark/90">
+<div class="flex items-center justify-between mb-1">
+<span class="text-[10px] uppercase font-mono tracking-wider text-brand-textMuted">Subsidized Units</span>
+<span class="text-[9px] px-1 bg-brand-surface hairline-all font-mono text-brand-textMuted">LIVE</span>
+</div>
+<div class="flex items-baseline space-x-2">
+<span class="text-2xl font-bold font-tabular text-brand-textPrimary">1,842</span>
+<span class="text-[11px] font-mono text-brand-emerald">+186 Q2</span>
+</div>
+<div class="mt-1 flex items-center justify-between text-[10px] font-mono text-brand-textMuted">
+<span>PMAY-G Linked:</span>
+<span class="text-brand-teal font-medium">1,120 (60.8%)</span>
+</div>
+</div>
+<!-- KPI 3 -->
+<div class="p-3 bg-brand-dark/90">
+<div class="flex items-center justify-between mb-1">
+<span class="text-[10px] uppercase font-mono tracking-wider text-brand-textMuted">Beneficiary Households</span>
+<span class="text-[9px] text-brand-teal font-mono">Direct DBT</span>
+</div>
+<div class="flex items-baseline space-x-2">
+<span class="text-2xl font-bold font-tabular text-brand-textPrimary">3,490</span>
+<span class="text-[11px] font-mono text-brand-emerald font-semibold">+₹26.4k/mo</span>
+</div>
+<div class="mt-1 flex items-center justify-between text-[10px] font-mono text-brand-textMuted">
+<span>Delta/family:</span>
+<span class="text-brand-emerald">+148% rural avg</span>
+</div>
+</div>
+<!-- KPI 4 -->
+<div class="p-3 bg-brand-dark/90">
+<div class="flex items-center justify-between mb-1">
+<span class="text-[10px] uppercase font-mono tracking-wider text-brand-textMuted">DBT Velocity Cycle</span>
+<svg class="w-3.5 h-3.5 text-brand-textMuted" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<div class="flex items-baseline space-x-2">
+<span class="text-2xl font-bold font-tabular text-brand-textPrimary">2.4 Days</span>
+<span class="text-[11px] font-mono text-brand-emerald">-1.8d vs FY23</span>
+</div>
+<div class="mt-1 flex items-center justify-between text-[10px] font-mono text-brand-textMuted">
+<span>Pendency:</span>
+<span class="text-brand-emerald font-semibold">0 in Kullu/Mandi</span>
+</div>
+</div>
+<!-- KPI 5 -->
+<div class="p-3 bg-brand-dark/90">
+<div class="flex items-center justify-between mb-1">
+<span class="text-[10px] uppercase font-mono tracking-wider text-brand-textMuted">NPA / Default Rate</span>
+<span class="text-[9px] px-1 bg-brand-emerald/10 text-brand-emerald border border-brand-emerald/30 font-mono">SOVEREIGN A+</span>
+</div>
+<div class="flex items-baseline space-x-2">
+<span class="text-2xl font-bold font-tabular text-brand-emerald">0.8%</span>
+<span class="text-[11px] font-mono text-brand-textMuted">Benchmark &lt;2.5%</span>
+</div>
+<div class="mt-1 flex items-center justify-between text-[10px] font-mono text-brand-textMuted">
+<span>Escrow Buffer:</span>
+<span class="text-brand-textPrimary">₹1.14 Cr</span>
+</div>
+</div>
+</section>
+<!-- Dashboard Body Grid -->
+<div class="p-3 space-y-3">
+<!-- BEGIN: HeroRevenueChartSection -->
+<!-- Core Wide Hero Card: Platform Revenue vs Loan Repayment Baseline -->
+<section class="bg-brand-panel hairline-all" data-purpose="hero-income-trend">
+<div class="p-3 hairline-b flex items-center justify-between bg-brand-dark/50">
+<div class="space-y-0.5">
+<div class="flex items-center space-x-2">
+<h2 class="text-[13px] font-semibold text-brand-textPrimary">Rural income generated via platform, mapped to MUDRA-loan homestays</h2>
+<span class="text-[9px] px-1.5 py-0.2 bg-brand-surface hairline-all text-brand-teal font-mono">AUDITED NIC-PFMS</span>
+</div>
+<p class="text-[11px] text-brand-textMuted">6-month monthly aggregate direct host payout telemetry vs mandatory debt repayment threshold</p>
+</div>
+<div class="flex items-center space-x-3">
+<!-- Key Indicators -->
+<div class="flex items-center space-x-4 text-[11px] font-mono">
+<div class="flex items-center space-x-1.5">
+<span class="w-3 h-0.5 bg-brand-teal inline-block"></span>
+<span class="text-brand-textPrimary">Actual Direct Payouts (₹)</span>
+</div>
+<div class="flex items-center space-x-1.5">
+<span class="w-3 h-0.5 border-t border-dashed border-brand-textMuted inline-block"></span>
+<span class="text-brand-textMuted">MUDRA Repayment Floor</span>
+</div>
+</div>
+<!-- Time granularity toggle -->
+<div class="flex hairline-all font-mono text-[10px] bg-brand-dark">
+<button class="px-2 py-0.5 bg-brand-surface text-brand-textPrimary hairline-r">Monthly</button>
+<button class="px-2 py-0.5 text-brand-textMuted hover:text-white">Fortnightly</button>
+</div>
+</div>
+</div>
+<!-- Hero Metrics Topline -->
+<div class="grid grid-cols-4 hairline-b bg-brand-dark/30 px-3 py-2 divide-x divide-brand-border">
+<div class="pr-3">
+<div class="text-[10px] font-mono text-brand-textMuted uppercase">Aggregate Direct Payout</div>
+<div class="text-xl font-bold font-tabular text-brand-textPrimary flex items-center gap-2">
+                ₹42.6L
+                <span class="text-[11px] font-mono text-brand-emerald font-normal">+34.8% vs H1 target</span>
+</div>
+</div>
+<div class="px-3">
+<div class="text-[10px] font-mono text-brand-textMuted uppercase">Avg Monthly Host Income</div>
+<div class="text-xl font-bold font-tabular text-brand-teal">₹24,800 <span class="text-[11px] text-brand-textMuted font-normal">/mo</span></div>
+</div>
+<div class="px-3">
+<div class="text-[10px] font-mono text-brand-textMuted uppercase">Debt Service Coverage (DSCR)</div>
+<div class="text-xl font-bold font-tabular text-brand-emerald">2.84x <span class="text-[10px] text-brand-textMuted font-normal">(Safe &gt; 1.35x)</span></div>
+</div>
+<div class="pl-3">
+<div class="text-[10px] font-mono text-brand-textMuted uppercase">Fastest Repaying Cluster</div>
+<div class="text-base font-semibold text-brand-textPrimary truncate">Tirthan &amp; Jibhi Valley (99.1%)</div>
+</div>
+</div>
+<!-- Interactive SVG Analytical Trend Area Chart -->
+<div class="p-3">
+<div class="h-56 w-full relative">
+<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 900 220">
+<defs>
+<!-- Teal Area Gradient -->
+<lineargradient id="tealGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#2F8F86" stop-opacity="0.32"></stop>
+<stop offset="100%" stop-color="#2F8F86" stop-opacity="0.0"></stop>
+</lineargradient>
+</defs>
+<!-- Crisp Hairline Grid Lines (Horizontals) -->
+<line stroke="#283340" stroke-dasharray="2 2" stroke-width="1" x1="40" x2="880" y1="20" y2="20"></line>
+<text fill="#8B93A1" font-family="IBM Plex Mono" font-size="10" text-anchor="end" x="32" y="24">₹14L</text>
+<line stroke="#283340" stroke-dasharray="2 2" stroke-width="1" x1="40" x2="880" y1="65" y2="65"></line>
+<text fill="#8B93A1" font-family="IBM Plex Mono" font-size="10" text-anchor="end" x="32" y="69">₹10.5L</text>
+<line stroke="#283340" stroke-dasharray="2 2" stroke-width="1" x1="40" x2="880" y1="110" y2="110"></line>
+<text fill="#8B93A1" font-family="IBM Plex Mono" font-size="10" text-anchor="end" x="32" y="114">₹7.0L</text>
+<line stroke="#283340" stroke-dasharray="2 2" stroke-width="1" x1="40" x2="880" y1="155" y2="155"></line>
+<text fill="#8B93A1" font-family="IBM Plex Mono" font-size="10" text-anchor="end" x="32" y="159">₹3.5L</text>
+<line stroke="#283340" stroke-width="1" x1="40" x2="880" y1="195" y2="195"></line>
+<text fill="#8B93A1" font-family="IBM Plex Mono" font-size="10" text-anchor="end" x="32" y="198">₹0</text>
+<!-- Baseline Repayment Threshold (Dashed Horizontal Line ~ ₹3.8L threshold) -->
+<line stroke="#8B93A1" stroke-dasharray="5 5" stroke-width="1.5" x1="40" x2="880" y1="150" y2="150"></line>
+<text fill="#8B93A1" font-family="IBM Plex Mono" font-size="9" font-weight="600" text-anchor="end" x="875" y="143">MINIMUM REPAYMENT CEILING: ₹3.8L</text>
+<!-- Area Fill for Payouts -->
+<!-- Points: May(45, 142) -> Jun(210, 126) -> Jul(375, 112) -> Aug(540, 88) -> Sep(705, 52) -> Oct(870, 36) -->
+<polygon fill="url(#tealGradient)" points="45,195 45,142 210,126 375,112 540,88 705,52 870,36 870,195"></polygon>
+<!-- Trend Line -->
+<polyline fill="none" points="45,142 210,126 375,112 540,88 705,52 870,36" stroke="#2F8F86" stroke-width="2.5"></polyline>
+<!-- Data Plot Nodes -->
+<circle cx="45" cy="142" fill="#121821" r="3.5" stroke="#2F8F86" stroke-width="2"></circle>
+<circle cx="210" cy="126" fill="#121821" r="3.5" stroke="#2F8F86" stroke-width="2"></circle>
+<circle cx="375" cy="112" fill="#121821" r="3.5" stroke="#2F8F86" stroke-width="2"></circle>
+<circle cx="540" cy="88" fill="#121821" r="3.5" stroke="#2F8F86" stroke-width="2"></circle>
+<circle cx="705" cy="52" fill="#121821" r="3.5" stroke="#2F8F86" stroke-width="2"></circle>
+<circle cx="870" cy="36" fill="#10b981" r="4.5" stroke="#121821" stroke-width="2"></circle>
+<!-- Oct Active Tooltip Badge Marker -->
+<g transform="translate(730, 10)">
+<rect fill="#1B232D" height="42" stroke="#2F8F86" stroke-width="1" width="135" x="0" y="0"></rect>
+<text fill="#E8EAED" font-family="IBM Plex Sans" font-size="10" font-weight="600" x="8" y="15">Oct 2024 (Peak Autumn)</text>
+<text fill="#2F8F86" font-family="IBM Plex Mono" font-size="12" font-weight="700" x="8" y="32">₹11.8L</text>
+<text fill="#8B93A1" font-family="IBM Plex Mono" font-size="10" x="64" y="32">1,842 units</text>
+</g>
+<!-- Vertical Hairline Drop on Oct node -->
+<line stroke="#2F8F86" stroke-dasharray="2 2" stroke-width="1" x1="870" x2="870" y1="36" y2="195"></line>
+<!-- X Axis Month Labels -->
+<text fill="#8B93A1" font-family="IBM Plex Mono" font-size="10" text-anchor="middle" x="45" y="212">May 2024</text>
+<text fill="#8B93A1" font-family="IBM Plex Mono" font-size="10" text-anchor="middle" x="210" y="212">Jun 2024</text>
+<text fill="#8B93A1" font-family="IBM Plex Mono" font-size="10" text-anchor="middle" x="375" y="212">Jul 2024</text>
+<text fill="#8B93A1" font-family="IBM Plex Mono" font-size="10" text-anchor="middle" x="540" y="212">Aug 2024</text>
+<text fill="#8B93A1" font-family="IBM Plex Mono" font-size="10" text-anchor="middle" x="705" y="212">Sep 2024</text>
+<text fill="#E8EAED" font-family="IBM Plex Mono" font-size="10" font-weight="600" text-anchor="middle" x="870" y="212">Oct 2024</text>
+</svg>
+</div>
+</div>
+</section>
+<!-- END: HeroRevenueChartSection -->
+<!-- BEGIN: SecondaryChartsGrid -->
+<!-- Side-by-Side Analytical Modules: Growth Benchmark + Arrivals Ratio -->
+<div class="grid grid-cols-2 gap-3">
+<!-- Card Left: State-wise Homestay Growth Benchmark -->
+<section class="bg-brand-panel hairline-all flex flex-col justify-between" data-purpose="state-growth-benchmark">
+<div>
+<div class="p-3 hairline-b flex items-center justify-between bg-brand-dark/40">
+<div class="flex items-center space-x-2">
+<h3 class="text-[12px] font-semibold text-brand-textPrimary">State-wise Homestay Growth &amp; Capacity</h3>
+<span class="text-[9px] px-1 bg-brand-surface hairline-all font-mono text-brand-textMuted">Himalayan Eco-belt</span>
+</div>
+<span class="text-[11px] font-mono text-brand-teal">FY 24-25</span>
+</div>
+<!-- Bar Comparison Telemetry -->
+<div class="p-3 space-y-3.5">
+<!-- Himachal Pradesh (Benchmark leader) -->
+<div>
+<div class="flex justify-between text-[11px] font-mono mb-1">
+<span class="text-white font-semibold flex items-center gap-1.5">
+<span class="w-2 h-2 bg-brand-teal inline-block"></span>
+                      Himachal Pradesh
+                      <span class="text-[9px] text-brand-teal bg-brand-teal/10 px-1 border border-brand-teal/30">Kathkuni Policy Top-up</span>
+</span>
+<span class="text-brand-textPrimary font-bold font-tabular">1,842 units <span class="text-brand-emerald font-normal">(+42% YoY)</span></span>
+</div>
+<!-- Progress hairline bar -->
+<div class="w-full h-3 bg-brand-dark hairline-all overflow-hidden">
+<div class="h-full bg-brand-teal" style="width: 88%;"></div>
+</div>
+</div>
+<!-- Uttarakhand -->
+<div>
+<div class="flex justify-between text-[11px] font-mono mb-1">
+<span class="text-brand-textMuted flex items-center gap-1.5">
+<span class="w-2 h-2 bg-brand-borderLight inline-block"></span>
+                      Uttarakhand (Homestay Yojna)
+                    </span>
+<span class="text-brand-textPrimary font-tabular">1,280 units <span class="text-brand-textMuted font-normal">(+28% YoY)</span></span>
+</div>
+<div class="w-full h-3 bg-brand-dark hairline-all overflow-hidden">
+<div class="h-full bg-brand-borderLight" style="width: 61%;"></div>
+</div>
+</div>
+<!-- Kerala -->
+<div>
+<div class="flex justify-between text-[11px] font-mono mb-1">
+<span class="text-brand-textMuted flex items-center gap-1.5">
+<span class="w-2 h-2 bg-brand-borderLight inline-block"></span>
+                      Kerala (Responsible Tourism Track)
+                    </span>
+<span class="text-brand-textPrimary font-tabular">1,490 units <span class="text-brand-textMuted font-normal">(+15% YoY)</span></span>
+</div>
+<div class="w-full h-3 bg-brand-dark hairline-all overflow-hidden">
+<div class="h-full bg-brand-borderLight" style="width: 71%;"></div>
+</div>
+</div>
+<!-- Ladakh UT -->
+<div>
+<div class="flex justify-between text-[11px] font-mono mb-1">
+<span class="text-brand-textMuted flex items-center gap-1.5">
+<span class="w-2 h-2 bg-brand-borderLight inline-block"></span>
+                      Ladakh UT (High Altitude Solar Units)
+                    </span>
+<span class="text-brand-textPrimary font-tabular">640 units <span class="text-brand-textMuted font-normal">(+19% YoY)</span></span>
+</div>
+<div class="w-full h-3 bg-brand-dark hairline-all overflow-hidden">
+<div class="h-full bg-brand-borderLight" style="width: 31%;"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footnote Regulatory Callout -->
+<div class="p-2.5 bg-brand-dark/80 hairline-t flex items-center justify-between text-[10px] font-mono text-brand-textMuted">
+<span>H.P. Tourism Policy §14-B Dispersal Incentive</span>
+<span class="text-brand-emerald">94.2% Adherence</span>
+</div>
+</section>
+<!-- Card Right: Domestic vs Foreign Arrivals Ratio -->
+<section class="bg-brand-panel hairline-all flex flex-col justify-between" data-purpose="arrivals-ratio-breakdown">
+<div>
+<div class="p-3 hairline-b flex items-center justify-between bg-brand-dark/40">
+<div class="flex items-center space-x-2">
+<h3 class="text-[12px] font-semibold text-brand-textPrimary">Domestic vs Foreign Arrivals Ratio</h3>
+<span class="text-[9px] px-1 bg-brand-surface hairline-all font-mono text-brand-emerald font-semibold">ECO-CERTIFIED</span>
+</div>
+<span class="text-[11px] font-mono text-brand-textMuted">143,474 Total Pax</span>
+</div>
+<div class="p-3 grid grid-cols-12 gap-3 items-center">
+<!-- SVG Semi-Donut / Radial Visual -->
+<div class="col-span-5 flex flex-col items-center justify-center">
+<div class="w-32 h-32 relative flex items-center justify-center">
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 100 100">
+<!-- Background circle track -->
+<circle cx="50" cy="50" fill="none" r="38" stroke="#1B232D" stroke-width="12"></circle>
+<!-- Domestic: 78.4% -> perimeter = 2 * PI * 38 = 238.76. Dash = 187.2 -->
+<circle cx="50" cy="50" fill="none" r="38" stroke="#10b981" stroke-dasharray="187.2 238.8" stroke-dashoffset="0" stroke-width="12"></circle>
+<!-- Foreign: 21.6% -> Dash = 51.5. Offset = -187.2 -->
+<circle cx="50" cy="50" fill="none" r="38" stroke="#2F8F86" stroke-dasharray="51.5 238.8" stroke-dashoffset="-187.2" stroke-width="12"></circle>
+</svg>
+<!-- Center Metric -->
+<div class="absolute inset-0 flex flex-col items-center justify-center text-center font-mono">
+<span class="text-xs font-bold text-white leading-none">78.4%</span>
+<span class="text-[8px] text-brand-textMuted uppercase mt-0.5">DOMESTIC</span>
+</div>
+</div>
+<div class="text-[10px] font-mono text-brand-textMuted mt-1">Oct Surge Peak Index</div>
+</div>
+<!-- Demographic and Origin Stats -->
+<div class="col-span-7 space-y-2 text-[11px] font-mono">
+<!-- Domestic Block -->
+<div class="p-2 bg-brand-dark/70 hairline-all">
+<div class="flex justify-between items-center mb-0.5">
+<div class="flex items-center space-x-1.5">
+<span class="w-2 h-2 rounded-full bg-brand-emerald"></span>
+<span class="font-semibold text-brand-textPrimary">Domestic</span>
+</div>
+<span class="font-bold text-white font-tabular">112,480 pax</span>
+</div>
+<div class="text-[10px] text-brand-textMuted truncate">Top Feeder: NCR Delhi (42%), Punjab, Maharashtra</div>
+</div>
+<!-- Foreign Block -->
+<div class="p-2 bg-brand-dark/70 hairline-all">
+<div class="flex justify-between items-center mb-0.5">
+<div class="flex items-center space-x-1.5">
+<span class="w-2 h-2 rounded-full bg-brand-teal"></span>
+<span class="font-semibold text-brand-textPrimary">Foreign (Eco-Trek)</span>
+</div>
+<span class="font-bold text-white font-tabular">30,994 pax</span>
+</div>
+<div class="text-[10px] text-brand-textMuted truncate">Permits: UK, France, Germany, Israel</div>
+</div>
+<div class="flex justify-between items-center text-[10px] pt-1">
+<span class="text-brand-textMuted">Avg Foreign Spend:</span>
+<span class="text-brand-teal font-semibold font-tabular">₹4,850 / day (Direct host)</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Disclaimer Footnote -->
+<div class="p-2.5 bg-brand-dark/80 hairline-t flex items-center justify-between text-[10px] font-mono text-brand-textMuted">
+<span>Source: FRRO &amp; Green Tax Surcharge Gateways</span>
+<span class="text-brand-textPrimary">Auto-reconciled</span>
+</div>
+</section>
+</div>
+<!-- END: SecondaryChartsGrid -->
+<!-- BEGIN: SchemeAuditVerificationTable -->
+<!-- Government Audit Log: DBT Subsidy Payouts & MUDRA Field Inspections -->
+<section class="bg-brand-panel hairline-all" data-purpose="scheme-audit-table">
+<div class="p-3 hairline-b flex items-center justify-between bg-brand-dark/40">
+<div class="flex items-center space-x-2">
+<h3 class="text-[12px] font-semibold text-brand-textPrimary">Live MUDRA &amp; DBT Subsidy Payout Stream (Kullu &amp; Tirthan Valley Cluster)</h3>
+<span class="w-1.5 h-1.5 rounded-full bg-brand-emerald animate-ping"></span>
+</div>
+<div class="flex items-center space-x-2 text-[11px] font-mono">
+<span class="text-brand-textMuted">Audited via PFMS Gateway</span>
+<div class="h-3 w-px bg-brand-border"></div>
+<button class="text-brand-teal hover:underline flex items-center space-x-1">
+<span>View Full 1,842 Records</span>
+<svg class="w-3 h-3" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+</div>
+<!-- Structured Gov Analytical Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left text-[11px] font-mono border-collapse">
+<thead>
+<tr class="bg-brand-dark/80 text-brand-textMuted hairline-b uppercase text-[10px]">
+<th class="py-2 px-3 font-semibold">Beneficiary / Homestay</th>
+<th class="py-2 px-3 font-semibold">Location / Panchayat</th>
+<th class="py-2 px-3 font-semibold">Scheme Category</th>
+<th class="py-2 px-3 font-semibold">Sanction Amount</th>
+<th class="py-2 px-3 font-semibold">Asset Created</th>
+<th class="py-2 px-3 font-semibold">Disbursal Date</th>
+<th class="py-2 px-3 font-semibold">PFMS Audit Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-brand-border text-brand-textPrimary">
+<!-- Record 1 -->
+<tr class="hover:bg-brand-surface/60 transition-colors">
+<td class="py-2.5 px-3">
+<div class="font-semibold text-white">Meera Devi</div>
+<div class="text-[10px] text-brand-textMuted">BHM-8842 · Shringi Vatika</div>
+</td>
+<td class="py-2.5 px-3">
+<div>Tirthan Valley</div>
+<div class="text-[10px] text-brand-textMuted">Gushaini Gram Panchayat</div>
+</td>
+<td class="py-2.5 px-3">
+<span class="px-1.5 py-0.5 bg-brand-teal/10 text-brand-teal border border-brand-teal/30 text-[10px]">MUDRA Shishu</span>
+</td>
+<td class="py-2.5 px-3 font-bold text-white font-tabular">₹50,000</td>
+<td class="py-2.5 px-3 text-brand-textMuted">Solar Water Heater &amp; Bukhari</td>
+<td class="py-2.5 px-3 text-brand-textMuted">Oct 18, 2024</td>
+<td class="py-2.5 px-3">
+<span class="inline-flex items-center px-1.5 py-0.5 bg-brand-emerald/10 text-brand-emerald border border-brand-emerald/40 text-[10px] font-semibold">
+                      ● VERIFIED &amp; ACTIVE
+                    </span>
+</td>
+</tr>
+<!-- Record 2 -->
+<tr class="hover:bg-brand-surface/60 transition-colors">
+<td class="py-2.5 px-3">
+<div class="font-semibold text-white">Roshan Thakur</div>
+<div class="text-[10px] text-brand-textMuted">BHM-7120 · Riverside Kathkuni</div>
+</td>
+<td class="py-2.5 px-3">
+<div>Nagini Cluster</div>
+<div class="text-[10px] text-brand-textMuted">Banjar Sub-division</div>
+</td>
+<td class="py-2.5 px-3">
+<span class="px-1.5 py-0.5 bg-brand-surface text-brand-textPrimary hairline-all text-[10px]">NABARD Eco-Trek</span>
+</td>
+<td class="py-2.5 px-3 font-bold text-white font-tabular">₹1,20,000</td>
+<td class="py-2.5 px-3 text-brand-textMuted">Angling Gear &amp; River Buffer Wall</td>
+<td class="py-2.5 px-3 text-brand-textMuted">Oct 12, 2024</td>
+<td class="py-2.5 px-3">
+<span class="inline-flex items-center px-1.5 py-0.5 bg-brand-emerald/10 text-brand-emerald border border-brand-emerald/40 text-[10px] font-semibold">
+                      ● VERIFIED
+                    </span>
+</td>
+</tr>
+<!-- Record 3 -->
+<tr class="hover:bg-brand-surface/60 transition-colors">
+<td class="py-2.5 px-3">
+<div class="font-semibold text-white">Khemraj Sharma</div>
+<div class="text-[10px] text-brand-textMuted">BHM-9041 · Jalori Pine Cottage</div>
+</td>
+<td class="py-2.5 px-3">
+<div>Jibhi &amp; Shoja Ridge</div>
+<div class="text-[10px] text-brand-textMuted">Chehni Kothi Zone</div>
+</td>
+<td class="py-2.5 px-3">
+<span class="px-1.5 py-0.5 bg-brand-amber/10 text-brand-amber border border-brand-amber/30 text-[10px]">PMAY-G Top-up</span>
+</td>
+<td class="py-2.5 px-3 font-bold text-white font-tabular">₹80,000</td>
+<td class="py-2.5 px-3 text-brand-textMuted">Slate Roof Restoration (Kathkuni)</td>
+<td class="py-2.5 px-3 text-brand-textMuted">Oct 04, 2024</td>
+<td class="py-2.5 px-3">
+<span class="inline-flex items-center px-1.5 py-0.5 bg-brand-amber/10 text-brand-amber border border-brand-amber/40 text-[10px] font-semibold">
+                      ▲ UNDER INSPECTION
+                    </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- END: SchemeAuditVerificationTable -->
+</div>
+</main>
+<!-- END: MainContentDashboard -->
+</div>
+<!-- BEGIN: BottomSystemTelemetryBar -->
+<footer class="h-6 bg-brand-dark hairline-t px-3 flex items-center justify-between text-[10px] font-mono text-brand-textMuted shrink-0" data-purpose="bottom-gis-telemetry">
+<div class="flex items-center space-x-4">
+<div class="flex items-center space-x-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-brand-emerald"></span>
+<span>GIS Stream: Sentinel-2 Multispectral</span>
+</div>
+<div class="h-3 w-px bg-brand-border"></div>
+<div>Projection: EPSG:4326 (WGS 84)</div>
+<div class="h-3 w-px bg-brand-border"></div>
+<div>Ground Res: 10m/px</div>
+<div class="h-3 w-px bg-brand-border"></div>
+<div>DBT Clearance Node: SBI Shimla Treasury #09</div>
+</div>
+<div class="flex items-center space-x-3">
+<div class="flex items-center space-x-1">
+<span>Auto-refresh:</span>
+<span class="text-brand-textPrimary font-semibold">10s</span>
+</div>
+<button class="hover:text-white flex items-center space-x-1">
+<svg class="w-3 h-3" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Sync</span>
+</button>
+<div class="h-3 w-px bg-brand-border"></div>
+<span class="text-brand-emerald">Cabinet Approved Portal</span>
+</div>
+</footer>
+<!-- END: BottomSystemTelemetryBar -->
+</body></html>
