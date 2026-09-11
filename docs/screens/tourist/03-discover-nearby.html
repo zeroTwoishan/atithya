@@ -1,117 +1,200 @@
 <!DOCTYPE html>
-
-<html lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Bhraman - Discover Nearby Himachal Pradesh</title>
-<!-- Google Fonts & Material Symbols -->
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<!-- Tailwind CSS with custom config -->
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script id="tailwind-config">
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Bhraman - Discover Nearby Himachal Pradesh — Clean Glass</title>
+  <!-- Google Fonts: Playfair Display / Newsreader & Plus Jakarta Sans / Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+  <!-- Material Symbols Outlined -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
     tailwind.config = {
-      darkMode: "class",
       theme: {
         extend: {
-          "colors": {
-            "secondary-fixed-dim": "#aeceba",
-            "primary-fixed-dim": "#ffb4a1",
-            "on-primary": "#ffffff",
-            "on-background": "#221a15",
-            "background": "#fff8f5",
-            "tertiary": "#006275",
-            "surface-tint": "#a53b1f",
-            "on-error": "#ffffff",
-            "tertiary-fixed-dim": "#79d3ec",
-            "secondary": "#486554",
-            "on-secondary-fixed-variant": "#314d3e",
-            "error": "#ba1a1a",
-            "on-primary-fixed": "#3c0800",
-            "on-tertiary-fixed-variant": "#004e5d",
-            "secondary-container": "#c7e7d3",
-            "surface": "#fff8f5",
-            "surface-dim": "#e7d7cf",
-            "surface-container-lowest": "#ffffff",
-            "primary": "#9e361a",
-            "surface-container-high": "#f6e5dd",
-            "on-secondary-fixed": "#042014",
-            "surface-container": "#fceae2",
-            "on-tertiary-container": "#eefaff",
-            "tertiary-container": "#007d94",
-            "surface-bright": "#fff8f5",
-            "inverse-on-surface": "#ffede5",
-            "on-error-container": "#93000a",
-            "outline-variant": "#dec0b8",
-            "outline": "#8b716b",
-            "on-tertiary": "#ffffff",
-            "on-primary-fixed-variant": "#852409",
-            "primary-fixed": "#ffdbd2",
-            "tertiary-fixed": "#afecff",
-            "surface-container-low": "#fff1ea",
-            "secondary-fixed": "#caead6",
-            "on-primary-container": "#fff6f4",
-            "on-tertiary-fixed": "#001f26",
-            "inverse-primary": "#ffb4a1",
-            "inverse-surface": "#382e29",
-            "surface-container-highest": "#f0dfd7",
-            "primary-container": "#bf4e30",
-            "on-secondary": "#ffffff",
-            "error-container": "#ffdad6",
-            "on-secondary-container": "#4c6959",
-            "on-surface": "#221a15",
-            "surface-variant": "#f0dfd7",
-            "on-surface-variant": "#57423c"
+          colors: {
+            bhraman: {
+              ink: '#1E1916',
+              inkMuted: '#6E645D',
+              inkLight: '#948880',
+              rust: '#BF4E30',
+              rustHover: '#A84126',
+              forest: '#244233',
+              forestSubtle: 'rgba(36, 66, 51, 0.08)',
+            }
           },
-          "borderRadius": {
-            "DEFAULT": "0.25rem",
-            "lg": "0.5rem",
-            "xl": "0.75rem",
-            "full": "9999px"
-          },
-          "spacing": {
-            "stack-section": "2.5rem",
-            "stack-base": "1rem",
-            "pad-pill": "0.375rem 0.875rem",
-            "pad-card": "1.25rem",
-            "margin-mobile": "1rem",
-            "pad-input": "0.875rem 1rem",
-            "stack-loose": "1.5rem",
-            "stack-tight": "0.5rem",
-            "gutter-mobile": "0.75rem"
-          },
-          "fontFamily": {
-            "headline-lg": ["Newsreader", "serif"],
-            "body-lg": ["Inter", "sans-serif"],
-            "label-sm": ["Inter", "sans-serif"],
-            "title-md": ["Inter", "sans-serif"],
-            "display-lg": ["Newsreader", "serif"],
-            "headline-sm": ["Newsreader", "serif"],
-            "headline-md": ["Newsreader", "serif"],
-            "label-md": ["Inter", "sans-serif"],
-            "body-md": ["Inter", "sans-serif"],
-            "display-mobile": ["Newsreader", "serif"]
-          },
-          "fontSize": {
-            "headline-lg": ["28px", { "lineHeight": "34px", "letterSpacing": "-0.02em", "fontWeight": "500" }],
-            "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400" }],
-            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600" }],
-            "title-md": ["18px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
-            "display-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.03em", "fontWeight": "600" }],
-            "headline-sm": ["20px", { "lineHeight": "26px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
-            "headline-md": ["24px", { "lineHeight": "30px", "letterSpacing": "-0.015em", "fontWeight": "500" }],
-            "label-md": ["13px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "600" }],
-            "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }],
-            "display-mobile": ["32px", { "lineHeight": "38px", "letterSpacing": "-0.025em", "fontWeight": "600" }]
+          fontFamily: {
+            serif: ['Playfair Display', 'Newsreader', 'Georgia', 'serif'],
+            sans: ['Plus Jakarta Sans', 'Inter', '-apple-system', 'sans-serif'],
           }
         }
       }
     }
   </script>
-<style>
+  <style>
+    /* ═════════════════════════════════════════════════════════════
+       CLEAN GLASSMORPHISM DESIGN SYSTEM (Light Milky Translucent)
+       ═════════════════════════════════════════════════════════════ */
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: #F6F1EA;
+      color: #1E1916;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .font-serif-lux {
+      font-family: 'Playfair Display', serif;
+      letter-spacing: -0.015em;
+    }
+
+    .pearl-canvas {
+      background: radial-gradient(120% 120% at 50% 0%, #FFFFFF 0%, #F7F2EC 40%, #EFE7DC 100%);
+      position: relative;
+    }
+
+    .glow-orb-1 {
+      position: absolute;
+      top: 40px;
+      right: -60px;
+      width: 280px;
+      height: 280px;
+      border-radius: 9999px;
+      background: radial-gradient(circle, rgba(243, 215, 190, 0.45) 0%, rgba(243, 215, 190, 0) 70%);
+      filter: blur(45px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .glow-orb-2 {
+      position: absolute;
+      top: 450px;
+      left: -80px;
+      width: 300px;
+      height: 300px;
+      border-radius: 9999px;
+      background: radial-gradient(circle, rgba(200, 225, 215, 0.45) 0%, rgba(200, 225, 215, 0) 70%);
+      filter: blur(50px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .glow-orb-3 {
+      position: absolute;
+      bottom: 160px;
+      right: -50px;
+      width: 260px;
+      height: 260px;
+      border-radius: 9999px;
+      background: radial-gradient(circle, rgba(235, 215, 200, 0.40) 0%, rgba(235, 215, 200, 0) 70%);
+      filter: blur(45px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(40px) saturate(200%);
+      -webkit-backdrop-filter: blur(40px) saturate(200%);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-top: 1px solid rgba(255, 255, 255, 0.6);
+      box-shadow: 
+        0 16px 40px -12px rgba(0, 0, 0, 0.06),
+        0 4px 12px rgba(0, 0, 0, 0.02),
+        inset 0 1px 1px 0 rgba(255, 255, 255, 0.4),
+        inset 0 -1px 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .glass-card-subtle {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(28px) saturate(180%);
+      -webkit-backdrop-filter: blur(28px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      box-shadow: 
+        0 4px 16px -4px rgba(0, 0, 0, 0.04),
+        inset 0 1px 1px 0 rgba(255, 255, 255, 0.3);
+    }
+
+    .glass-pill {
+      background: rgba(255, 255, 255, 0.35);
+      backdrop-filter: blur(24px) saturate(190%);
+      -webkit-backdrop-filter: blur(24px) saturate(190%);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      box-shadow: 
+        0 4px 14px -2px rgba(0, 0, 0, 0.04),
+        inset 0 1px 1px 0 rgba(255, 255, 255, 0.5);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .glass-pill:hover {
+      background: rgba(255, 255, 255, 0.55);
+      transform: translateY(-1px);
+      box-shadow: 
+        0 6px 18px -2px rgba(0, 0, 0, 0.06),
+        inset 0 1px 2px 0 rgba(255, 255, 255, 0.7);
+    }
+
+    .glass-pill:active {
+      transform: scale(0.97);
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    .glass-pill-dark {
+      background: #201B18;
+      color: #FFFFFF;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      box-shadow: 
+        0 8px 24px -4px rgba(32, 27, 24, 0.32),
+        inset 0 1px 1px 0 rgba(255, 255, 255, 0.25);
+      transition: all 0.2s ease;
+    }
+
+    .glass-pill-dark:hover {
+      background: #2D2622;
+      transform: translateY(-1px);
+    }
+
+    .glass-nav {
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(30px) saturate(200%);
+      -webkit-backdrop-filter: blur(30px) saturate(200%);
+      border-top: 1px solid rgba(255, 255, 255, 0.90);
+      box-shadow: 0 -6px 28px -4px rgba(45, 35, 28, 0.05);
+    }
+
+    /* ── Textured Gradient Navigation ── */
+    .nav-textured-gradient {
+      background: 
+        linear-gradient(135deg, rgba(232, 100, 58, 0.12) 0%, rgba(47, 75, 60, 0.06) 50%, rgba(255, 255, 255, 0.0) 100%),
+        rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(40px) saturate(220%);
+      -webkit-backdrop-filter: blur(40px) saturate(220%);
+      border-top: 1px solid rgba(255, 255, 255, 0.6);
+      position: relative;
+    }
+
+    .nav-textured-gradient::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0.2;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23n)'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 450, 'GRAD' 0, 'opsz' 20;
+      vertical-align: middle;
+    }
+    .material-symbols-filled {
+      font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 20;
+      vertical-align: middle;
+    }
+
     .no-scrollbar::-webkit-scrollbar {
       display: none;
     }
@@ -119,405 +202,282 @@
       -ms-overflow-style: none;
       scrollbar-width: none;
     }
-    .material-symbols-outlined {
-      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-      display: inline-block;
-      vertical-align: middle;
-      line-height: 1;
-    }
   </style>
 </head>
-<body class="bg-background text-on-surface antialiased min-h-screen flex flex-col items-center selection:bg-primary-fixed selection:text-on-primary-fixed">
-<!-- Mobile Viewport Shell (390px-420px container for authentic mobile fidelity) -->
-<div class="w-full max-w-[420px] min-h-screen bg-background relative flex flex-col pb-28 shadow-xl">
-<!-- Status & Telecom Mock Row -->
-<header class="w-full pt-3 px-5 pb-2 flex items-center justify-between text-on-surface-variant">
-<div class="flex items-center gap-1.5">
-<span class="font-label-sm text-label-sm tracking-wider font-semibold text-on-surface">09:41</span>
-<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
-</div>
-<div class="flex items-center gap-2 text-on-surface">
-<span class="material-symbols-outlined text-[15px]" data-icon="signal_cellular_alt">signal_cellular_alt</span>
-<span class="material-symbols-outlined text-[15px]" data-icon="wifi">wifi</span>
-<span class="material-symbols-outlined text-[16px]" data-icon="battery_full">battery_full</span>
-</div>
-</header>
-<!-- App Brand & Location Header -->
-<section class="px-4 pt-1 pb-3 flex flex-col gap-2.5">
-<div class="flex items-center justify-between">
-<div class="flex items-center gap-1.5">
-<span class="material-symbols-outlined text-primary text-[18px]" data-icon="spa">spa</span>
-<span class="font-label-sm text-label-sm tracking-[0.16em] uppercase text-on-surface-variant font-semibold">
-            Bhraman • Himachal Pradesh
-          </span>
-</div>
-<div class="flex items-center gap-1">
-<button aria-label="Notifications" class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface hover:bg-surface-container-high transition-colors">
-<span class="material-symbols-outlined text-[18px]" data-icon="notifications">notifications</span>
-</button>
-</div>
-</div>
-<!-- Location & Search Capsule -->
-<div class="flex items-center gap-2 bg-surface-container-lowest border border-outline-variant/60 rounded-xl p-2 shadow-[0_2px_10px_-2px_rgba(42,33,28,0.05)]">
-<div class="w-9 h-9 rounded-lg bg-surface-container flex items-center justify-center text-primary shrink-0">
-<span class="material-symbols-outlined text-[20px]" data-icon="near_me">near_me</span>
-</div>
-<div class="flex-1 min-w-0 pr-1">
-<div class="flex items-center gap-1">
-<span class="font-title-md text-[14px] font-semibold text-on-surface truncate">Near Tirthan Valley, HP</span>
-<span class="material-symbols-outlined text-[16px] text-on-surface-variant" data-icon="expand_more">expand_more</span>
-</div>
-<div class="flex items-center gap-1.5 mt-0.5">
-<span class="inline-block w-1.5 h-1.5 rounded-full bg-secondary"></span>
-<span class="font-label-sm text-[10.5px] text-on-surface-variant tracking-wide">Within 15 km • Catchment Active</span>
-</div>
-</div>
-<button aria-label="Filters" class="w-9 h-9 rounded-lg border border-outline-variant/50 flex items-center justify-center text-on-surface-variant hover:text-primary hover:border-primary transition-colors">
-<span class="material-symbols-outlined text-[19px]" data-icon="tune">tune</span>
-</button>
-</div>
-</section>
-<!-- Scrollable Category Filter Chips -->
-<nav class="w-full pl-4 pr-1 py-2 overflow-x-auto no-scrollbar flex items-center gap-2">
-<!-- Active Chip -->
-<button class="px-3.5 py-1.5 rounded-full bg-primary-container text-on-primary font-label-md text-label-md shadow-sm shrink-0 flex items-center gap-1.5">
-<span>All</span>
-<span class="text-[11px] px-1.5 py-0.2 bg-on-primary/20 rounded-full font-bold">24</span>
-</button>
-<!-- Inactive Chips -->
-<button class="px-3.5 py-1.5 rounded-full bg-surface-container-lowest border border-outline-variant/60 text-on-surface-variant hover:text-primary font-label-md text-label-md shrink-0 transition-colors">
-        Homestays
-      </button>
-<button class="px-3.5 py-1.5 rounded-full bg-surface-container-lowest border border-outline-variant/60 text-on-surface-variant hover:text-primary font-label-md text-label-md shrink-0 transition-colors">
-        Local Guides
-      </button>
-<button class="px-3.5 py-1.5 rounded-full bg-surface-container-lowest border border-outline-variant/60 text-on-surface-variant hover:text-primary font-label-md text-label-md shrink-0 transition-colors">
-        Artisans
-      </button>
-<button class="px-3.5 py-1.5 rounded-full bg-surface-container-lowest border border-outline-variant/60 text-on-surface-variant hover:text-primary font-label-md text-label-md shrink-0 transition-colors">
-        Food Experiences
-      </button>
-<button class="px-3.5 py-1.5 rounded-full bg-surface-container-lowest border border-outline-variant/60 text-on-surface-variant hover:text-primary font-label-md text-label-md shrink-0 transition-colors">
-        River Treks
-      </button>
-</nav>
-<!-- Editorial Lead Title Banner -->
-<div class="px-4 pt-4 pb-2">
-<div class="flex items-center justify-between">
-<span class="font-label-sm text-label-sm tracking-wider uppercase text-outline font-semibold">
-          Curated Daily • Tirthan Catchment
+<body class="pearl-canvas text-bhraman-ink antialiased min-h-screen flex justify-center selection:bg-[#BF4E30]/20 selection:text-[#BF4E30]">
+
+<!-- Mobile Viewport Shell (390px-420px container) -->
+<div class="w-full max-w-[420px] min-h-screen relative flex flex-col pb-28 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.08)] border-x border-white/60 overflow-hidden bg-transparent">
+  
+  <!-- Ambient background glow orbs -->
+  <div class="glow-orb-1"></div>
+  <div class="glow-orb-2"></div>
+  <div class="glow-orb-3"></div>
+
+  <!-- Status & Telecom Mock Row (Frosted Glass) -->
+  <header class="w-full pt-3 px-5 pb-2 flex items-center justify-between text-bhraman-inkMuted relative z-20">
+    <div class="flex items-center gap-1.5">
+      <span class="text-[12px] tracking-wider font-semibold text-bhraman-ink">09:41</span>
+      <span class="w-1.5 h-1.5 rounded-full bg-bhraman-forest"></span>
+    </div>
+    <div class="flex items-center gap-2 text-bhraman-ink">
+      <span class="material-symbols-outlined text-[15px]">signal_cellular_alt</span>
+      <span class="material-symbols-outlined text-[15px]">wifi</span>
+      <span class="material-symbols-outlined text-[16px]">battery_full</span>
+    </div>
+  </header>
+
+  <!-- App Brand & Location Header -->
+  <section class="px-4 pt-1 pb-3 flex flex-col gap-2.5 relative z-20">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-1.5">
+        <span class="material-symbols-outlined text-bhraman-rust text-[18px]">spa</span>
+        <span class="text-[11px] tracking-[0.16em] uppercase text-bhraman-inkMuted font-bold">
+          Bhraman • Himachal Pradesh
         </span>
-<div class="flex items-center gap-1.5 bg-secondary/10 px-2 py-0.5 rounded-full">
-<span class="relative flex h-2 w-2">
-<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
-<span class="relative inline-flex rounded-full h-2 w-2 bg-secondary"></span>
-</span>
-<span class="font-label-sm text-[10px] text-secondary font-semibold uppercase tracking-wider">Live in Valley</span>
-</div>
-</div>
-<h1 class="font-headline-lg text-headline-lg text-on-surface mt-1 font-headline-lg">
-        Immersive Living Stories
-      </h1>
-<p class="font-body-md text-body-md text-on-surface-variant mt-0.5">
-        Handcrafted community encounters rooted in Himalayan heritage and conservation.
-      </p>
-</div>
-<!-- FEED SECTION: Experience Cards -->
-<main class="px-4 pt-2 flex flex-col gap-6">
-<!-- CARD 1: Trout Fishing & River Conservation -->
-<article class="bg-surface-container-lowest rounded-2xl overflow-hidden border border-outline-variant/70 shadow-[0_4px_20px_-2px_rgba(42,33,28,0.06),0_2px_6px_-1px_rgba(42,33,28,0.04)] transition-all">
-<!-- Media Container -->
-<div class="relative w-full aspect-[16/10] overflow-hidden bg-surface-container">
-<img alt="Roshan Thakur fly-fishing in the rushing mountain streams of Tirthan Valley surrounded by pine-covered Himalayan slopes." class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AEtjO1VHHk6sPrS963uluABcCsRa0-27UonXaTh6SI-kOhv49nCu6BHkOXCgOH_XHfHBPNX3uepkS94yrwSfw9VRLrtt75-lo7KGeFb-IVwo5ZwwVneaIZnua7Io4W0Oh-j_EvQoSiyasO6-6VZM0vNiOChHoCl66ELbmq0UtozlgGY1G2sHaYfwqBzvpb5SAEc4wMZRb7t5asCkTENBjW1Hx5xtQEqe8ud9C5rRSIBCzxlU2RlTJdqbQfyhUxvC"/>
-<!-- Top Left: Verified Host Badge -->
-<div class="absolute top-3 left-3 flex items-center gap-1.5 bg-secondary text-on-secondary px-2.5 py-1 rounded-full text-label-sm font-label-sm shadow-sm backdrop-blur-sm">
-<span class="material-symbols-outlined text-[13px]" data-icon="verified_user">verified_user</span>
-<span>Verified Local Host</span>
-</div>
-<!-- Top Right: Wishlist Heart -->
-<button aria-label="Save to Wishlist" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-surface-container-lowest/90 backdrop-blur-sm flex items-center justify-center text-on-surface hover:text-primary transition-transform active:scale-90 shadow-sm">
-<span class="material-symbols-outlined text-[18px]" data-icon="favorite">favorite</span>
-</button>
-<!-- Bottom Left Pill on Image -->
-<div class="absolute bottom-3 left-3 bg-inverse-surface/85 backdrop-blur-md text-inverse-on-surface px-2.5 py-1 rounded-lg text-label-sm font-label-sm tracking-wide">
-            Catch &amp; Release Eco-Zone
+      </div>
+      <div class="flex items-center gap-1">
+        <button aria-label="Notifications" class="w-8 h-8 rounded-full glass-pill flex items-center justify-center text-bhraman-ink hover:scale-105 transition">
+          <span class="material-symbols-outlined text-[18px]">notifications</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Location & Search Capsule (Clean Frosted Glass Pill) -->
+    <div class="flex items-center gap-2.5 glass-card rounded-[22px] p-2">
+      <div class="w-9 h-9 rounded-full glass-pill flex items-center justify-center text-bhraman-rust shrink-0">
+        <span class="material-symbols-outlined text-[19px]">near_me</span>
+      </div>
+      <div class="flex-1 min-w-0 pr-1">
+        <div class="flex items-center gap-1">
+          <span class="font-serif-lux text-[15px] font-semibold text-bhraman-ink truncate">Near Tirthan Valley, HP</span>
+          <span class="material-symbols-outlined text-[16px] text-bhraman-inkMuted">expand_more</span>
+        </div>
+        <div class="flex items-center gap-1.5 mt-0.5">
+          <span class="inline-block w-1.5 h-1.5 rounded-full bg-bhraman-forest"></span>
+          <span class="text-[10.5px] text-bhraman-inkMuted tracking-wide font-medium">Within 15 km • Catchment Active</span>
+        </div>
+      </div>
+      <button aria-label="Filters" class="w-9 h-9 rounded-full glass-pill flex items-center justify-center text-bhraman-inkMuted hover:text-bhraman-rust transition">
+        <span class="material-symbols-outlined text-[18px]">tune</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- Scrollable Category Filter Chips (Matching Reference Pill Buttons) -->
+  <nav class="w-full pl-4 pr-1 py-1 overflow-x-auto no-scrollbar flex items-center gap-2 relative z-20">
+    <!-- Active Chip - Dark Glass Pill -->
+    <button class="px-4 py-1.5 rounded-full glass-pill-dark font-medium text-[12px] shadow-sm shrink-0 flex items-center gap-1.5 active:scale-95 transition">
+      <span>All</span>
+      <span class="text-[10px] px-1.5 py-0.2 bg-white/20 rounded-full font-bold">24</span>
+    </button>
+    <!-- Inactive Chips - Clean Glass Pills -->
+    <button class="px-4 py-1.5 rounded-full glass-pill text-bhraman-ink font-medium text-[12px] shrink-0 active:scale-95 transition">
+      Homestays
+    </button>
+    <button class="px-4 py-1.5 rounded-full glass-pill text-bhraman-ink font-medium text-[12px] shrink-0 active:scale-95 transition">
+      Local Guides
+    </button>
+    <button class="px-4 py-1.5 rounded-full glass-pill text-bhraman-ink font-medium text-[12px] shrink-0 active:scale-95 transition">
+      Artisans
+    </button>
+    <button class="px-4 py-1.5 rounded-full glass-pill text-bhraman-ink font-medium text-[12px] shrink-0 active:scale-95 transition">
+      Food Experiences
+    </button>
+    <button class="px-4 py-1.5 rounded-full glass-pill text-bhraman-ink font-medium text-[12px] shrink-0 active:scale-95 transition">
+      River Treks
+    </button>
+  </nav>
+
+  <!-- Editorial Lead Title Banner -->
+  <div class="px-4 pt-4 pb-2 relative z-10">
+    <div class="flex items-center justify-between">
+      <span class="text-[10.5px] tracking-wider uppercase text-bhraman-inkMuted font-bold">
+        Curated Daily • Tirthan Catchment
+      </span>
+      <div class="flex items-center gap-1.5 glass-pill px-2.5 py-0.5 rounded-full">
+        <span class="relative flex h-2 w-2">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-600"></span>
+        </span>
+        <span class="text-[10px] text-bhraman-forest font-semibold uppercase tracking-wider">Live in Valley</span>
+      </div>
+    </div>
+    <h1 class="font-serif-lux text-[26px] font-semibold text-bhraman-ink mt-1 leading-tight">
+      Immersive Living Stories
+    </h1>
+    <p class="text-[13px] text-bhraman-inkMuted mt-0.5">
+      Handcrafted community encounters rooted in Himalayan heritage and conservation.
+    </p>
+  </div>
+
+  <!-- FEED SECTION: Experience Cards (Frosted Glass) -->
+  <main class="px-4 pt-2 flex flex-col gap-5 relative z-10">
+    
+    <!-- CARD 1: Trout Fishing & River Conservation -->
+    <article class="glass-card rounded-[22px] overflow-hidden transition-all">
+      <!-- Media Container -->
+      <div class="relative w-full aspect-[16/10] overflow-hidden">
+        <img alt="Roshan Thakur fly-fishing in Tirthan Valley" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AEtjO1VHHk6sPrS963uluABcCsRa0-27UonXaTh6SI-kOhv49nCu6BHkOXCgOH_XHfHBPNX3uepkS94yrwSfw9VRLrtt75-lo7KGeFb-IVwo5ZwwVneaIZnua7Io4W0Oh-j_EvQoSiyasO6-6VZM0vNiOChHoCl66ELbmq0UtozlgGY1G2sHaYfwqBzvpb5SAEc4wMZRb7t5asCkTENBjW1Hx5xtQEqe8ud9C5rRSIBCzxlU2RlTJdqbQfyhUxvC"/>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/15"></div>
+
+        <!-- Top Left: Verified Host Badge -->
+        <div class="absolute top-3 left-3 flex items-center gap-1.5 bg-[#201B18]/70 text-white px-3 py-1 rounded-full text-[11px] font-semibold shadow-sm backdrop-blur-md border border-white/20">
+          <span class="material-symbols-filled text-[13px] text-emerald-400">verified_user</span>
+          <span>Verified Local Host</span>
+        </div>
+
+        <!-- Top Right: Wishlist Heart -->
+        <button aria-label="Save to Wishlist" class="absolute top-3 right-3 w-8 h-8 rounded-full glass-pill flex items-center justify-center text-bhraman-rust hover:scale-105 active:scale-95 transition shadow-sm">
+          <span class="material-symbols-outlined text-[17px]">favorite</span>
+        </button>
+
+        <!-- Bottom Left Pill on Image -->
+        <div class="absolute bottom-3 left-3 bg-white/75 backdrop-blur-md text-bhraman-ink px-2.5 py-1 rounded-full text-[11px] font-semibold border border-white/80">
+          Catch &amp; Release Eco-Zone
+        </div>
+      </div>
+
+      <!-- Body Content -->
+      <div class="p-4 flex flex-col gap-2.5">
+        <!-- Distance and Rating -->
+        <div class="flex items-center justify-between text-[11.5px] text-bhraman-inkMuted">
+          <div class="flex items-center gap-1">
+            <span class="material-symbols-outlined text-[15px] text-bhraman-rust">distance</span>
+            <span>2.4 km away • Nagini</span>
           </div>
-</div>
-<!-- Body Content -->
-<div class="p-4 flex flex-col gap-2.5">
-<!-- Distance and Rating -->
-<div class="flex items-center justify-between text-on-surface-variant font-label-md text-label-md">
-<div class="flex items-center gap-1">
-<span class="material-symbols-outlined text-[16px] text-primary" data-icon="distance">distance</span>
-<span>2.4 km away • Nagini</span>
-</div>
-<div class="flex items-center gap-1 text-on-surface font-semibold">
-<span class="material-symbols-outlined text-[16px] text-primary" data-icon="star" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
-<span>4.95</span>
-<span class="text-on-surface-variant font-normal">(38 stories)</span>
-</div>
-</div>
-<!-- Title & Host -->
-<div>
-<h2 class="font-headline-sm text-headline-sm text-on-surface leading-tight">
-              Sunrise Fly-Fishing &amp; River Walk along Tirthan
-            </h2>
-<p class="font-body-md text-[13px] font-medium text-primary mt-1 flex items-center gap-1.5">
-<span class="material-symbols-outlined text-[15px]" data-icon="person">person</span>
-              Roshan Thakur • 3rd-Gen Angler &amp; Valley Elder
-            </p>
-</div>
-<!-- Narrative description -->
-<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">
-            Wade into glacial pools with handcrafted bamboo rods, learning traditional catch-and-release fly cast techniques and mountain river lore.
-          </p>
-<!-- Divider -->
-<div class="w-full h-px bg-outline-variant/40 my-0.5"></div>
-<!-- Price & Action Footer -->
-<div class="flex items-center justify-between pt-0.5">
-<div>
-<div class="flex items-baseline gap-1">
-<span class="font-title-md text-[17px] font-bold text-on-surface">₹1,400</span>
-<span class="font-label-sm text-label-sm text-on-surface-variant">/ person</span>
-</div>
-<span class="font-label-sm text-[10.5px] text-secondary font-medium block">Gear &amp; herbal kahwa included</span>
-</div>
-<button class="px-4 py-2.5 rounded-xl bg-primary-container hover:bg-primary text-on-primary font-label-md text-label-md font-semibold tracking-wide transition-all shadow-sm active:scale-95">
-              Reserve Slot
-            </button>
-</div>
-</div>
-</article>
-<!-- CARD 2: Handloom & Natural Dyeing -->
-<article class="bg-surface-container-lowest rounded-2xl overflow-hidden border border-outline-variant/70 shadow-[0_4px_20px_-2px_rgba(42,33,28,0.06),0_2px_6px_-1px_rgba(42,33,28,0.04)] transition-all">
-<!-- Media Container -->
-<div class="relative w-full aspect-[16/10] overflow-hidden bg-surface-container">
-<img alt="Meena Devi weaving vibrant traditional Himachali patterns on an antique wooden handloom surrounded by dyed natural wool." class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AEtjO1WwshsVH7uT9JaBZnRBRoXmMePrkBHbF-Wp1ZKvMzNhqihjviSSFewFvgRGWONl1E4aX_ylP-rldn2IFIHXSGyMykmBl-5kf8UFC43H-0tSB_BVB6uKk5AKR4-_JOAA6Pr8sNBHtUmYSyfXxlWJUh3oLWQnFCXlJynDZpMb3g0Bzv4o540peUWlOP5fz-7Zc89Oohb1zpT1_WKB7nraYSxuI3uS5yYflsodQe5ehpkQgSAGcyslClJlY_Uv"/>
-<!-- Top Left: Verified Host Badge -->
-<div class="absolute top-3 left-3 flex items-center gap-1.5 bg-secondary text-on-secondary px-2.5 py-1 rounded-full text-label-sm font-label-sm shadow-sm backdrop-blur-sm">
-<span class="material-symbols-outlined text-[13px]" data-icon="verified_user">verified_user</span>
-<span>Verified Local Host</span>
-</div>
-<!-- Top Right: Wishlist Heart -->
-<button aria-label="Save to Wishlist" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-surface-container-lowest/90 backdrop-blur-sm flex items-center justify-center text-on-surface hover:text-primary transition-transform active:scale-90 shadow-sm">
-<span class="material-symbols-outlined text-[18px]" data-icon="favorite">favorite</span>
-</button>
-<!-- Bottom Left Pill on Image -->
-<div class="absolute bottom-3 left-3 bg-inverse-surface/85 backdrop-blur-md text-inverse-on-surface px-2.5 py-1 rounded-lg text-label-sm font-label-sm tracking-wide">
-            Indigenous Handcraft Heritage
+          <div class="flex items-center gap-1 text-bhraman-ink font-semibold">
+            <span class="material-symbols-filled text-[14px] text-bhraman-rust">star</span>
+            <span>4.95</span>
+            <span class="text-bhraman-inkMuted font-normal">(38 stories)</span>
           </div>
-</div>
-<!-- Body Content -->
-<div class="p-4 flex flex-col gap-2.5">
-<!-- Distance and Rating -->
-<div class="flex items-center justify-between text-on-surface-variant font-label-md text-label-md">
-<div class="flex items-center gap-1">
-<span class="material-symbols-outlined text-[16px] text-primary" data-icon="distance">distance</span>
-<span>4.8 km away • Shoja</span>
-</div>
-<div class="flex items-center gap-1 text-on-surface font-semibold">
-<span class="material-symbols-outlined text-[16px] text-primary" data-icon="star" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
-<span>4.98</span>
-<span class="text-on-surface-variant font-normal">(64 stories)</span>
-</div>
-</div>
-<!-- Title & Host -->
-<div>
-<h2 class="font-headline-sm text-headline-sm text-on-surface leading-tight">
-              Patti Weaving &amp; Natural Walnut Dyeing with Meena Di
-            </h2>
-<p class="font-body-md text-[13px] font-medium text-primary mt-1 flex items-center gap-1.5">
-<span class="material-symbols-outlined text-[15px]" data-icon="person">person</span>
-              Meena Devi • Kullu Handloom Guild
-            </p>
-</div>
-<!-- Narrative description -->
-<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">
-            Sit by the handloom in a 100-year-old wooden workshop, blend native sheep wool, and weave your own patti keepsake.
+        </div>
+
+        <!-- Title & Host -->
+        <div>
+          <h2 class="font-serif-lux text-[18px] font-semibold text-bhraman-ink leading-snug">
+            Sunrise Fly-Fishing &amp; River Walk along Tirthan
+          </h2>
+          <p class="text-[12.5px] font-semibold text-bhraman-rust mt-1 flex items-center gap-1">
+            <span class="material-symbols-outlined text-[14px]">person</span>
+            Roshan Thakur • 3rd-Gen Angler &amp; Valley Elder
           </p>
-<!-- Divider -->
-<div class="w-full h-px bg-outline-variant/40 my-0.5"></div>
-<!-- Price & Action Footer -->
-<div class="flex items-center justify-between pt-0.5">
-<div>
-<div class="flex items-baseline gap-1">
-<span class="font-title-md text-[17px] font-bold text-on-surface">₹950</span>
-<span class="font-label-sm text-label-sm text-on-surface-variant">/ session</span>
-</div>
-<span class="font-label-sm text-[10.5px] text-secondary font-medium block">Woven coaster &amp; cider included</span>
-</div>
-<button class="px-4 py-2.5 rounded-xl bg-primary-container hover:bg-primary text-on-primary font-label-md text-label-md font-semibold tracking-wide transition-all shadow-sm active:scale-95">
-              Reserve Slot
-            </button>
-</div>
-</div>
-</article>
-<!-- CARD 3: Home-cooked Himachali Dham Feast -->
-<article class="bg-surface-container-lowest rounded-2xl overflow-hidden border border-outline-variant/70 shadow-[0_4px_20px_-2px_rgba(42,33,28,0.06),0_2px_6px_-1px_rgba(42,33,28,0.04)] transition-all">
-<!-- Media Container -->
-<div class="relative w-full aspect-[16/10] overflow-hidden bg-surface-container">
-<img alt="Traditional Himachali Dham meal served in heavy brass thalis on a wooden verandah with panoramic views of terraced Himalayan valleys." class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AEtjO1WAkCkDlh6nmRHKIXaqm37tMqEd8q_1ZudP4G7oc6S8TUGLZ966xm_nAE-RZWyi8PdWxfFi3y0Gqfy6WsMxwbuVruhwyzZyTfI_9W5hqyexkmgnps4mqBTE_vv2bT9xEa_Q1-Dm4zvlTxJNIwFJfSBwnIcw-tQU78hSKv8WxfcpHQkv8LsE8XjjghNqCvnp2-Oy2rTy0eBavJ2k6ZWFkP7XBE1P42vAMrKGOIxGmyBtvZZHcDS4DE69mPSU"/>
-<!-- Top Left: Verified Host Badge -->
-<div class="absolute top-3 left-3 flex items-center gap-1.5 bg-secondary text-on-secondary px-2.5 py-1 rounded-full text-label-sm font-label-sm shadow-sm backdrop-blur-sm">
-<span class="material-symbols-outlined text-[13px]" data-icon="verified_user">verified_user</span>
-<span>Verified Local Host</span>
-</div>
-<!-- Top Right: Wishlist Heart -->
-<button aria-label="Save to Wishlist" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-surface-container-lowest/90 backdrop-blur-sm flex items-center justify-center text-on-surface hover:text-primary transition-transform active:scale-90 shadow-sm">
-<span class="material-symbols-outlined text-[18px]" data-icon="favorite">favorite</span>
-</button>
-<!-- Bottom Left Pill on Image -->
-<div class="absolute bottom-3 left-3 bg-inverse-surface/85 backdrop-blur-md text-inverse-on-surface px-2.5 py-1 rounded-lg text-label-sm font-label-sm tracking-wide">
-            Traditional Slow Culinary Art
+        </div>
+
+        <p class="text-[12.5px] text-bhraman-inkMuted line-clamp-2 leading-relaxed">
+          Wade into glacial pools with handcrafted bamboo rods, learning traditional catch-and-release fly cast techniques and mountain river lore.
+        </p>
+
+        <!-- Divider -->
+        <div class="w-full h-px bg-white/60 my-0.5"></div>
+
+        <!-- Price & Action Footer -->
+        <div class="flex items-center justify-between pt-0.5">
+          <div>
+            <div class="flex items-baseline gap-1">
+              <span class="font-serif-lux text-[18px] font-bold text-bhraman-ink">₹1,400</span>
+              <span class="text-[11px] text-bhraman-inkMuted">/ person</span>
+            </div>
+            <span class="text-[10px] text-bhraman-forest font-semibold block">Gear &amp; herbal kahwa included</span>
           </div>
-</div>
-<!-- Body Content -->
-<div class="p-4 flex flex-col gap-2.5">
-<!-- Distance and Rating -->
-<div class="flex items-center justify-between text-on-surface-variant font-label-md text-label-md">
-<div class="flex items-center gap-1">
-<span class="material-symbols-outlined text-[16px] text-primary" data-icon="distance">distance</span>
-<span>6.1 km away • Gushaini</span>
-</div>
-<div class="flex items-center gap-1 text-on-surface font-semibold">
-<span class="material-symbols-outlined text-[16px] text-primary" data-icon="star" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
-<span>5.0</span>
-<span class="text-on-surface-variant font-normal">(82 stories)</span>
-</div>
-</div>
-<!-- Title & Host -->
-<div>
-<h2 class="font-headline-sm text-headline-sm text-on-surface leading-tight">
-              Sunset Kandi Dham in a Kathkuni Balcony
-            </h2>
-<p class="font-body-md text-[13px] font-medium text-primary mt-1 flex items-center gap-1.5">
-<span class="material-symbols-outlined text-[15px]" data-icon="person">person</span>
-              Lata &amp; Hemraj Sharma • Village Homestead
-            </p>
-</div>
-<!-- Narrative description -->
-<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">
-            Seven-course sacred community meal cooked in copper handis over pine embers: Madra, Babru, Siddu with pure cow ghee, and Sepu Vadi.
-          </p>
-<!-- Divider -->
-<div class="w-full h-px bg-outline-variant/40 my-0.5"></div>
-<!-- Price & Action Footer -->
-<div class="flex items-center justify-between pt-0.5">
-<div>
-<div class="flex items-baseline gap-1">
-<span class="font-title-md text-[17px] font-bold text-on-surface">₹650</span>
-<span class="font-label-sm text-label-sm text-on-surface-variant">/ thali</span>
-</div>
-<span class="font-label-sm text-[10.5px] text-secondary font-medium block">Walnut oil &amp; sharbat included</span>
-</div>
-<button class="px-4 py-2.5 rounded-xl bg-primary-container hover:bg-primary text-on-primary font-label-md text-label-md font-semibold tracking-wide transition-all shadow-sm active:scale-95">
-              Reserve Slot
-            </button>
-</div>
-</div>
-</article>
-<!-- CARD 4: Heritage Orchard Homestay Stay -->
-<article class="bg-surface-container-lowest rounded-2xl overflow-hidden border border-outline-variant/70 shadow-[0_4px_20px_-2px_rgba(42,33,28,0.06),0_2px_6px_-1px_rgba(42,33,28,0.04)] transition-all">
-<!-- Media Container -->
-<div class="relative w-full aspect-[16/10] overflow-hidden bg-surface-container">
-<img alt="Traditional multi-level Kathkuni wood and stone homestead nestled inside a mountain apple orchard during golden hour." class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AEtjO1VXnp88Ekl48GAr8I65bQ_3bxMZdz4Q9OXkT1rzHf6l3XSYokyN0J3F-BwgesrTK2Nfd9w-fEzk7pUDxfNUjX9FsmYxc1AWoHJTyyC7CZEdHlBQqee0BU0fJxM0iFEdNf0YVtTN0nxrwV3syoJXNTVJzDHCu4kDvSUTfb2ax21IT_F4KJTU882fVq_ZASn134fAxyI21ozI2TcRPDUoj27CPHAtYEHHjG5KrMWAN-g2NJA9JNYPEufnjC8"/>
-<!-- Top Left: Verified Host Badge -->
-<div class="absolute top-3 left-3 flex items-center gap-1.5 bg-secondary text-on-secondary px-2.5 py-1 rounded-full text-label-sm font-label-sm shadow-sm backdrop-blur-sm">
-<span class="material-symbols-outlined text-[13px]" data-icon="verified_user">verified_user</span>
-<span>Verified Local Host</span>
-</div>
-<!-- Top Right: Wishlist Heart -->
-<button aria-label="Save to Wishlist" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-surface-container-lowest/90 backdrop-blur-sm flex items-center justify-center text-on-surface hover:text-primary transition-transform active:scale-90 shadow-sm">
-<span class="material-symbols-outlined text-[18px]" data-icon="favorite">favorite</span>
-</button>
-<!-- Bottom Left Pill on Image -->
-<div class="absolute bottom-3 left-3 bg-inverse-surface/85 backdrop-blur-md text-inverse-on-surface px-2.5 py-1 rounded-lg text-label-sm font-label-sm tracking-wide">
-            Kathkuni Timber Architecture
+          <button class="px-4 py-2.5 rounded-full glass-pill-dark text-white text-[12px] font-semibold active:scale-95 transition">
+            Reserve Slot
+          </button>
+        </div>
+      </div>
+    </article>
+
+    <!-- CARD 2: Handloom & Natural Dyeing -->
+    <article class="glass-card rounded-[22px] overflow-hidden transition-all">
+      <div class="relative w-full aspect-[16/10] overflow-hidden">
+        <img alt="Meena Devi weaving on wooden handloom" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AEtjO1WwshsVH7uT9JaBZnRBRoXmMePrkBHbF-Wp1ZKvMzNhqihjviSSFewFvgRGWONl1E4aX_ylP-rldn2IFIHXSGyMykmBl-5kf8UFC43H-0tSB_BVB6uKk5AKR4-_JOAA6Pr8sNBHtUmYSyfXxlWJUh3oLWQnFCXlJynDZpMb3g0Bzv4o540peUWlOP5fz-7Zc89Oohb1zpT1_WKB7nraYSxuI3uS5yYflsodQe5ehpkQgSAGcyslClJlY_Uv"/>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/15"></div>
+
+        <div class="absolute top-3 left-3 flex items-center gap-1.5 bg-[#201B18]/70 text-white px-3 py-1 rounded-full text-[11px] font-semibold shadow-sm backdrop-blur-md border border-white/20">
+          <span class="material-symbols-filled text-[13px] text-emerald-400">verified_user</span>
+          <span>Verified Local Host</span>
+        </div>
+
+        <button aria-label="Save to Wishlist" class="absolute top-3 right-3 w-8 h-8 rounded-full glass-pill flex items-center justify-center text-bhraman-rust hover:scale-105 active:scale-95 transition shadow-sm">
+          <span class="material-symbols-outlined text-[17px]">favorite_border</span>
+        </button>
+
+        <div class="absolute bottom-3 left-3 bg-white/75 backdrop-blur-md text-bhraman-ink px-2.5 py-1 rounded-full text-[11px] font-semibold border border-white/80">
+          Indigenous Handcraft Heritage
+        </div>
+      </div>
+
+      <div class="p-4 flex flex-col gap-2.5">
+        <div class="flex items-center justify-between text-[11.5px] text-bhraman-inkMuted">
+          <div class="flex items-center gap-1">
+            <span class="material-symbols-outlined text-[15px] text-bhraman-rust">distance</span>
+            <span>4.8 km away • Shoja</span>
           </div>
-</div>
-<!-- Body Content -->
-<div class="p-4 flex flex-col gap-2.5">
-<!-- Distance and Rating -->
-<div class="flex items-center justify-between text-on-surface-variant font-label-md text-label-md">
-<div class="flex items-center gap-1">
-<span class="material-symbols-outlined text-[16px] text-primary" data-icon="distance">distance</span>
-<span>8.5 km away • Jibhi Valley</span>
-</div>
-<div class="flex items-center gap-1 text-on-surface font-semibold">
-<span class="material-symbols-outlined text-[16px] text-primary" data-icon="star" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
-<span>4.92</span>
-<span class="text-on-surface-variant font-normal">(51 stories)</span>
-</div>
-</div>
-<!-- Title & Host -->
-<div>
-<h2 class="font-headline-sm text-headline-sm text-on-surface leading-tight">
-              Cedar Wood Orchard Homestay overlooking Serolsar Peaks
-            </h2>
-<p class="font-body-md text-[13px] font-medium text-primary mt-1 flex items-center gap-1.5">
-<span class="material-symbols-outlined text-[15px]" data-icon="person">person</span>
-              Bhim Singh • Apple Farmer &amp; Folk Storyteller
-            </p>
-</div>
-<!-- Narrative description -->
-<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">
-            Handcrafted deodar timber stay with Bukhari wood fires, solar spring water, and homemade rhododendron preserve breakfast.
+          <div class="flex items-center gap-1 text-bhraman-ink font-semibold">
+            <span class="material-symbols-filled text-[14px] text-bhraman-rust">star</span>
+            <span>4.98</span>
+            <span class="text-bhraman-inkMuted font-normal">(64 stories)</span>
+          </div>
+        </div>
+
+        <div>
+          <h2 class="font-serif-lux text-[18px] font-semibold text-bhraman-ink leading-snug">
+            Patti Weaving &amp; Natural Walnut Dyeing with Meena Di
+          </h2>
+          <p class="text-[12.5px] font-semibold text-bhraman-rust mt-1 flex items-center gap-1">
+            <span class="material-symbols-outlined text-[14px]">person</span>
+            Meena Devi • Kullu Handloom Guild
           </p>
-<!-- Divider -->
-<div class="w-full h-px bg-outline-variant/40 my-0.5"></div>
-<!-- Price & Action Footer -->
-<div class="flex items-center justify-between pt-0.5">
-<div>
-<div class="flex items-baseline gap-1">
-<span class="font-title-md text-[17px] font-bold text-on-surface">₹1,850</span>
-<span class="font-label-sm text-label-sm text-on-surface-variant">/ night</span>
+        </div>
+
+        <p class="text-[12.5px] text-bhraman-inkMuted line-clamp-2 leading-relaxed">
+          Sit by the handloom in a 100-year-old wooden workshop, blend native sheep wool, and weave your own patti keepsake.
+        </p>
+
+        <div class="w-full h-px bg-white/60 my-0.5"></div>
+
+        <div class="flex items-center justify-between pt-0.5">
+          <div>
+            <div class="flex items-baseline gap-1">
+              <span class="font-serif-lux text-[18px] font-bold text-bhraman-ink">₹950</span>
+              <span class="text-[11px] text-bhraman-inkMuted">/ person</span>
+            </div>
+            <span class="text-[10px] text-bhraman-forest font-semibold block">Wool spindle included</span>
+          </div>
+          <button class="px-4 py-2.5 rounded-full glass-pill-dark text-white text-[12px] font-semibold active:scale-95 transition">
+            Reserve Slot
+          </button>
+        </div>
+      </div>
+    </article>
+
+  </main>
+
+  <!-- Floating Map Toggle Pill -->
+  <div class="fixed bottom-20 left-0 right-0 flex justify-center z-40 pointer-events-none">
+    <button class="pointer-events-auto px-5 py-2.5 rounded-full glass-pill-dark text-white text-[12.5px] font-semibold flex items-center gap-2 shadow-xl hover:scale-105 active:scale-95 transition">
+      <span class="material-symbols-outlined text-[17px]">map</span>
+      <span>View Valley Map</span>
+    </button>
+  </div>
+
+  <!-- ── Unified Bottom Navigation Bar (Fintech Premium) ── -->
+  <nav class="fixed bottom-0 left-0 right-0 max-w-[420px] mx-auto h-[72px] nav-textured-gradient z-50 px-6 pb-safe pt-2 flex items-center justify-between">
+    <a href="01-trip-planner-chat.html" class="flex flex-col items-center gap-1 text-bhraman-inkMuted hover:text-bhraman-ink transition-colors">
+      <span class="material-symbols-outlined text-[24px]">chat_bubble_outline</span>
+      <span class="text-[10px] font-semibold">Chat</span>
+    </a>
+    <a href="02-itinerary-timeline.html" class="flex flex-col items-center gap-1 text-bhraman-inkMuted hover:text-bhraman-ink transition-colors">
+      <span class="material-symbols-outlined text-[24px]">map</span>
+      <span class="text-[10px] font-semibold">Timeline</span>
+    </a>
+    <a href="03-discover-nearby.html" class="flex flex-col items-center gap-1 text-bhraman-rust scale-105 transition-transform">
+      <span class="material-symbols-filled text-[24px]">explore</span>
+      <span class="text-[10px] font-bold">Discover</span>
+    </a>
+  </nav>
+
 </div>
-<span class="font-label-sm text-[10.5px] text-secondary font-medium block">Home-style breakfast included</span>
-</div>
-<button class="px-4 py-2.5 rounded-xl bg-primary-container hover:bg-primary text-on-primary font-label-md text-label-md font-semibold tracking-wide transition-all shadow-sm active:scale-95">
-              Reserve Slot
-            </button>
-</div>
-</div>
-</article>
-<!-- COMMUNITY TRUST / STEWARDSHIP BANNER -->
-<section class="bg-secondary/10 border border-secondary/20 rounded-2xl p-4 my-2 flex items-start gap-3">
-<div class="w-8 h-8 rounded-full bg-secondary text-on-secondary flex items-center justify-center shrink-0 mt-0.5">
-<span class="material-symbols-outlined text-[18px]" data-icon="volunteer_activism">volunteer_activism</span>
-</div>
-<div>
-<h3 class="font-title-md text-[14px] font-semibold text-on-secondary-fixed-variant">
-            Direct Host Stewardship Promise
-          </h3>
-<p class="font-body-md text-[12.5px] text-secondary mt-0.5 leading-relaxed">
-            100% direct host payouts supported by Bhraman Rural Fund — zero commission taken from local artisans.
-          </p>
-</div>
-</section>
-</main>
-<!-- SHARED COMPONENT: BottomNavBar (Active: Discover) -->
-<!-- Applying style tokens verbatim from Shared Components JSON -->
-<nav aria-label="Bottom Navigation" class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-2 bg-surface dark:bg-inverse-surface shadow-[0_-4px_20px_-2px_rgba(42,33,28,0.06)] dark:shadow-none border-t border-outline-variant dark:border-outline max-w-[420px] left-1/2 -translate-x-1/2">
-<!-- Itinerary Tab (Inactive) -->
-<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed-dim active:scale-95 transition-transform duration-150 py-1 flex-1" href="#">
-<span class="material-symbols-outlined text-[22px]" data-icon="calendar_today">calendar_today</span>
-<span class="text-label-sm font-label-sm mt-0.5">Itinerary</span>
-</a>
-<!-- Discover Tab (ACTIVE: Exact Semantic Mapping for Discover Nearby feed) -->
-<a class="flex flex-col items-center justify-center text-primary dark:text-primary-fixed-dim font-semibold active:scale-95 transition-transform duration-150 py-1 flex-1" href="#">
-<span class="material-symbols-outlined text-[23px]" data-icon="explore" data-weight="fill" style="font-variation-settings: 'FILL' 1;">explore</span>
-<span class="text-label-sm font-label-sm mt-0.5">Discover</span>
-</a>
-<!-- Wallet Tab (Inactive) -->
-<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed-dim active:scale-95 transition-transform duration-150 py-1 flex-1" href="#">
-<span class="material-symbols-outlined text-[22px]" data-icon="account_balance_wallet">account_balance_wallet</span>
-<span class="text-label-sm font-label-sm mt-0.5">Wallet</span>
-</a>
-<!-- Profile Tab (Inactive) -->
-<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed-dim active:scale-95 transition-transform duration-150 py-1 flex-1" href="#">
-<span class="material-symbols-outlined text-[22px]" data-icon="person">person</span>
-<span class="text-label-sm font-label-sm mt-0.5">Profile</span>
-</a>
-</nav>
-</div>
-</body></html>
+
+</body>
+</html>

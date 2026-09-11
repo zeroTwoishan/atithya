@@ -5,12 +5,13 @@
    ============================================================ */
 
 /* ── Font Imports (Google Fonts only — reliable in all envs) ── */
-@import url("https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap");
 
 @import "tailwindcss";
 
 /* ── Design Tokens ── */
 @theme {
+  --font-serif-lux: 'Playfair Display', Georgia, serif;
   /* Brand palette */
   --color-canvas:         #0b0d14;
   --color-ink:            #f0ede8;
@@ -123,6 +124,68 @@ body {
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(52, 199, 123, 0.22);
   box-shadow: 0 4px 20px rgba(47, 75, 60, 0.35);
+}
+
+/* ════════════════════════════════════════
+   CLEAN LIGHT GLASSMORPHISM (Fintech Premium)
+   ════════════════════════════════════════ */
+.glass-clean {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(40px) saturate(200%);
+  -webkit-backdrop-filter: blur(40px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-top: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 
+    0 16px 40px -12px rgba(0, 0, 0, 0.06),
+    0 4px 12px rgba(0, 0, 0, 0.02),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.4),
+    inset 0 -1px 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.glass-clean-subtle {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 
+    0 4px 16px -4px rgba(0, 0, 0, 0.04),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.glass-clean-pill {
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(24px) saturate(190%);
+  -webkit-backdrop-filter: blur(24px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 
+    0 4px 14px -2px rgba(0, 0, 0, 0.04),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.5);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── Textured Gradient Navigation ── */
+.nav-textured-gradient {
+  background: 
+    linear-gradient(135deg, rgba(232, 100, 58, 0.12) 0%, rgba(47, 75, 60, 0.06) 50%, rgba(255, 255, 255, 0.0) 100%),
+    rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(40px) saturate(220%);
+  -webkit-backdrop-filter: blur(40px) saturate(220%);
+  border-top: 1px solid rgba(255, 255, 255, 0.6);
+  position: relative;
+}
+
+.nav-textured-gradient::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.2;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23n)'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: -1;
+}
+
+.pearl-canvas {
+  background: radial-gradient(120% 120% at 50% 0%, #FFFFFF 0%, #F7F2EC 40%, #EFE7DC 100%);
 }
 
 /* ════════════════════════════════════════

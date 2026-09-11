@@ -4,10 +4,13 @@ import { motion } from "motion/react";
 import { clsx } from "clsx";
 
 const variants = {
-  warm:  "glass",
-  dark:  "glass-dark",
-  green: "glass-green",
-  navy:  "glass-dark",
+  warm:   "glass",
+  dark:   "glass-dark",
+  green:  "glass-green",
+  navy:   "glass-dark",
+  clean:  "glass-clean",
+  pearl:  "glass-clean",
+  subtle: "glass-clean-subtle",
 };
 
 export function GlassCard({
