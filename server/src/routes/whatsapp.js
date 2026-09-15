@@ -78,12 +78,10 @@ function* inboundMessages(payload) {
         yield {
           from: message.from,
           body: message.text?.body ?? message.image?.caption ?? message.audio?.caption ?? "",
-          // Media arrives as an id, not a URL — resolving it needs a second
-          // authenticated call, so the id is carried through and resolved
-          // only if the listing actually gets published.
-          mediaUrls: [message.image?.id, message.video?.id, message.document?.id]
-            .filter(Boolean)
-            .map((id) => `${GRAPH_API}/${id}`),
+          // Media arrives as an id, not a URL. Downloading it costs two
+          // authenticated calls (src/media.js), so only the ids travel here —
+          // they are fetched in persist_listing, once the listing is real.
+          mediaIds: [message.image?.id, message.video?.id, message.document?.id].filter(Boolean),
         };
       }
     }

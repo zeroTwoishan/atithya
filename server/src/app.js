@@ -1,8 +1,11 @@
+import { fileURLToPath } from "node:url";
+
 import express from "express";
 import cors from "cors";
 
 import { fail } from "./http.js";
 import { requireAuth } from "./auth.js";
+import { MEDIA_DIR } from "./media.js";
 import authRoutes from "./routes/auth.js";
 import listingRoutes from "./routes/listings.js";
 import tripRoutes from "./routes/trips.js";
@@ -19,6 +22,11 @@ export function createApp() {
   app.use("/webhooks/whatsapp", whatsappRoutes);
 
   app.use(express.json({ limit: "1mb" }));
+
+  // Photos hosts sent over WhatsApp (src/media.js). Public and unauthenticated
+  // — a listing's photos are public anyway, and the filenames are random UUIDs
+  // rather than guessable media ids.
+  app.use("/media", express.static(fileURLToPath(MEDIA_DIR), { maxAge: "1h", index: false }));
 
   app.get("/api/v1/health", (req, res) => res.json({ data: { status: "ok" } }));
   app.use("/api/v1/auth", authRoutes);

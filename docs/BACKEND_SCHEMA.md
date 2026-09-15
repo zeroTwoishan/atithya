@@ -121,7 +121,7 @@ erDiagram
 - **`listings.embedding` (pgvector)** powers the Planning Agent's semantic retrieval (`retrieve_candidates` node in [[TRD]] §3.2) — cosine similarity against the tourist's stated interests.
 - **No separate `pricing_suggestions` table.** The AI pricing copilot (`GET /api/v1/hosts/:id/pricing-suggestions`) computes a suggestion live from `listings` + `bookings` (regional median price for the same `offering_type`/`region`) — storing it would just be a cache with nothing yet to invalidate against. Add a table only if computing it live becomes measurably slow.
 - **No separate `gov_metrics` table.** The government dashboard's heatmap and scheme metrics are aggregate `GROUP BY` queries over `bookings`/`listings`/`reviews` — same reasoning as above.
-- **`conversation_state.state` is `jsonb`**, not a fixed set of columns, because the onboarding conversation's shape (what's been asked, what's still missing) changes agent-side without needing a migration every time the conversation graph changes.
+- **`conversation_state` maps a WhatsApp number to a host**, and records when they last wrote. It does *not* hold the half-finished listing: that draft lives in the onboarding graph's checkpoint (`PostgresSaver`, thread id = the number), so there is exactly one copy of it. `state` is `jsonb` for the few pointers worth querying in SQL (e.g. `last_listing_id`) without a migration each time the graph changes.
 - **Mock money, real ledger shape.** `wallet_transactions` and `payouts` are structured exactly like a real ledger (append-only, typed) even though no payment gateway is wired up — swapping in Razorpay/Stripe later is an integration change, not a schema change.
 
 ## 3. `schema.sql`

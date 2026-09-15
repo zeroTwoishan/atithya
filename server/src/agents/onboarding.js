@@ -14,6 +14,8 @@ import { query, transaction } from "../db/index.js";
 import { OFFERING_TYPE, PRICE_UNIT, ROLE } from "../constants.js";
 import { extract, say, hasLLM } from "./llm.js";
 import { runVerification } from "./verification.js";
+import { fetchAllMedia } from "../media.js";
+import { checkpointer } from "./checkpointer.js";
 
 /** A listing cannot be published without these. Everything else is optional. */
 const REQUIRED = ["offering_type", "title", "price_amount", "region"];
@@ -31,7 +33,7 @@ const draftSchema = z.object({
 const State = new StateSchema({
   from: z.string(),
   body: z.string(),
-  mediaUrls: z.array(z.string()).default(() => []),
+  mediaIds: z.array(z.string()).default(() => []),
   conversation: z.custom().nullable().default(null),
   intent: z.enum(["new_listing", "follow_up", "update", "chitchat"]).default("new_listing"),
   draft: z.record(z.string(), z.unknown()).default(() => ({})),
@@ -40,14 +42,16 @@ const State = new StateSchema({
 });
 
 async function loadConversation(state) {
+  // The row maps a number to a host and records when they last wrote; the
+  // answers they have given so far live in the graph's checkpoint, keyed by
+  // the same number. One copy of the draft, not two.
   const { rows } = await query(
     `INSERT INTO conversation_state (whatsapp_number) VALUES ($1)
        ON CONFLICT (whatsapp_number) DO UPDATE SET last_message_at = now()
        RETURNING id, whatsapp_number, host_user_id, state`,
     [state.from],
   );
-  const conversation = rows[0];
-  return { conversation, draft: conversation.state.draft ?? {} };
+  return { conversation: rows[0] };
 }
 
 /** Node 1 — classify_intent. A host with no draft yet is always starting one;
@@ -85,8 +89,10 @@ async function extractFields(state) {
   for (const [key, value] of Object.entries(extracted ?? {})) {
     if (value !== null && value !== undefined && value !== "") draft[key] = value;
   }
-  if (state.mediaUrls.length) {
-    draft.photo_urls = [...new Set([...(draft.photo_urls ?? []), ...state.mediaUrls])];
+  if (state.mediaIds.length) {
+    // Ids only at this stage — fetching photos for a conversation that never
+    // finishes would be wasted round-trips against Meta.
+    draft.media_ids = [...new Set([...(draft.media_ids ?? []), ...state.mediaIds])];
   }
   draft.price_unit ??= PRICE_UNIT.NIGHT;
   return { draft };
@@ -125,14 +131,13 @@ async function askMissingOrConfirm(state) {
 /** Node 4 — persist_listing. Creates the host account on first contact, then
  *  hands the row to the Verification Agent before it can go live. */
 async function persistListing(state) {
-  if (missingFields(state.draft).length) {
-    // Not publishable yet — just checkpoint the draft for the next message.
-    await query("UPDATE conversation_state SET state = $2 WHERE id = $1", [
-      state.conversation.id,
-      { draft: state.draft },
-    ]);
-    return {};
-  }
+  // Not publishable yet: the checkpointer already holds the draft for the
+  // host's next message, so there is nothing to write here.
+  if (missingFields(state.draft).length) return {};
+
+  // Two authenticated round-trips per photo — done before the transaction
+  // opens, never while holding it.
+  const photoUrls = await fetchAllMedia(state.draft.media_ids ?? []);
 
   const listing = await transaction(async (client) => {
     let hostId = state.conversation.host_user_id;
@@ -181,20 +186,22 @@ async function persistListing(state) {
         state.draft.price_amount,
         state.draft.price_unit,
         state.draft.region,
-        state.draft.photo_urls ?? [],
+        photoUrls,
       ],
     );
     await client.query("UPDATE conversation_state SET state = $2 WHERE id = $1", [
       state.conversation.id,
-      { draft: {}, last_listing_id: rows[0].id },
+      { last_listing_id: rows[0].id },
     ]);
     return rows[0];
   });
 
-  return { listing: await runVerification(listing) };
+  // Draft cleared so the host's next message starts a fresh listing rather
+  // than editing the one just published.
+  return { listing: await runVerification(listing), draft: {} };
 }
 
-export const onboardingGraph = new StateGraph(State)
+const builder = new StateGraph(State)
   .addNode("load_conversation", loadConversation)
   .addNode("classify_intent", classifyIntent)
   .addNode("extract_fields", extractFields)
@@ -205,11 +212,27 @@ export const onboardingGraph = new StateGraph(State)
   .addEdge("classify_intent", "extract_fields")
   .addEdge("extract_fields", "ask_missing_or_confirm")
   .addEdge("ask_missing_or_confirm", "persist_listing")
-  .addEdge("persist_listing", END)
-  .compile();
+  .addEdge("persist_listing", END);
 
-/** @returns {{reply: string, listing: object|null}} */
-export async function handleInboundMessage({ from, body, mediaUrls = [] }) {
-  const result = await onboardingGraph.invoke({ from, body, mediaUrls });
+let graph;
+
+/** Compiled once, with the shared checkpointer attached. Exported so tests
+ *  can drive the graph with a pre-filled draft — without an API key the
+ *  extraction nodes are no-ops, and persist_listing is worth testing anyway. */
+export async function onboardingGraph() {
+  graph ??= builder.compile({ checkpointer: await checkpointer() });
+  return graph;
+}
+
+/** One WhatsApp message in, one reply out. The thread is the host's number,
+ *  so every message they send resumes the same conversation — including after
+ *  a restart (docs/TRD.md §6).
+ *  @returns {{reply: string, listing: object|null}} */
+export async function handleInboundMessage({ from, body, mediaIds = [] }) {
+  const compiled = await onboardingGraph();
+  const result = await compiled.invoke(
+    { from, body, mediaIds },
+    { configurable: { thread_id: `onboarding:${from}` } },
+  );
   return { reply: result.reply, listing: result.listing };
 }

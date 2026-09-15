@@ -17,6 +17,7 @@
     "@langchain/anthropic": "^1.0.0",
     "@langchain/core": "^1.0.0",
     "@langchain/langgraph": "^1.0.0",
+    "@langchain/langgraph-checkpoint-postgres": "^1.0.5",
     "cors": "^2.8.5",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",

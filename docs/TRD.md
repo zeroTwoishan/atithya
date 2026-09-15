@@ -67,10 +67,10 @@ Frontend and backend choices below match this team's own established conventions
 - **Trigger:** inbound WhatsApp Cloud API webhook (`POST /webhooks/whatsapp`), after `X-Hub-Signature-256` HMAC validation.
 - **Graph nodes:**
   1. `classify_intent` — is this a new onboarding, a follow-up answer, or an update to an existing listing?
-  2. `extract_fields` — LLM tool-call extracts `{offering_type, description, price, availability, location, photos[]}` from the message (+ any attached media, fetched from the Cloud API `/media/:id` endpoint with the app token).
+  2. `extract_fields` — LLM tool-call extracts `{offering_type, description, price, availability, location, photos[]}` from the message. Media arrives as an *id*, not a URL: resolving it takes two authenticated Graph API calls (`GET /<id>` for a short-lived URL, then the bytes), so ids are carried on the draft and only downloaded in `persist_listing` — a conversation that never finishes costs no round-trips. Files land in `server/media/`, served at `/media/<uuid>`.
   3. `ask_missing_or_confirm` — if required fields are missing, generate the next question in the host's language; else summarize back for confirmation.
   4. `persist_listing` — upsert into `listings` table with `status = 'pending_verification'`, enqueue for the Verification agent.
-- **State persisted per WhatsApp number** (`conversation_state` table) so the conversation survives across messages — this is the "memory" the PRD claims.
+- **State persisted per WhatsApp number** — the graph is checkpointed with `PostgresSaver` under thread id `onboarding:<number>`, so a host's half-finished listing survives both their next message and a process restart; the `conversation_state` row carries the number-to-host link alongside it. This is the "memory" the PRD claims.
 - **Language:** system prompt instructs the model to respond in the same language the host wrote in (Hindi supported for demo; no separate translation service needed since the LLM handles it natively).
 
 ### 3.2 Travel Planning & Booking Agent
