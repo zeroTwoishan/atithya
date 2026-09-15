@@ -1,9 +1,11 @@
 /* ============================================================
-   ATITHYA — Global Styles
-   Visual language: soft iridescent light mode / near-black dark
-   mode, high-contrast serif display, hairline pill controls,
-   floating circular navigation. Matches the reference build in
-   .agent/ (see docs/UI_UX_DESIGN.md).
+   ATITHYA / BHRAMAN — Global styles
+
+   Visual language (from .agent/ reference recording):
+   · soft iridescent light mode, near-black aurora dark mode
+   · one high-contrast serif carries every heading, number and input
+   · one neutral sans carries labels and body, small and letterspaced
+   · every control is a pill; navigation floats as circles
    ============================================================ */
 
 @import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..500&display=swap");
@@ -12,8 +14,6 @@
 
 /* ── Design tokens ──────────────────────────────────────── */
 @theme {
-  /* Typography — a serif that carries every heading, number and
-     input; one neutral sans for labels and body. */
   --font-display: "Instrument Serif", "Newsreader", Georgia, serif;
   --font-reading: "Newsreader", Georgia, serif;
   --font-sans: "Inter", system-ui, -apple-system, sans-serif;
@@ -28,8 +28,6 @@
   --color-ink-soft: rgba(27, 23, 37, 0.62);
   --color-ink-faint: rgba(27, 23, 37, 0.42);
 
-  /* Accents — brand terracotta used sparingly, green for anything
-     confirmed/safe, amber for review, red for stop. */
   --color-primary: #c2542c;
   --color-positive: #2f7d5f;
   --color-caution: #b07d2b;
@@ -81,10 +79,9 @@ body {
 
 /* ════════════════════════════════════════════════════════
    THE BACKDROP
-   Light: four slow iridescent washes (rose, lavender, mint,
-   butter) over a pale ground. Dark: the same geometry at low
-   opacity over near-black, so the two themes are the same
-   room with the lights off.
+   Light: four slow iridescent washes over a pale ground.
+   Dark: the same geometry at low opacity over near-black —
+   the same room with the lights off.
    ════════════════════════════════════════════════════════ */
 .aurora {
   position: relative;
@@ -196,10 +193,127 @@ body {
   border: 1px solid color-mix(in srgb, var(--color-positive) 35%, transparent);
   background: color-mix(in srgb, var(--color-positive) 14%, transparent);
   color: var(--color-positive);
+  transition:
+    background 0.18s ease,
+    color 0.18s ease;
 }
 
 .pill-positive:hover:not(:disabled) {
   background: color-mix(in srgb, var(--color-positive) 20%, transparent);
+}
+
+/* Destructive: never filled, never shouting — text only. */
+.pill-negative {
+  border-radius: 9999px;
+  border: 1px solid var(--color-hairline);
+  background: var(--color-surface);
+  color: var(--color-negative);
+}
+
+/* ── Fields ────────────────────────────────────────────── */
+/* The reference types into serif, at reading size, on a hairline
+   pill — an input that looks like the sentence it will become. */
+.field {
+  width: 100%;
+  border-radius: var(--radius-inner);
+  border: 1px solid var(--color-hairline);
+  background: var(--color-surface);
+  padding: 14px 16px;
+  font-family: var(--font-display);
+  font-size: 20px;
+  line-height: 1.35;
+  color: var(--color-ink);
+  transition: border-color 0.18s ease;
+}
+
+.field::placeholder {
+  color: var(--color-ink-faint);
+}
+
+.field:focus {
+  outline: none;
+  border-color: color-mix(in srgb, var(--color-ink) 28%, transparent);
+}
+
+/* ── Range slider ──────────────────────────────────────── */
+/* Used for budget ceilings. The filled half is the amount the
+   traveller has committed; the rest is headroom. */
+.range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 22px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.range::-webkit-slider-runnable-track {
+  height: 2px;
+  border-radius: 2px;
+  background: var(--color-hairline);
+}
+
+.range::-moz-range-track {
+  height: 2px;
+  border-radius: 2px;
+  background: var(--color-hairline);
+}
+
+.range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  margin-top: -9px;
+  height: 20px;
+  width: 20px;
+  border-radius: 9999px;
+  background: var(--color-ink);
+  border: 3px solid var(--color-canvas);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.range::-moz-range-thumb {
+  height: 20px;
+  width: 20px;
+  border: 3px solid var(--color-canvas);
+  border-radius: 9999px;
+  background: var(--color-ink);
+}
+
+/* ── Toggle ────────────────────────────────────────────── */
+.toggle {
+  position: relative;
+  display: inline-flex;
+  height: 27px;
+  width: 46px;
+  flex-shrink: 0;
+  align-items: center;
+  border-radius: 9999px;
+  border: 1px solid var(--color-hairline);
+  background: var(--color-surface);
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.toggle[data-on="true"] {
+  background: var(--color-positive);
+  border-color: transparent;
+}
+
+.toggle::after {
+  content: "";
+  position: absolute;
+  left: 3px;
+  height: 19px;
+  width: 19px;
+  border-radius: 9999px;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.toggle[data-on="true"]::after {
+  transform: translateX(19px);
 }
 
 /* ── Focus: one visible ring everywhere, never removed ── */
@@ -224,6 +338,13 @@ body {
   color: var(--color-ink-faint);
 }
 
+/* The quiet caption under a figure — sentence case, not caps. */
+.caption {
+  font-size: 11.5px;
+  line-height: 1.45;
+  color: var(--color-ink-faint);
+}
+
 .rule-row {
   display: flex;
   align-items: center;
@@ -245,7 +366,7 @@ body {
 }
 
 /* Money and any figure that sits in a column: serif, lining,
-   tabular so columns line up (docs/UI_UX_DESIGN.md). */
+   tabular so columns line up. */
 .figure {
   font-family: var(--font-display);
   font-variant-numeric: tabular-nums lining-nums;
@@ -266,6 +387,22 @@ body {
 }
 .safe-bottom {
   padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* The hero's fanned cards — three stacked quotes, the middle one
+   lifted forward (see the reference's opening screen). */
+@keyframes float-card {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.float-slow {
+  animation: float-card 7s ease-in-out infinite;
 }
 
 /* Respect the OS setting — a demo room projector is not the place

@@ -1,37 +1,96 @@
+/** The route tree.
+ *
+ *  Three dashboards over one local store. The guard only checks that a
+ *  session exists — roles here are views of the same data, not a security
+ *  boundary, and pretending otherwise in a build with no server would be
+ *  theatre. The role roots do redirect to whichever dashboard the session
+ *  actually chose, so you cannot land in the wrong one by typing a URL.
+ */
+
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { AnimatePresence } from "motion/react";
 
-import { SignIn } from "./pages/SignIn";
-import { TouristHome } from "./pages/tourist/TouristHome";
+import { useStore } from "./lib/store";
+
+import { Landing } from "./pages/Landing";
+import { Start } from "./pages/Start";
+import { About } from "./pages/About";
+import { Settings } from "./pages/Settings";
+import { Limits } from "./pages/Limits";
+
+import { TouristHome } from "./pages/tourist/Home";
+import { NewTrip } from "./pages/tourist/NewTrip";
+import { TripDetail } from "./pages/tourist/TripDetail";
+import { Trips } from "./pages/tourist/Trips";
+import { Safety } from "./pages/tourist/Safety";
+import { Discover } from "./pages/tourist/Discover";
+import { StayDetail } from "./pages/tourist/StayDetail";
+
 import { HostHome } from "./pages/host/HostHome";
+import { HostListings } from "./pages/host/HostListings";
+import { HostListingDetail } from "./pages/host/HostListingDetail";
+import { HostVerification } from "./pages/host/HostVerification";
+
 import { GovHome } from "./pages/gov/GovHome";
-import { getToken, getUser } from "./lib/api";
+import { GovRegions } from "./pages/gov/GovRegions";
+import { GovAdvisories } from "./pages/gov/GovAdvisories";
 
-const HOME_FOR = { tourist: "/tourist", host: "/host", gov: "/gov" };
+const HOME_FOR = { tourist: "/app", host: "/host", gov: "/gov" };
 
-/** Three role-gated route trees in one app (docs/TRD.md §2). The gate is a
- *  convenience, not the security boundary — every endpoint checks the JWT and
- *  row ownership server-side, so a hand-edited localStorage role gets 403s,
- *  not data. */
-function Guard({ role, children }) {
+/** Signed out? Back to the landing page, remembering where you were headed. */
+function Require({ children }) {
+  const session = useStore((state) => state.session);
   const location = useLocation();
-  const user = getUser();
+  if (!session) return <Navigate to="/" state={{ from: location }} replace />;
+  return children;
+}
 
-  if (!getToken() || !user) return <Navigate to="/signin" state={{ from: location }} replace />;
-  if (user.role !== role) return <Navigate to={HOME_FOR[user.role] ?? "/signin"} replace />;
+/** A role root belongs to one role. Anyone else is sent to their own. */
+function RoleRoot({ role, children }) {
+  const session = useStore((state) => state.session);
+  if (!session) return <Navigate to="/" replace />;
+  if (session.role !== role) return <Navigate to={HOME_FOR[session.role] ?? "/"} replace />;
   return children;
 }
 
 export default function App() {
-  const user = getUser();
+  const location = useLocation();
+  const session = useStore((state) => state.session);
 
   return (
-    <Routes>
-      <Route path="/" element={<Navigate to={getToken() && user ? (HOME_FOR[user.role] ?? "/signin") : "/signin"} replace />} />
-      <Route path="/signin" element={<SignIn />} />
-      <Route path="/tourist/*" element={<Guard role="tourist"><TouristHome /></Guard>} />
-      <Route path="/host/*" element={<Guard role="host"><HostHome /></Guard>} />
-      <Route path="/gov/*" element={<Guard role="gov"><GovHome /></Guard>} />
-      <Route path="*" element={<Navigate to="/" replace />} />
-    </Routes>
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        {/* Public */}
+        <Route path="/" element={session ? <Navigate to={HOME_FOR[session.role] ?? "/app"} replace /> : <Landing />} />
+        <Route path="/start" element={<Start />} />
+        <Route path="/about" element={<About />} />
+
+        {/* Traveller */}
+        <Route path="/app" element={<RoleRoot role="tourist"><TouristHome /></RoleRoot>} />
+        <Route path="/app/new/:tripId" element={<Require><NewTrip /></Require>} />
+        <Route path="/app/trip/:tripId" element={<Require><TripDetail /></Require>} />
+        <Route path="/app/trips" element={<Require><Trips /></Require>} />
+        <Route path="/app/safety" element={<Require><Safety /></Require>} />
+        <Route path="/app/discover" element={<Require><Discover /></Require>} />
+        <Route path="/app/stay/:listingId" element={<Require><StayDetail /></Require>} />
+
+        {/* Shared across all three roles */}
+        <Route path="/app/settings" element={<Require><Settings /></Require>} />
+        <Route path="/app/settings/limits" element={<Require><Limits /></Require>} />
+
+        {/* Host */}
+        <Route path="/host" element={<RoleRoot role="host"><HostHome /></RoleRoot>} />
+        <Route path="/host/listings" element={<Require><HostListings /></Require>} />
+        <Route path="/host/listing/:listingId" element={<Require><HostListingDetail /></Require>} />
+        <Route path="/host/verification" element={<Require><HostVerification /></Require>} />
+
+        {/* Tourism board */}
+        <Route path="/gov" element={<RoleRoot role="gov"><GovHome /></RoleRoot>} />
+        <Route path="/gov/regions" element={<Require><GovRegions /></Require>} />
+        <Route path="/gov/advisories" element={<Require><GovAdvisories /></Require>} />
+
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </AnimatePresence>
   );
 }

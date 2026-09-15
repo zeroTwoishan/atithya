@@ -21,6 +21,22 @@ Four agents under one LangGraph supervisor — onboarding, verification, plannin
 
 ## Getting started
 
+The frontend runs on its own — no server, no database, no keys. Everything it
+shows (the catalogue, the planning agent, bookings) runs in the browser, with
+state in `localStorage`.
+
+```bash
+cd client
+npm install
+npm run dev     # http://localhost:5173
+```
+
+See [`client/README.md`](client/README.md) for the design language and the code
+layout.
+
+<details>
+<summary>Running the backend too</summary>
+
 ```bash
 # 1. Database — Postgres 16 with pgvector.
 # Either `docker compose up -d` for a local one, or a free Neon/Supabase
@@ -79,6 +95,8 @@ Two things the suite cannot cover, both noted in [`server/test/loop.test.js`](se
 4. Register every phone that will message it — a test number only talks to 5 pre-registered recipients.
 
 The webhook verifies `X-Hub-Signature-256` against `WHATSAPP_APP_SECRET` over the raw request body, and **fails closed**: with no secret configured, nothing is accepted.
+
+</details>
 
 ## Original problem statement
 
