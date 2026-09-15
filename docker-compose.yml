@@ -3,13 +3,13 @@ services:
     image: pgvector/pgvector:pg16
     restart: unless-stopped
     environment:
-      POSTGRES_DB: bhraman
-      POSTGRES_USER: bhraman
-      POSTGRES_PASSWORD: bhraman
+      POSTGRES_DB: atithya
+      POSTGRES_USER: atithya
+      POSTGRES_PASSWORD: atithya
     ports:
       - "5432:5432"
     volumes:
-      - bhraman_pgdata:/var/lib/postgresql/data
+      - atithya_pgdata:/var/lib/postgresql/data
 
 volumes:
-  bhraman_pgdata:
+  atithya_pgdata:

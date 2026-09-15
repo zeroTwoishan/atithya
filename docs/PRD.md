@@ -1,7 +1,7 @@
-# Bhraman — Product Requirements Document
+# Atithya — Product Requirements Document
 
 **Problem Statement 26204** · Smart India Hackathon (AICTE) · Theme: Travel & Tourism
-**Status:** Draft for 36-hour build · **Owner:** Team Bhraman
+**Status:** Draft for 36-hour build · **Owner:** Team Atithya
 
 ---
 
@@ -23,7 +23,7 @@ India's unorganized tourism supply — homestays, local guides, artisans, hyperl
 ## 3. Non-Goals (explicitly out of scope for this build)
 
 - Real payment settlement (mock wallet only — see [[TRD]])
-- Real WhatsApp Business API / Meta verification (Twilio Sandbox stand-in — see [[TRD]])
+- Meta business verification / a production WhatsApp number (Cloud API test number stand-in — see [[TRD]])
 - Multi-language production-grade translation pipeline (demo supports 1–2 regional languages, not all 22)
 - Native mobile apps (web-responsive dashboards only)
 - Full fraud/ML-based verification model (rule + LLM-flag heuristic only)
@@ -96,7 +96,7 @@ India's unorganized tourism supply — homestays, local guides, artisans, hyperl
 
 ## 9. Success Criteria for the 36-Hour Build (demo-grade)
 
-- [ ] One real end-to-end onboarding: WhatsApp (Twilio Sandbox) message → structured listing visible in Host Dashboard.
+- [ ] One real end-to-end onboarding: WhatsApp (Cloud API test number) message → structured listing visible in Host Dashboard.
 - [ ] One real end-to-end tourist flow: chat input → itinerary with ≥1 onboarded listing → mock booking confirmed.
 - [ ] Host dashboard shows the booking against the listing with a payout figure.
 - [ ] Government dashboard renders a heatmap and scheme-linked stats from the same database (seeded historical data + live demo data overlaid).
@@ -106,7 +106,7 @@ India's unorganized tourism supply — homestays, local guides, artisans, hyperl
 
 | Risk | Mitigation |
 |---|---|
-| Twilio WhatsApp Sandbox requires each judge/tester to join sandbox via a join code | Pre-join sandbox before demo; have a fallback recorded clip if live WhatsApp fails |
+| A Cloud API test number only messages 5 pre-registered recipients | Register every demo phone in the Meta console before the event; have a fallback recorded clip if live WhatsApp fails |
 | LLM latency during live demo | Keep agent graphs to 2–3 nodes; cache/pre-warm before demo slot |
 | Regional language coverage | Demo in Hindi only; mention multi-language as roadmap, not built |
 | Scope creep into re-planning agent | Treat as stretch, cut first if behind schedule (see [[BUILD_PLAN]]) |
