@@ -194,6 +194,83 @@ test("booking writes bookings + a wallet debit and flips the trip to confirmed",
   assert.equal(again.status, 409);
 });
 
+test("removing a stop touches only that day, and resequences it", async () => {
+  const { access } = await login("tourist_demo");
+  const { data: trip } = await call("POST", "/trips", {
+    token: access,
+    body: { budget: 16000, interests: ["mountains"], start_date: "2027-01-05", end_date: "2027-01-08" },
+  });
+
+  const target = trip.itinerary_items.find((item) => item.known_site && item.day_number === 2);
+  assert.ok(target, "expected a sightseeing stop on day 2");
+  const dayOneBefore = trip.itinerary_items.filter((item) => item.day_number === 1).map((item) => item.id);
+
+  const edited = await call("PATCH", `/trips/${trip.id}/items/${target.id}`, {
+    token: access,
+    body: { action: "remove" },
+  });
+  assert.equal(edited.status, 200, JSON.stringify(edited.payload));
+  assert.equal(edited.data.edited_day, 2);
+
+  const stops = edited.data.itinerary_items;
+  assert.ok(!stops.some((item) => item.id === target.id), "removed stop is still there");
+  assert.deepEqual(
+    stops.filter((item) => item.day_number === 1).map((item) => item.id),
+    dayOneBefore,
+    "day 1 must be untouched",
+  );
+  // Sequences stay 0,1,2… or the next insert on that day collides.
+  const sequences = stops.filter((item) => item.day_number === 2).map((item) => item.sequence);
+  assert.deepEqual(sequences, sequences.map((_, index) => index));
+});
+
+test("swapping a stop brings a different place, never one already on the trip", async () => {
+  const { access } = await login("tourist_demo");
+  const { data: trip } = await call("POST", "/trips", {
+    token: access,
+    body: { budget: 16000, interests: ["mountains"], start_date: "2027-02-05", end_date: "2027-02-07" },
+  });
+
+  const target = trip.itinerary_items.find((item) => item.known_site);
+  const before = new Set(trip.itinerary_items.filter((i) => i.known_site).map((i) => i.known_site.id));
+
+  const edited = await call("PATCH", `/trips/${trip.id}/items/${target.id}`, {
+    token: access,
+    body: { action: "swap" },
+  });
+  assert.equal(edited.status, 200, JSON.stringify(edited.payload));
+
+  const swapped = edited.data.itinerary_items.find((item) => item.id === target.id);
+  assert.notEqual(swapped.known_site.id, target.known_site.id, "swap returned the same place");
+  assert.ok(!before.has(swapped.known_site.id), "swapped in a place already on the trip");
+
+  const siteIds = edited.data.itinerary_items.filter((i) => i.known_site).map((i) => i.known_site.id);
+  assert.equal(new Set(siteIds).size, siteIds.length, "trip now has a duplicate stop");
+});
+
+test("editing a stop on someone else's trip, or a booked one, is refused", async () => {
+  const tourist = await login("tourist_demo");
+  const { data: trip } = await call("POST", "/trips", {
+    token: tourist.access,
+    body: { budget: 16000, interests: ["mountains"], start_date: "2027-03-05", end_date: "2027-03-07" },
+  });
+  const stop = trip.itinerary_items[0];
+
+  const host = await login("host_demo");
+  const foreign = await call("PATCH", `/trips/${trip.id}/items/${stop.id}`, {
+    token: host.access,
+    body: { action: "remove" },
+  });
+  assert.equal(foreign.status, 403, "a host should not be able to edit a tourist's itinerary");
+
+  await call("POST", `/trips/${trip.id}/book`, { token: tourist.access });
+  const afterBooking = await call("PATCH", `/trips/${trip.id}/items/${stop.id}`, {
+    token: tourist.access,
+    body: { action: "remove" },
+  });
+  assert.equal(afterBooking.status, 409, "a booked trip must not be editable");
+});
+
 test("re-planning rebuilds only the days still ahead", async () => {
   const { access } = await login("tourist_demo");
   const { data: trip } = await call("POST", "/trips", {

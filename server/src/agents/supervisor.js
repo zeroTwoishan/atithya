@@ -12,7 +12,7 @@ import { z } from "zod";
 
 import { handleInboundMessage } from "./onboarding.js";
 import { runVerification } from "./verification.js";
-import { planTrip } from "./planning.js";
+import { planTrip, editStop } from "./planning.js";
 import { replanTrip } from "./replanning.js";
 
 export const TASK = Object.freeze({
@@ -20,6 +20,7 @@ export const TASK = Object.freeze({
   VERIFY: "verify",
   PLAN: "plan",
   REPLAN: "replan",
+  EDIT: "edit",
 });
 
 const State = new StateSchema({
@@ -36,6 +37,7 @@ const AGENTS = {
   [TASK.VERIFY]: (payload) => runVerification(payload.listing),
   [TASK.PLAN]: (payload) => planTrip(payload.trip, { disruption: payload.disruption ?? null }),
   [TASK.REPLAN]: (payload) => replanTrip(payload.trip, payload.disruption, { fromDay: payload.fromDay ?? 2 }),
+  [TASK.EDIT]: (payload) => editStop(payload.trip, payload.itemId, payload.action),
 };
 
 async function dispatch(state) {

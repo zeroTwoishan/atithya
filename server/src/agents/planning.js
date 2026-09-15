@@ -13,7 +13,7 @@ import { StateGraph, StateSchema, START, END } from "@langchain/langgraph";
 import { z } from "zod";
 
 import { query } from "../db/index.js";
-import { LISTING_STATUS } from "../constants.js";
+import { LISTING_STATUS, ITEM_TYPE } from "../constants.js";
 import { composeItinerary, estimateCost, daysBetween } from "../planner.js";
 import { say } from "./llm.js";
 
@@ -134,4 +134,80 @@ export async function persistItems(tripId, items, { fromDay = 1 } = {}) {
       [tripId, item.day_number, item.sequence, item.item_type, item.listing_id, item.known_site_id, item.notes],
     );
   }
+}
+
+/** docs/TRD.md §3.2 node 3 — `await_edit`. The tourist removes or swaps one
+ *  stop and only that day changes; re-running the whole planner would move
+ *  stops they were happy with, and on stage it would visibly redraw the
+ *  screen for no reason.
+ *
+ *  @param {object} trip
+ *  @param {string} itemId  the itinerary_items row being edited
+ *  @param {"remove"|"swap"} action
+ */
+export async function editStop(trip, itemId, action) {
+  const { rows } = await query(
+    `SELECT id, trip_id, day_number, sequence, item_type, listing_id, known_site_id
+       FROM itinerary_items WHERE id = $1 AND trip_id = $2`,
+    [itemId, trip.id],
+  );
+  const item = rows[0];
+  if (!item) return { changed: false, reason: "no_such_stop" };
+
+  if (action === "remove") {
+    await query("DELETE FROM itinerary_items WHERE id = $1", [item.id]);
+    await resequence(trip.id, item.day_number);
+    return { changed: true, day: item.day_number, removed: item.id };
+  }
+
+  const replacement = await findReplacement(trip, item);
+  if (!replacement) return { changed: false, reason: "no_alternative", day: item.day_number };
+
+  await query(
+    `UPDATE itinerary_items SET listing_id = $2, known_site_id = $3, notes = $4 WHERE id = $1`,
+    [item.id, replacement.listing_id, replacement.known_site_id, replacement.notes],
+  );
+  return { changed: true, day: item.day_number, swapped: replacement.label };
+}
+
+/** An alternative of the same kind, never one already on this trip. */
+async function findReplacement(trip, item) {
+  if (item.item_type === ITEM_TYPE.KNOWN_SITE) {
+    const { rows } = await query(
+      `SELECT k.id, k.name FROM known_sites k
+        WHERE k.id NOT IN (SELECT known_site_id FROM itinerary_items
+                            WHERE trip_id = $1 AND known_site_id IS NOT NULL)
+        ORDER BY (k.region = (SELECT region FROM known_sites WHERE id = $2)) DESC, k.name
+        LIMIT 1`,
+      [trip.id, item.known_site_id],
+    );
+    return rows[0]
+      ? { listing_id: null, known_site_id: rows[0].id, notes: "Swapped on request.", label: rows[0].name }
+      : null;
+  }
+
+  // A stay swap has to stay inside the budget, or the swap quietly breaks the
+  // thing the tourist asked for in the first place.
+  const days = daysBetween(trip.start_date, trip.end_date);
+  const { rows } = await query(
+    `SELECT id, title FROM listings
+      WHERE status = $1 AND id <> $2 AND price_amount * $3 <= $4
+      ORDER BY price_amount DESC LIMIT 1`,
+    [LISTING_STATUS.LIVE, item.listing_id, days, trip.budget],
+  );
+  return rows[0]
+    ? { listing_id: rows[0].id, known_site_id: null, notes: "Swapped on request.", label: rows[0].title }
+    : null;
+}
+
+/** Sequences are 0,1,2… within a day — a gap after a removal would make the
+ *  next insert collide. */
+async function resequence(tripId, day) {
+  await query(
+    `UPDATE itinerary_items SET sequence = ordered.position - 1
+       FROM (SELECT id, row_number() OVER (ORDER BY sequence) AS position
+               FROM itinerary_items WHERE trip_id = $1 AND day_number = $2) ordered
+      WHERE itinerary_items.id = ordered.id`,
+    [tripId, day],
+  );
 }

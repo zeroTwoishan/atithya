@@ -105,7 +105,18 @@ router.post(
        RETURNING id, tourist_user_id, budget, interests, start_date, end_date, status, created_at`,
       [req.user.id, body.budget, body.interests, body.start_date, body.end_date],
     );
-    const { narrative } = await run(TASK.PLAN, { trip: rows[0] });
+
+    let narrative;
+    try {
+      ({ narrative } = await run(TASK.PLAN, { trip: rows[0] }));
+    } catch (error) {
+      // The trip row exists but has no itinerary. Leaving it would put an
+      // empty trip in the tourist's list that nothing can ever fill, so drop
+      // it and let them retry — the planner is the whole point of a trip.
+      await query("DELETE FROM trips WHERE id = $1", [rows[0].id]);
+      console.error("[trips] planning failed, rolled back the trip:", error.message);
+      return fail(res, 503, "planner_unavailable", "Couldn't build an itinerary just now. Try again.");
+    }
     created(res, { ...(await tripWithItinerary(rows[0].id)), narrative });
   }),
 );
@@ -189,6 +200,32 @@ router.post(
     });
 
     created(res, { trip: await tripWithItinerary(trip.id), ...result });
+  }),
+);
+
+router.patch(
+  "/trips/:id/items/:itemId",
+  requireRole(ROLE.TOURIST),
+  route(async (req, res) => {
+    const trip = await loadOwnTrip(req, res);
+    if (!trip) return;
+    if (trip.status !== TRIP_STATUS.PLANNING) {
+      return fail(res, 409, "already_booked", `Trip is ${trip.status} — stops can only change while planning.`);
+    }
+
+    const body = parseBody(z.object({ action: z.enum(["remove", "swap"]) }), req, res);
+    if (!body) return;
+
+    // docs/TRD.md §3.2 node 3 — only the edited day is touched.
+    const result = await run(TASK.EDIT, { trip, itemId: req.params.itemId, action: body.action });
+    if (!result.changed) {
+      const message =
+        result.reason === "no_such_stop"
+          ? "That stop isn't on this trip."
+          : "No alternative available that still fits the budget.";
+      return fail(res, result.reason === "no_such_stop" ? 404 : 409, result.reason, message);
+    }
+    ok(res, { ...(await tripWithItinerary(trip.id)), edited_day: result.day });
   }),
 );
 

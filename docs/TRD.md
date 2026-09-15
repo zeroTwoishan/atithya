@@ -78,7 +78,7 @@ Frontend and backend choices below match this team's own established conventions
 - **Graph nodes:**
   1. `retrieve_candidates` — pgvector similarity search over `listings` (interest embedding) + curated `known_sites` table.
   2. `compose_itinerary` — LLM composes a day-by-day itinerary within budget, mixing known sites and verified listings.
-  3. `await_edit` — if tourist edits a stop (swap/remove), only the affected day is regenerated, not the whole trip (keeps demo latency low).
+  3. `await_edit` — if the tourist edits a stop (swap/remove), only the affected day changes, not the whole trip. A swap picks an alternative of the same kind that is not already on the trip, and for a stay one that still fits the budget; a removal resequences the day so the next insert does not collide. Deterministic, no LLM call — re-running the planner would move stops the tourist was happy with, and visibly redraw the screen on stage.
   4. `book` — on confirm, writes `bookings` rows, decrements listing availability, writes a `wallet_transactions` row (mock debit).
 - **Checkpointing:** LangGraph checkpoint keyed by `trip_id` so "await_edit" can pause indefinitely between user turns.
 
@@ -98,6 +98,7 @@ Frontend and backend choices below match this team's own established conventions
 
 | Endpoint | Method | Purpose |
 |---|---|---|
+| `/api/v1/health` | GET | Unauthenticated probe: database reachability plus which integrations are configured. 503 when the database is down |
 | `/webhooks/whatsapp` | GET | Meta webhook verification handshake (`hub.challenge`) — required once at subscription time |
 | `/webhooks/whatsapp` | POST | WhatsApp Cloud API inbound message webhook → Onboarding Agent |
 | `/api/v1/listings` | GET | List/filter listings (host dashboard, planning agent internal use) |
@@ -105,6 +106,7 @@ Frontend and backend choices below match this team's own established conventions
 | `/api/v1/listings/:id/verify` | POST | Manually re-trigger verification (host disputes a flag) |
 | `/api/v1/trips` | POST | Start a planning session `{budget, interests, dates}` |
 | `/api/v1/trips/:id` | GET / PATCH | Fetch/edit itinerary (PATCH triggers partial regeneration) |
+| `/api/v1/trips/:id/items/:itemId` | PATCH | Remove or swap one stop — only that day changes (§3.2 node 3) |
 | `/api/v1/trips/:id/book` | POST | Confirm booking, debit mock wallet |
 | `/api/v1/trips/:id/replan` | POST | Trigger adaptive re-planning *(stretch)* |
 | `/api/v1/hosts/:id/dashboard` | GET | Aggregated bookings/earnings/analytics for a host |
