@@ -1,89 +1,44 @@
-// ChatBubble — user and AI message bubbles with glassmorphic styling
+/** Chat turns. The agent speaks in the display serif (it is the voice of the
+ *  product); the tourist's own words sit in a filled pill. */
 import { motion } from "motion/react";
-import { clsx } from "clsx";
 
-// Typing indicator shown while AI is thinking
+import { cn } from "../lib/utils";
+
+export function ChatBubble({ role, text, time, children, index = 0 }) {
+  const mine = role === "user";
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, delay: Math.min(index * 0.04, 0.2), ease: [0.22, 1, 0.36, 1] }}
+      className={cn("flex w-full flex-col gap-2", mine ? "items-end" : "items-start")}
+    >
+      <div className={cn("max-w-[85%] sm:max-w-[560px]", mine && "flex flex-col items-end")}>
+        {mine ? (
+          <p className="card-inset bg-surface-strong px-4 py-2.5 text-[13.5px] leading-relaxed text-ink">{text}</p>
+        ) : (
+          <p className="font-reading text-[16.5px] leading-[1.6] text-ink">{text}</p>
+        )}
+        {time && <time className="mt-1.5 block text-[10.5px] text-ink-faint">{time}</time>}
+      </div>
+      {children && <div className="w-full max-w-[85%] sm:max-w-[560px]">{children}</div>}
+    </motion.div>
+  );
+}
+
 export function TypingIndicator() {
   return (
-    <motion.div
-      className="flex items-start gap-2.5"
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3 }}
-    >
-      {/* Avatar */}
-      <div className="w-8 h-8 rounded-full glass-dark flex items-center justify-center shrink-0 mt-0.5 border border-white/20">
-        <span className="font-display text-sm text-white font-bold">भ</span>
-      </div>
-      <div className="glass-sm rounded-2xl rounded-tl-sm px-4 py-3 flex items-center gap-1.5">
-        <span className="typing-dot w-1.5 h-1.5 rounded-full bg-white/70 inline-block" />
-        <span className="typing-dot w-1.5 h-1.5 rounded-full bg-white/70 inline-block" />
-        <span className="typing-dot w-1.5 h-1.5 rounded-full bg-white/70 inline-block" />
-      </div>
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex items-center gap-1.5 py-1">
+      {[0, 1, 2].map((dot) => (
+        <motion.span
+          key={dot}
+          className="size-[5px] rounded-full bg-ink-faint"
+          animate={{ opacity: [0.25, 1, 0.25] }}
+          transition={{ duration: 1.1, repeat: Infinity, delay: dot * 0.18 }}
+        />
+      ))}
+      <span className="ml-1.5 text-[11.5px] text-ink-faint">Atithya is planning…</span>
     </motion.div>
-  );
-}
-
-// User bubble (right-aligned, warmer glass)
-function UserBubble({ text, time, index }) {
-  return (
-    <motion.div
-      className="flex justify-end"
-      initial={{ opacity: 0, x: 20, scale: 0.95 }}
-      animate={{ opacity: 1, x: 0, scale: 1 }}
-      transition={{ duration: 0.35, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
-    >
-      <div className="max-w-[82%] glass rounded-2xl rounded-tr-sm px-4 py-3">
-        <p className="font-sans-bhraman text-[13.5px] leading-relaxed text-white">{text}</p>
-        {time && (
-          <p className="font-mono-bhraman text-[10px] text-white/50 text-right mt-1">{time}</p>
-        )}
-      </div>
-    </motion.div>
-  );
-}
-
-// AI bubble (left-aligned, with avatar, softer glass)
-function AiBubble({ text, highlightText, time, index, children }) {
-  return (
-    <motion.div
-      className="flex items-start gap-2.5"
-      initial={{ opacity: 0, x: -20, scale: 0.95 }}
-      animate={{ opacity: 1, x: 0, scale: 1 }}
-      transition={{ duration: 0.38, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
-    >
-      {/* Bhraman Avatar */}
-      <div className="w-8 h-8 rounded-full glass-dark flex items-center justify-center shrink-0 mt-0.5 border border-white/20 shadow-sm">
-        <span className="font-display text-sm font-bold" style={{ color: "#FFE28D" }}>भ</span>
-      </div>
-
-      <div className="flex-1 space-y-2.5 max-w-[88%]">
-        {text && (
-          <div className="glass-sm rounded-2xl rounded-tl-sm px-4 py-3">
-            {highlightText && (
-              <p className="font-display text-[15px] font-semibold mb-1" style={{ color: "#FFE28D" }}>
-                {highlightText}
-              </p>
-            )}
-            <p className="font-sans-bhraman text-[13.5px] leading-relaxed text-white/90">{text}</p>
-            {time && (
-              <p className="font-mono-bhraman text-[10px] text-white/40 mt-1">{time}</p>
-            )}
-          </div>
-        )}
-        {children}
-      </div>
-    </motion.div>
-  );
-}
-
-export function ChatBubble({ role = "user", text, highlightText, time, index = 0, children }) {
-  if (role === "user") {
-    return <UserBubble text={text} time={time} index={index} />;
-  }
-  return (
-    <AiBubble text={text} highlightText={highlightText} time={time} index={index}>
-      {children}
-    </AiBubble>
   );
 }

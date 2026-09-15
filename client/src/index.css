@@ -1,402 +1,282 @@
 /* ============================================================
-   BHRAMAN — Global Styles
-   Two archetypes: Tourist/Host (Dark Glassmorphism)
-                   Government (Precision Console)
+   ATITHYA — Global Styles
+   Visual language: soft iridescent light mode / near-black dark
+   mode, high-contrast serif display, hairline pill controls,
+   floating circular navigation. Matches the reference build in
+   .agent/ (see docs/UI_UX_DESIGN.md).
    ============================================================ */
 
-/* ── Font Imports (Google Fonts only — reliable in all envs) ── */
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..500&display=swap");
 
 @import "tailwindcss";
 
-/* ── Design Tokens ── */
+/* ── Design tokens ──────────────────────────────────────── */
 @theme {
-  --font-serif-lux: 'Playfair Display', Georgia, serif;
-  /* Brand palette */
-  --color-canvas:         #0b0d14;
-  --color-ink:            #f0ede8;
-  --color-text-muted:     rgba(240,237,232,0.55);
-  --color-primary:        #e8643a;
-  --color-primary-active: #d45526;
-  --color-secondary:      #2f4b3c;
-  --color-warning:        #e8a33d;
-  --color-surface-card:   rgba(255,255,255,0.07);
-  --color-hairline:       rgba(255,255,255,0.10);
+  /* Typography — a serif that carries every heading, number and
+     input; one neutral sans for labels and body. */
+  --font-display: "Instrument Serif", "Newsreader", Georgia, serif;
+  --font-reading: "Newsreader", Georgia, serif;
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "Inter", ui-monospace, monospace;
 
-  /* Accent glow colors */
-  --color-grad-sun:       #FFE28D;
-  --color-grad-blush:     #e8643a;
-  --color-grad-night:     #0b0d14;
+  /* Light surface (default) */
+  --color-canvas: #eceaf2;
+  --color-surface: rgba(255, 255, 255, 0.62);
+  --color-surface-strong: rgba(255, 255, 255, 0.86);
+  --color-hairline: rgba(24, 20, 34, 0.09);
+  --color-ink: #1b1725;
+  --color-ink-soft: rgba(27, 23, 37, 0.62);
+  --color-ink-faint: rgba(27, 23, 37, 0.42);
 
-  /* Government semantic */
-  --color-status-positive: #34c77b;
-  --color-status-caution:  #e8a33d;
-  --color-status-negative: #e5484d;
+  /* Accents — brand terracotta used sparingly, green for anything
+     confirmed/safe, amber for review, red for stop. */
+  --color-primary: #c2542c;
+  --color-positive: #2f7d5f;
+  --color-caution: #b07d2b;
+  --color-negative: #b0342f;
 
-  /* Typography — Google Fonts only */
-  --font-display: 'Syne', system-ui, sans-serif;
-  --font-accent:  'Space Grotesk', system-ui, sans-serif;
-  --font-sans:    'DM Sans', system-ui, sans-serif;
-  --font-mono:    'JetBrains Mono', 'Courier New', monospace;
-
-  /* Shape */
-  --radius-card:   18px;
-  --radius-button: 12px;
+  --radius-card: 20px;
+  --radius-inner: 14px;
 }
 
-/* ── Government archetype overrides ── */
-.gov {
-  --color-canvas:       #121821;
-  --color-surface-card: #1b232d;
-  --color-hairline:     rgba(255, 255, 255, 0.08);
-  --color-ink:          #e8eaed;
-  --color-text-muted:   #8b93a1;
-  --color-primary:      #2f8f86;
-  --font-sans:          'IBM Plex Sans', sans-serif;
-  --font-mono:          'IBM Plex Mono', monospace;
-  --radius-card:        8px;
-  --radius-button:      6px;
+/* ── Dark surface ───────────────────────────────────────── */
+.dark {
+  --color-canvas: #08080c;
+  --color-surface: rgba(255, 255, 255, 0.055);
+  --color-surface-strong: rgba(255, 255, 255, 0.09);
+  --color-hairline: rgba(255, 255, 255, 0.1);
+  --color-ink: #f4f2f7;
+  --color-ink-soft: rgba(244, 242, 247, 0.62);
+  --color-ink-faint: rgba(244, 242, 247, 0.38);
+
+  --color-primary: #e8845c;
+  --color-positive: #63c79b;
+  --color-caution: #e0b055;
+  --color-negative: #e2726d;
 }
 
-/* ── Base styles ── */
-*, *::before, *::after {
+/* ── Base ───────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
 }
 
-html, body {
+html,
+body {
   height: 100%;
   overflow-x: hidden;
 }
 
 body {
-  background-color: #0b0d14;
-  color: #f0ede8;
-  font-family: 'DM Sans', system-ui, sans-serif;
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 14px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 }
 
-/* ════════════════════════════════════════
-   GLASSMORPHISM — tuned for dark backdrop
-   ════════════════════════════════════════ */
+/* ════════════════════════════════════════════════════════
+   THE BACKDROP
+   Light: four slow iridescent washes (rose, lavender, mint,
+   butter) over a pale ground. Dark: the same geometry at low
+   opacity over near-black, so the two themes are the same
+   room with the lights off.
+   ════════════════════════════════════════════════════════ */
+.aurora {
+  position: relative;
+  background-color: var(--color-canvas);
+  background-image:
+    radial-gradient(60% 45% at 12% 8%, rgba(247, 191, 208, 0.75), transparent 70%),
+    radial-gradient(55% 40% at 88% 14%, rgba(196, 190, 245, 0.7), transparent 72%),
+    radial-gradient(65% 45% at 78% 88%, rgba(178, 232, 213, 0.6), transparent 70%),
+    radial-gradient(50% 40% at 22% 92%, rgba(250, 226, 178, 0.55), transparent 72%);
+  background-attachment: fixed;
+}
 
-/* Primary cards / panels */
-.glass {
-  background: rgba(255, 255, 255, 0.07);
-  backdrop-filter: blur(24px) saturate(1.6);
-  -webkit-backdrop-filter: blur(24px) saturate(1.6);
-  border: 1px solid rgba(255, 255, 255, 0.13);
+.dark .aurora {
+  background-image:
+    radial-gradient(60% 45% at 10% 6%, rgba(122, 86, 164, 0.3), transparent 70%),
+    radial-gradient(55% 40% at 90% 12%, rgba(58, 84, 150, 0.32), transparent 72%),
+    radial-gradient(65% 50% at 80% 92%, rgba(38, 96, 92, 0.26), transparent 70%),
+    radial-gradient(50% 40% at 18% 88%, rgba(150, 82, 56, 0.2), transparent 72%);
+}
+
+/* Grain keeps the large gradient fields from banding on cheap
+   projectors — which is what a hackathon demo runs on. */
+.aurora::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ════════════════════════════════════════════════════════
+   SURFACES
+   ════════════════════════════════════════════════════════ */
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius-card);
+  backdrop-filter: blur(20px) saturate(1.3);
+  -webkit-backdrop-filter: blur(20px) saturate(1.3);
   box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.06) inset,
-    0 12px 40px rgba(0, 0, 0, 0.45),
-    0 2px 8px rgba(0, 0, 0, 0.30);
+    0 1px 0 rgba(255, 255, 255, 0.45) inset,
+    0 10px 30px rgba(24, 20, 34, 0.06);
 }
 
-.glass:hover {
-  background: rgba(255, 255, 255, 0.10);
-  border-color: rgba(255, 255, 255, 0.18);
+.dark .card {
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.05) inset,
+    0 12px 36px rgba(0, 0, 0, 0.5);
 }
 
-/* Smaller secondary elements */
-.glass-sm {
-  background: rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(16px) saturate(1.4);
-  -webkit-backdrop-filter: blur(16px) saturate(1.4);
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+/* A card nested inside a card — flatter, no shadow of its own. */
+.card-inset {
+  background: var(--color-surface);
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius-inner);
 }
 
-/* Deeper dark panels (nav, overlays) */
-.glass-dark {
-  background: rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(28px) saturate(1.2);
-  -webkit-backdrop-filter: blur(28px) saturate(1.2);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.55);
-}
-
-/* Forest-green tinted glass (safety/verified) */
-.glass-green {
-  background: rgba(47, 75, 60, 0.30);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(52, 199, 123, 0.22);
-  box-shadow: 0 4px 20px rgba(47, 75, 60, 0.35);
-}
-
-/* ════════════════════════════════════════
-   CLEAN LIGHT GLASSMORPHISM (Fintech Premium)
-   ════════════════════════════════════════ */
-.glass-clean {
-  background: rgba(255, 255, 255, 0.25);
-  backdrop-filter: blur(40px) saturate(200%);
-  -webkit-backdrop-filter: blur(40px) saturate(200%);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  border-top: 1px solid rgba(255, 255, 255, 0.6);
-  box-shadow: 
-    0 16px 40px -12px rgba(0, 0, 0, 0.06),
-    0 4px 12px rgba(0, 0, 0, 0.02),
-    inset 0 1px 1px 0 rgba(255, 255, 255, 0.4),
-    inset 0 -1px 1px 0 rgba(255, 255, 255, 0.1);
-}
-
-.glass-clean-subtle {
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(28px) saturate(180%);
-  -webkit-backdrop-filter: blur(28px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  box-shadow: 
-    0 4px 16px -4px rgba(0, 0, 0, 0.04),
-    inset 0 1px 1px 0 rgba(255, 255, 255, 0.3);
-}
-
-.glass-clean-pill {
-  background: rgba(255, 255, 255, 0.35);
-  backdrop-filter: blur(24px) saturate(190%);
-  -webkit-backdrop-filter: blur(24px) saturate(190%);
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  box-shadow: 
-    0 4px 14px -2px rgba(0, 0, 0, 0.04),
-    inset 0 1px 1px 0 rgba(255, 255, 255, 0.5);
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* ── Textured Gradient Navigation ── */
-.nav-textured-gradient {
-  background: 
-    linear-gradient(135deg, rgba(232, 100, 58, 0.12) 0%, rgba(47, 75, 60, 0.06) 50%, rgba(255, 255, 255, 0.0) 100%),
-    rgba(255, 255, 255, 0.4);
-  backdrop-filter: blur(40px) saturate(220%);
-  -webkit-backdrop-filter: blur(40px) saturate(220%);
-  border-top: 1px solid rgba(255, 255, 255, 0.6);
-  position: relative;
-}
-
-.nav-textured-gradient::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  opacity: 0.2;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23n)'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: -1;
-}
-
-.pearl-canvas {
-  background: radial-gradient(120% 120% at 50% 0%, #FFFFFF 0%, #F7F2EC 40%, #EFE7DC 100%);
-}
-
-/* ════════════════════════════════════════
-   DARK BACKDROP — rich deep base + glows
-   ════════════════════════════════════════ */
-.dusk-backdrop {
-  /* Deep dark base — text is ALWAYS legible */
-  background:
-    radial-gradient(ellipse 70% 55% at 10% 0%,   rgba(232,100,58,0.28)  0%, transparent 55%),
-    radial-gradient(ellipse 60% 50% at 90% 100%,  rgba(47,75,60,0.22)    0%, transparent 55%),
-    radial-gradient(ellipse 80% 60% at 50% 40%,   rgba(19,25,112,0.20)   0%, transparent 60%),
-    linear-gradient(175deg, #12101e 0%, #0e1220 40%, #0b1018 75%, #080c10 100%);
-  position: relative;
-  overflow: hidden;
-}
-
-/* Subtle noise grain for depth */
-.dusk-backdrop::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  opacity: 0.025;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 1;
-}
-
-/* ── Floating Orbs ── */
-.orb {
-  position: absolute;
+/* ════════════════════════════════════════════════════════
+   CONTROLS — everything is a pill
+   ════════════════════════════════════════════════════════ */
+.pill {
   border-radius: 9999px;
-  filter: blur(90px);
-  pointer-events: none;
-  z-index: 0;
-  will-change: transform;
+  border: 1px solid var(--color-hairline);
+  background: var(--color-surface);
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    transform 0.12s ease;
 }
 
-.orb-sun {
-  background: radial-gradient(circle, #FFE28D 0%, #e8643a 100%);
-  opacity: 0.18;
-  width: 340px;
-  height: 340px;
-  top: -100px;
-  right: -80px;
-  animation: orb-drift-a 14s ease-in-out infinite alternate;
+.pill:hover:not(:disabled) {
+  background: var(--color-surface-strong);
+}
+.pill:active:not(:disabled) {
+  transform: scale(0.985);
+}
+.pill:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
-.orb-blush {
-  background: radial-gradient(circle, #e8643a 0%, #BF4E30 100%);
-  opacity: 0.12;
-  width: 260px;
-  height: 260px;
-  top: 35%;
-  left: -120px;
-  animation: orb-drift-b 18s ease-in-out infinite alternate;
+/* The one filled action per screen: ink-on-ivory in dark, and
+   the inverse in light — highest contrast either way. */
+.pill-primary {
+  border-radius: 9999px;
+  background: var(--color-ink);
+  color: var(--color-canvas);
+  border: 1px solid transparent;
+  transition:
+    opacity 0.18s ease,
+    transform 0.12s ease;
 }
 
-.orb-rust {
-  background: radial-gradient(circle, #2f4b3c 0%, #1a3628 100%);
-  opacity: 0.20;
-  width: 220px;
-  height: 220px;
-  bottom: 25%;
-  right: -70px;
-  animation: orb-drift-c 11s ease-in-out infinite alternate;
+.pill-primary:hover:not(:disabled) {
+  opacity: 0.88;
+}
+.pill-primary:active:not(:disabled) {
+  transform: scale(0.985);
+}
+.pill-primary:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
 }
 
-.orb-navy {
-  background: radial-gradient(circle, #131970 0%, #0a0d40 100%);
-  opacity: 0.25;
-  width: 350px;
-  height: 350px;
-  bottom: -100px;
-  left: -60px;
-  animation: orb-drift-a 20s ease-in-out infinite alternate-reverse;
+/* Confirmed/safe action (the reference's "hold to pay" green). */
+.pill-positive {
+  border-radius: 9999px;
+  border: 1px solid color-mix(in srgb, var(--color-positive) 35%, transparent);
+  background: color-mix(in srgb, var(--color-positive) 14%, transparent);
+  color: var(--color-positive);
 }
 
-@keyframes orb-drift-a {
-  from { transform: translate(0, 0) scale(1); }
-  to   { transform: translate(28px, 18px) scale(1.07); }
-}
-@keyframes orb-drift-b {
-  from { transform: translate(0, 0) scale(1); }
-  to   { transform: translate(-22px, 28px) scale(1.05); }
-}
-@keyframes orb-drift-c {
-  from { transform: translate(0, 0) scale(1); }
-  to   { transform: translate(18px, -22px) scale(1.09); }
+.pill-positive:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--color-positive) 20%, transparent);
 }
 
-/* ════════════════════════════════════════
-   TYPOGRAPHY HELPERS
-   ════════════════════════════════════════ */
-.font-display      { font-family: 'Syne', system-ui, sans-serif; letter-spacing: -0.01em; }
-.font-accent       { font-family: 'Space Grotesk', system-ui, sans-serif; }
-.font-sans-bhraman { font-family: 'DM Sans', system-ui, sans-serif; }
-.font-mono-bhraman { font-family: 'JetBrains Mono', monospace; font-variant-numeric: tabular-nums; }
+/* ── Focus: one visible ring everywhere, never removed ── */
+:where(a, button, input, textarea, select, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: 9999px;
+}
 
-/* ════════════════════════════════════════
-   BUTTON ANIMATIONS — clean spring feel
-   ════════════════════════════════════════ */
+/* ════════════════════════════════════════════════════════
+   TYPE HELPERS
+   ════════════════════════════════════════════════════════ */
 
-/* Base interactive element polish */
-.btn-base {
-  position: relative;
-  display: inline-flex;
+/* Section labels: small, letterspaced, muted, with a hairline
+   running to the end of the row. */
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-ink-faint);
+}
+
+.rule-row {
+  display: flex;
   align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  user-select: none;
-  transition:
-    transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1),
-    box-shadow 0.18s ease,
-    background 0.15s ease,
-    border-color 0.15s ease,
-    opacity 0.15s ease;
-  -webkit-transition:
-    transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1),
-    box-shadow 0.18s ease,
-    background 0.15s ease;
+  gap: 12px;
+}
+.rule-row::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--color-hairline);
 }
 
-.btn-base:hover  { transform: translateY(-1px) scale(1.02); }
-.btn-base:active { transform: translateY(0px) scale(0.96); transition-duration: 0.08s; }
-
-/* Icon-only circular buttons */
-.btn-icon {
-  transition:
-    transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1),
-    background 0.15s ease,
-    border-color 0.15s ease;
-}
-.btn-icon:hover  { transform: scale(1.08); background: rgba(255,255,255,0.12); }
-.btn-icon:active { transform: scale(0.92); transition-duration: 0.07s; }
-
-/* Primary CTA — rust glow */
-.btn-primary {
-  background: #e8643a;
-  box-shadow: 0 4px 20px rgba(232,100,58,0.45), 0 1px 3px rgba(0,0,0,0.30);
-  transition:
-    transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1),
-    box-shadow 0.18s ease,
-    background 0.15s ease;
-}
-.btn-primary:hover {
-  background: #f07048;
-  box-shadow: 0 6px 28px rgba(232,100,58,0.60), 0 2px 6px rgba(0,0,0,0.30);
-  transform: translateY(-2px) scale(1.01);
-}
-.btn-primary:active {
-  background: #d45526;
-  box-shadow: 0 2px 10px rgba(232,100,58,0.35);
-  transform: translateY(0) scale(0.97);
-  transition-duration: 0.07s;
+/* The wordmark treatment: letterspaced caps. */
+.wordmark {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
 }
 
-/* Chip / pill filter buttons */
-.btn-chip {
-  transition:
-    transform 0.16s cubic-bezier(0.34, 1.56, 0.64, 1),
-    background 0.15s ease,
-    color 0.15s ease,
-    border-color 0.15s ease,
-    box-shadow 0.15s ease;
+/* Money and any figure that sits in a column: serif, lining,
+   tabular so columns line up (docs/UI_UX_DESIGN.md). */
+.figure {
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums lining-nums;
+  letter-spacing: -0.01em;
 }
-.btn-chip:hover  { transform: scale(1.04); }
-.btn-chip:active { transform: scale(0.96); transition-duration: 0.07s; }
 
-/* Send / circular action buttons */
-.btn-send {
-  transition:
-    transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1),
-    box-shadow 0.18s ease;
+/* ── Utilities ── */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
-.btn-send:hover  { transform: scale(1.08) rotate(4deg); }
-.btn-send:active { transform: scale(0.92) rotate(0deg); transition-duration: 0.08s; }
-
-/* ════════════════════════════════════════
-   MICRO-ANIMATIONS
-   ════════════════════════════════════════ */
-@keyframes ping-slow {
-  0%, 100% { transform: scale(1); opacity: 0.9; }
-  50%       { transform: scale(1.7); opacity: 0; }
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
-.animate-ping-slow { animation: ping-slow 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
 
-@keyframes typing-bounce {
-  0%, 60%, 100% { transform: translateY(0);  opacity: 0.4; }
-  30%           { transform: translateY(-5px); opacity: 1; }
+.safe-top {
+  padding-top: env(safe-area-inset-top, 0px);
 }
-.typing-dot:nth-child(1) { animation: typing-bounce 1.4s ease-in-out infinite; }
-.typing-dot:nth-child(2) { animation: typing-bounce 1.4s ease-in-out 0.18s infinite; }
-.typing-dot:nth-child(3) { animation: typing-bounce 1.4s ease-in-out 0.36s infinite; }
-
-@keyframes fade-up {
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: translateY(0); }
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }
-.animate-fade-up { animation: fade-up 0.4s cubic-bezier(0.22, 1, 0.36, 1) both; }
 
-/* ── Scrollbar utilities ── */
-.no-scrollbar::-webkit-scrollbar { display: none; }
-.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-/* ── Safe-area insets ── */
-.safe-bottom { padding-bottom: env(safe-area-inset-bottom, 12px); }
-.safe-top    { padding-top:    env(safe-area-inset-top, 0px); }
-
-/* ── Focus visible ring ── */
-:focus-visible {
-  outline: 2px solid rgba(232, 100, 58, 0.80);
-  outline-offset: 3px;
-  border-radius: 8px;
+/* Respect the OS setting — a demo room projector is not the place
+   for parallax, and some judges get motion sick. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

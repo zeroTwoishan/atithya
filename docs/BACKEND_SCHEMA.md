@@ -1,6 +1,6 @@
-# Bhraman — Backend Schema
+# Atithya — Backend Schema
 
-**Companion to [[TRD]]** · PostgreSQL 16 + `pgvector`, accessed via Django's ORM · Single init migration (no production data yet, so no expand-contract/zero-downtime ceremony — see `ponytail` note below).
+**Companion to [[TRD]]** · PostgreSQL 16 + `pgvector`, accessed with the `pg` driver over raw parameterised SQL · Single init schema (no production data yet, so no expand-contract/zero-downtime ceremony — see `ponytail` note below).
 
 > This is the first migration for a project with no prod data, so every column can be added with real constraints up front instead of the nullable-then-backfill dance zero-downtime migrations need. That pattern is documented in `docs/BACKEND_SCHEMA.md#phase-2-migration-notes` for when the schema needs to change under live data.
 
@@ -126,203 +126,23 @@ erDiagram
 
 ## 3. `schema.sql`
 
-```sql
--- Bhraman initial schema — single init migration, PostgreSQL 16+
+**The DDL lives in [`server/src/db/schema.sql`](../server/src/db/schema.sql), not here.** It is applied verbatim by `npm run db:init`, so it is the migration, and a second copy in this document would only drift from it. The ERD in §1 is the diagram of that file; read the file for the exact columns.
 
-CREATE EXTENSION IF NOT EXISTS pgvector;
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+Three deliberate differences from the ERD's shorthand:
 
-CREATE TYPE user_role AS ENUM ('host', 'tourist', 'gov');
-CREATE TYPE offering_type AS ENUM ('homestay', 'guide', 'artisan_experience', 'other');
-CREATE TYPE price_unit AS ENUM ('night', 'person', 'experience');
-CREATE TYPE listing_status AS ENUM ('pending_verification', 'needs_review', 'live', 'inactive');
-CREATE TYPE trip_status AS ENUM ('planning', 'confirmed', 'completed', 'cancelled');
-CREATE TYPE booking_status AS ENUM ('confirmed', 'completed', 'cancelled');
-CREATE TYPE itinerary_item_type AS ENUM ('known_site', 'listing');
-CREATE TYPE wallet_txn_type AS ENUM ('debit', 'refund');
-CREATE TYPE payout_status AS ENUM ('pending', 'paid');
-CREATE TYPE advisory_severity AS ENUM ('info', 'caution', 'warning');
+- `CREATE EXTENSION vector` — the pgvector extension is named `vector`; `CREATE EXTENSION pgvector` fails.
+- `gen_random_uuid()` for every primary key, not `uuid-ossp`'s `uuid_generate_v4()` — built into PG13+, one less extension to install on whatever Postgres the demo runs against.
+- `users` carries `username` and `password` (scrypt, `salt:hash`) on top of the ERD's identity columns — the 3 demo role accounts have to authenticate somehow (docs/TRD.md §4). WhatsApp-onboarded hosts get a non-hash placeholder, so they own a listing without being able to log in until a real credential is set.
 
-CREATE TABLE users (
-    id           UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    role         user_role NOT NULL,
-    phone        TEXT UNIQUE,
-    name         TEXT NOT NULL,
-    language     TEXT NOT NULL DEFAULT 'hi',
-    created_at   TIMESTAMPTZ NOT NULL DEFAULT now()
-);
+## 4. Data Access (Node.js)
 
-CREATE TABLE known_sites (
-    id          UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    name        TEXT NOT NULL,
-    region      TEXT NOT NULL,
-    category    TEXT NOT NULL,
-    description TEXT,
-    lat         DOUBLE PRECISION,
-    lng         DOUBLE PRECISION,
-    embedding   vector(1536)
-);
+`schema.sql` above is not a design reference any more — it is the migration. `npm run db:init` pipes it straight into Postgres, so there is no second source of truth to drift from and no ORM mapping layer to keep in sync with the ERD.
 
-CREATE TABLE listings (
-    id                  UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    host_user_id        UUID NOT NULL REFERENCES users(id),
-    offering_type       offering_type NOT NULL,
-    title               TEXT NOT NULL,
-    description         TEXT,
-    price_amount        NUMERIC(10,2) NOT NULL,
-    price_unit          price_unit NOT NULL,
-    region              TEXT NOT NULL,
-    lat                 DOUBLE PRECISION,
-    lng                 DOUBLE PRECISION,
-    availability        JSONB NOT NULL DEFAULT '{}',
-    photo_urls          TEXT[] NOT NULL DEFAULT '{}',
-    embedding           vector(1536),
-    status              listing_status NOT NULL DEFAULT 'pending_verification',
-    verification_notes  TEXT,
-    created_at          TIMESTAMPTZ NOT NULL DEFAULT now(),
-    updated_at          TIMESTAMPTZ NOT NULL DEFAULT now()
-);
-CREATE INDEX idx_listings_host ON listings (host_user_id);
-CREATE INDEX idx_listings_status_region ON listings (status, region);
-
-CREATE TABLE conversation_state (
-    id               UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    whatsapp_number  TEXT NOT NULL UNIQUE,
-    host_user_id     UUID REFERENCES users(id),
-    state            JSONB NOT NULL DEFAULT '{}',
-    last_message_at  TIMESTAMPTZ NOT NULL DEFAULT now()
-);
-
-CREATE TABLE trips (
-    id               UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    tourist_user_id  UUID NOT NULL REFERENCES users(id),
-    budget           NUMERIC(10,2) NOT NULL,
-    interests        TEXT[] NOT NULL DEFAULT '{}',
-    start_date       DATE NOT NULL,
-    end_date         DATE NOT NULL,
-    status           trip_status NOT NULL DEFAULT 'planning',
-    created_at       TIMESTAMPTZ NOT NULL DEFAULT now()
-);
-CREATE INDEX idx_trips_tourist ON trips (tourist_user_id);
-
-CREATE TABLE itinerary_items (
-    id             UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    trip_id        UUID NOT NULL REFERENCES trips(id) ON DELETE CASCADE,
-    day_number     INT NOT NULL,
-    sequence       INT NOT NULL,
-    item_type      itinerary_item_type NOT NULL,
-    listing_id     UUID REFERENCES listings(id),
-    known_site_id  UUID REFERENCES known_sites(id),
-    notes          TEXT,
-    start_time     TIME,
-    end_time       TIME,
-    CHECK (
-        (item_type = 'listing' AND listing_id IS NOT NULL AND known_site_id IS NULL) OR
-        (item_type = 'known_site' AND known_site_id IS NOT NULL AND listing_id IS NULL)
-    )
-);
-CREATE INDEX idx_itinerary_trip ON itinerary_items (trip_id, day_number, sequence);
-
-CREATE TABLE bookings (
-    id           UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    trip_id      UUID NOT NULL REFERENCES trips(id),
-    listing_id   UUID NOT NULL REFERENCES listings(id),
-    quantity     INT NOT NULL DEFAULT 1,
-    unit_price   NUMERIC(10,2) NOT NULL,
-    total_price  NUMERIC(10,2) NOT NULL,
-    status       booking_status NOT NULL DEFAULT 'confirmed',
-    created_at   TIMESTAMPTZ NOT NULL DEFAULT now()
-);
-CREATE INDEX idx_bookings_listing ON bookings (listing_id);
-CREATE INDEX idx_bookings_trip ON bookings (trip_id);
-
-CREATE TABLE wallet_transactions (
-    id               UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    tourist_user_id  UUID NOT NULL REFERENCES users(id),
-    trip_id          UUID REFERENCES trips(id),
-    amount           NUMERIC(10,2) NOT NULL,
-    type             wallet_txn_type NOT NULL,
-    created_at       TIMESTAMPTZ NOT NULL DEFAULT now()
-);
-
-CREATE TABLE payouts (
-    id            UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    host_user_id  UUID NOT NULL REFERENCES users(id),
-    amount        NUMERIC(10,2) NOT NULL,
-    period_start  DATE NOT NULL,
-    period_end    DATE NOT NULL,
-    status        payout_status NOT NULL DEFAULT 'pending',
-    created_at    TIMESTAMPTZ NOT NULL DEFAULT now()
-);
-
-CREATE TABLE reviews (
-    id           UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    booking_id   UUID NOT NULL REFERENCES bookings(id),
-    listing_id   UUID NOT NULL REFERENCES listings(id),
-    rating       INT NOT NULL CHECK (rating BETWEEN 1 AND 5),
-    comment      TEXT,
-    created_at   TIMESTAMPTZ NOT NULL DEFAULT now()
-);
-CREATE INDEX idx_reviews_listing ON reviews (listing_id);
-
-CREATE TABLE safety_advisories (
-    id         UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    region     TEXT NOT NULL,
-    category   TEXT NOT NULL,
-    message    TEXT NOT NULL,
-    severity   advisory_severity NOT NULL DEFAULT 'info',
-    created_at TIMESTAMPTZ NOT NULL DEFAULT now()
-);
-CREATE INDEX idx_advisories_region ON safety_advisories (region);
-```
-
-## 4. Django Models
-
-`schema.sql` above stays the canonical contract (it's what the ERD and every other doc reference) — but the app talks to Postgres through Django's ORM, not raw SQL, per [[TRD]] §2. Two mechanical translation notes so the models don't drift from the diagram:
-
-- **Migrations, not `psql < schema.sql`.** Write the models below per Django app (`listings.models.Listing`, `trips.models.Trip`, etc.), then `manage.py makemigrations && manage.py migrate` generates the actual DDL. The hand-written `schema.sql` in §3 is the design reference the team agreed on — if a model's `makemigrations` output diverges from it, that's a signal to double check which one is wrong, not to silently let them drift apart.
-- **pgvector needs one extra package.** `pip install pgvector` gives `pgvector.django.VectorField` — use it for `Listing.embedding` and `KnownSite.embedding` exactly where §3 has `vector(1536)`. Register `pgvector.django` in `INSTALLED_APPS` and enable the extension via a migration's `AddExtension` operation (or a raw-SQL migration for `CREATE EXTENSION IF NOT EXISTS pgvector`) — Django won't do this on its own.
-- **Enums become `TextChoices`.** Every Postgres `ENUM` in §3 (`user_role`, `listing_status`, `trip_status`, …) maps to a `models.TextChoices` class on the owning model, with `choices=...` on the field — this is the standard Django pattern and keeps the enum values identical to §3 rather than reinventing them as free-text.
-
-Example — `listings.models.Listing`, showing the pattern the rest of the models follow:
-
-```python
-from django.db import models
-from pgvector.django import VectorField
-import uuid
-
-class Listing(models.Model):
-    class OfferingType(models.TextChoices):
-        HOMESTAY = "homestay"
-        GUIDE = "guide"
-        ARTISAN_EXPERIENCE = "artisan_experience"
-        OTHER = "other"
-
-    class Status(models.TextChoices):
-        PENDING_VERIFICATION = "pending_verification"
-        NEEDS_REVIEW = "needs_review"
-        LIVE = "live"
-        INACTIVE = "inactive"
-
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    host = models.ForeignKey("accounts.User", on_delete=models.PROTECT, related_name="listings")
-    offering_type = models.CharField(max_length=32, choices=OfferingType.choices)
-    title = models.CharField(max_length=255)
-    description = models.TextField(blank=True)
-    price_amount = models.DecimalField(max_digits=10, decimal_places=2)
-    price_unit = models.CharField(max_length=16)  # TextChoices, per §3 price_unit enum
-    region = models.CharField(max_length=255)
-    availability = models.JSONField(default=dict)
-    photo_urls = models.JSONField(default=list)  # Postgres TEXT[] -> JSONField is the pragmatic Django mapping
-    embedding = VectorField(dimensions=1536, null=True)
-    status = models.CharField(max_length=32, choices=Status.choices, default=Status.PENDING_VERIFICATION)
-    verification_notes = models.TextField(blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        indexes = [models.Index(fields=["status", "region"])]
-```
+- **No ORM.** Eleven tables, frozen for the build, queried by hand-written SQL through a single `pg.Pool` (`src/db.js`). Prisma would add a schema DSL, a generate step and a migration history for a database that gets created exactly once — and its pgvector support is still preview-only, which is the one column an ORM would actually have to earn.
+- **Every query is parameterised** (`$1, $2, ...`), no string interpolation into SQL, ever. This is the only injection defence in the stack now that there is no ORM escaping values.
+- **Enums stay in Postgres.** The `CREATE TYPE ... AS ENUM` blocks in §3 are the enum definition; the JS side mirrors them as frozen plain objects in `src/constants.js` so a typo is a runtime error at the boundary rather than a silent `22P02` from the driver.
+- **`vector(1536)` values** are bound as a string literal (`'[0.1,0.2,...]'`) — `pgvector/pg` registers the type so arrays round-trip, but the query itself stays plain SQL.
+- **`TEXT[]` maps to a JS array** natively via `pg`; `JSONB` maps to a plain object. No serialisation helpers needed for either.
 
 ## 5. Seed Data Needed for the Demo (not schema, but required to make the 3 dashboards non-empty on stage)
 
@@ -330,7 +150,7 @@ class Listing(models.Model):
 - 5–10 pre-onboarded `listings` (so the tourist flow has inventory even before the live on-stage onboarding happens) + the live one onboarded during the demo.
 - 20–30 historical `bookings`/`reviews` rows dated over the past few months (so the government dashboard's trend charts aren't a flat line).
 - A handful of `safety_advisories` for the regions used in the demo itinerary.
-- Write seed data as a Django management command (`manage.py seed_demo_data`), not a raw SQL script — it can reuse the real model validation instead of hand-crafting inserts that might drift from the schema.
+- Write seed data as a node script (`npm run db:seed`) that inserts through the same `pg` pool the API uses, so a seed row and an API-created row go down the identical path — and re-running it is idempotent (truncate-then-insert), because it will be re-run on stage between rehearsals.
 
 ## 6. Phase-2 Migration Notes
 

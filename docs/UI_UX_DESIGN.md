@@ -1,60 +1,66 @@
-# Bhraman — UI/UX Design
+# Atithya — UI/UX Design
 
-**Companion to [[PRD]] and [[TRD]]** · Mockups generated via **Stitch MCP** (project `Bhraman - SIH 26204`, id `12922044088822496175`) · Rendered HTML saved to `docs/screens/{tourist,host,government}/`.
-
-Design references consulted: `75-company-designs` (Airbnb — warm consumer marketplace; PostHog — technical data-dense console), `design-house-rules`, `ui-ux-pro-max`.
+**Companion to [[PRD]] and [[TRD]]** · Screen content reference: the Stitch mockups in `docs/screens/{tourist,host,government}/` · **Visual system reference: the prototype recording in `.agent/`** — that build, not the Stitch mockups, defines how Atithya looks.
 
 ---
 
-## 1. Two Deliberate Archetypes, Not One Skin Stretched Three Ways
+## 1. One System, Two Temperatures
 
-Per `design-house-rules` Step 0, the three dashboards don't share a single visual system, because they don't share an audience, a device, or a mood:
+The earlier plan split the product into two visual archetypes (a warm marketplace for tourist/host, a precision console for government). That is superseded: the reference build in `.agent/` is a single system that works for all three audiences, and three dashboards that look like three products is a liability in a 13-minute demo where judges are tracking one story across all of them.
 
-- **Tourist + Host → "Warm Marketplace" archetype.** *Physical scene:* Meera checks bookings on a cracked-screen Android between guests; Aditya scrolls one-handed on a train platform deciding where to stay tonight. Both need warmth, trust signals (verified badges, ratings), and forgiving touch targets — closer to Airbnb's photography-led marketplace than to enterprise SaaS.
-- **Government → "Precision Console" archetype.** *Physical scene:* a tourism officer reviews scheme outcomes on a desktop monitor in an office, comparing regions and defending budget numbers to a superior. This needs density, legibility of numbers, and zero decorative noise — closer to PostHog/Linear's technical-console family than to a consumer app.
+What separates the three surfaces now is **content density and navigation**, not palette. The tourist gets prose and one action per screen; the host gets tiles and a table; the government gets aggregates and bars. Same tokens throughout.
 
-Splitting the system this way also does real product work: switching from warm terracotta to slate-and-teal is itself a signal to anyone screen-sharing which room of the platform they're in.
+The system's two temperatures are **light** (default) and **dark**, not two archetypes:
 
-## 2. Design Tokens — Warm Marketplace (Tourist + Host)
+- **Light** — an iridescent wash (rose, lavender, mint, butter) over a pale ground, with white translucent cards. Reads as calm and premium in a bright demo room, and photographs well on a projector.
+- **Dark** — near-black with the same gradient geometry at low opacity. Follows the OS until the user picks; the choice then sticks (`client/src/lib/useTheme.js`).
 
-| Token | Value | Use |
-|---|---|---|
-| `canvas` | `#F5E6D8` (terracotta-tinted ivory — an intentional warm surface, not the reflex sand/cream default) | Page background |
-| `ink` | `#2A211C` (warm near-black brown) | Headlines, body text — never pure black |
-| `primary` (rust/terracotta) | `#BF4E30` | Primary CTA only — send button, "Reserve", "New listing". Reserved, not diluted across secondary UI |
-| `primary-active` | `#A33F26` | Press state |
-| `secondary` (forest green) | `#2F4B3C` | "Verified" badges, safety confirmations, paid/live status |
-| `warning` (amber) | `#C97D2E` | "Needs review" status, pricing-copilot flags |
-| `surface-card` | `#FFFFFF` | Cards, always with the system's one soft layered shadow — never flat |
-| `hairline` | `#E3CFBC` | Card borders, dividers |
-| Display type | **Fraunces** (serif, weight 400–600, tight negative tracking `-0.02em` on headlines) | Page titles, section heads — the one place the system trusts type for warmth |
-| UI/body type | **Inter** | Body copy, buttons, form fields, chat bubbles |
-| Radius | card `16px` · button `10px` · pill `full` (chips, filter tags) | Soft, human, no hard corners |
-| Shadow | single tier: `0 1px 2px rgba(42,33,28,.04), 0 4px 12px rgba(42,33,28,.08)` | Cards, floating chat input, dropdowns — no default browser shadow |
+Both are defined once as CSS custom properties in `client/src/index.css`; a component never hard-codes a colour.
 
-## 3. Design Tokens — Precision Console (Government)
+## 2. Design Tokens
 
-| Token | Value | Use |
-|---|---|---|
-| `canvas` | `#121821` (deep slate navy) | Page background |
-| `surface-panel` | `#1B232D` | Panels, cards — **1px hairline border, zero drop shadow** |
-| `hairline` | `rgba(255,255,255,0.08)` | The system's only depth cue |
-| `text-primary` | `#E8EAED` | Headlines, primary labels |
-| `text-muted` | `#8B93A1` | Secondary labels, axis text |
-| `primary` (teal) | `#2F8F86` | Primary actions, chart lines, active nav |
-| `status-positive` | `#34C77B` (emerald) | Underused-but-growing, scheme growth |
-| `status-caution` | `#E8A33D` (amber) | Moderate demand |
-| `status-negative` | `#E5484D` (red) | Overcrowded, safety incidents |
-| UI type | **IBM Plex Sans** | Nav, labels, body |
-| Data type | **IBM Plex Mono**, `font-variant-numeric: tabular-nums` | Every stat number, chart axis, table figure — non-negotiable for a dashboard defending budget numbers |
-| Radius | `6–8px` throughout | Deliberately less soft than the marketplace side — this is a work tool, not a consumer app |
-| Shadow | none, anywhere | Depth comes only from the hairline border + surface contrast (Precision Void, per `design-house-rules`) |
+Canonical source: `client/src/index.css`. Everything below mirrors that file — if the two disagree, the stylesheet is right.
+
+| Token | Light | Dark | Use |
+|---|---|---|---|
+| `--color-canvas` | `#eceaf2` | `#08080c` | Page ground under the aurora |
+| `--color-surface` | `rgba(255,255,255,0.62)` | `rgba(255,255,255,0.055)` | Cards, pills, inputs |
+| `--color-surface-strong` | `rgba(255,255,255,0.86)` | `rgba(255,255,255,0.09)` | Hover, active nav, raised rows |
+| `--color-hairline` | `rgba(24,20,34,0.09)` | `rgba(255,255,255,0.10)` | Every border and rule — 1px, never heavier |
+| `--color-ink` | `#1b1725` | `#f4f2f7` | Primary text, filled buttons |
+| `--color-ink-soft` | 62% ink | 62% ink | Body copy, secondary labels |
+| `--color-ink-faint` | 42% ink | 38% ink | Eyebrows, captions, metadata |
+| `--color-primary` | `#c2542c` | `#e8845c` | Brand terracotta — accents and focus rings only |
+| `--color-positive` | `#2f7d5f` | `#63c79b` | Verified, booked, safe, growth |
+| `--color-caution` | `#b07d2b` | `#e0b055` | Needs review, advisories |
+| `--color-negative` | `#b0342f` | `#e2726d` | Declines, warnings, cancellations |
+
+**Type.** Three faces, one job each:
+
+| Face | Role |
+|---|---|
+| **Instrument Serif** (`--font-display`) | Every heading, every figure, and the chat/search inputs. This is the product's voice. |
+| **Newsreader** (`--font-reading`) | The agent's prose in chat — a reading serif at 16.5px/1.6. |
+| **Inter** (`--font-sans`) | Labels, captions, buttons, table data. Never a heading. |
+
+*Unverified:* the faces above are the closest Google Fonts match to the reference recording — a video can't be inspected for `font-family`. If the reference build's own stylesheet is available, take the names from there and swap the `@import` in `index.css`; nothing else changes.
+
+**Shape.** Cards `20px`, nested cards `14px`, every control a full pill (`9999px`). One filled button per screen (`.pill-primary`, ink-on-canvas); everything else is a hairline pill.
+
+## 3. Layout & Navigation
+
+Responsive is a requirement, not a stretch — judges will see this on a laptop, the team will demo parts of it on a phone.
+
+- **Content column** caps at `1280px`; inner reading columns cap at `720px` (chat, forms) or `1000px` (grids, dashboards).
+- **Navigation changes shape, not content.** Below `lg`: a floating dock of circular buttons, thumb-reachable, over the content. From `lg`: a 240px labelled rail beside the content. One `tabs` array feeds both (`client/src/components/Shell.jsx`), so a route cannot exist in one and be missing from the other.
+- **Grids** step 1 → 2 → 3 columns at `sm` and `xl`. The itinerary and trip screens go two-column at `lg` with the budget/actions panel sticky.
+- Mobile keeps `pb-28` under scrollable content so the dock never covers the last row.
 
 ## 4. Screen Inventory
 
 All 12 screens live in Stitch project `12922044088822496175`. Static HTML mockups are saved locally so the team can open them directly in a browser without a Stitch account.
 
-### Tourist Dashboard (Warm Marketplace — mobile AND desktop, responsive web, not mobile-only)
+### Tourist Dashboard (mobile and desktop, responsive)
 | # | Screen | File | What it proves |
 |---|---|---|---|
 | 1 | Trip Planner (chat) — mobile | `docs/screens/tourist/01-trip-planner-chat.html` | The Planning & Booking Agent conversation — budget/interest input → itinerary preview card blending a known site with a verified listing ([[TRD]] §3.2) |
@@ -64,16 +70,16 @@ All 12 screens live in Stitch project `12922044088822496175`. Static HTML mockup
 | 5 | Itinerary Timeline — desktop | `docs/screens/tourist/05-itinerary-timeline-desktop.html` | Left column stepper + sticky right rail (safety pulse, route map, budget) — Airbnb-listing-style 2-column layout |
 | 6 | Discover Nearby — desktop | `docs/screens/tourist/06-discover-nearby-desktop.html` | 3-column search-results grid instead of a single mobile feed column |
 
-Bhraman's actual product is a **responsive web app**, not separate mobile/desktop builds — these 6 screens are the two ends of one fluid layout (per `ui-ux-pro-max` priority-5 responsive rules: same components, same breakpoints project described in [[TRD]], not a different app). Build the CSS once with these two as the reference points for the layout's collapse behavior, same as the breakpoint tables in the Airbnb/PostHog references consulted for this system.
+Atithya's actual product is a **responsive web app**, not separate mobile/desktop builds — these 6 screens are the two ends of one fluid layout (per `ui-ux-pro-max` priority-5 responsive rules: same components, same breakpoints project described in [[TRD]], not a different app). Build the CSS once with these two as the reference points for the layout's collapse behavior, same as the breakpoint tables in the Airbnb/PostHog references consulted for this system.
 
-### Host / Operator Dashboard (desktop — Warm Marketplace, denser)
+### Host / Operator Dashboard (denser — tiles and tables)
 | # | Screen | File | What it proves |
 |---|---|---|---|
 | 7 | Listings | `docs/screens/host/01-listings.html` | Listing management grid with Live/Needs-review/Pending status — surfaces Verification Agent output directly ([[TRD]] §3.3) |
 | 8 | Calendar & Earnings | `docs/screens/host/02-calendar-earnings.html` | Booking calendar + earnings figure (tabular nums) + AI Pricing Copilot suggestion card |
 | 9 | Listing Detail & Verification | `docs/screens/host/03-listing-detail-verification.html` | A single flagged listing showing the *specific* reason it was flagged — not a black-box "rejected" |
 
-### Government / Tourism Board Dashboard (desktop — Precision Console)
+### Government / Tourism Board Dashboard (aggregates and bars)
 | # | Screen | File | What it proves |
 |---|---|---|---|
 | 10 | Regional Heatmap | `docs/screens/government/01-regional-heatmap.html` | Overcrowded vs. underused destination heatmap + top-line stat tiles. **This exact stylized zone-diagram look is the shipped implementation, not a placeholder for a real map** — see [[TRD]] §4 and [[BUILD_PLAN]] §2 for why a Leaflet/Mapbox integration is explicitly out of scope |
