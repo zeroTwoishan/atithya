@@ -5,6 +5,7 @@ import cors from "cors";
 
 import { fail } from "./http.js";
 import { query } from "./db/index.js";
+import { hasLLM, providerName } from "./agents/llm.js";
 import { requireAuth } from "./auth.js";
 import { MEDIA_DIR } from "./media.js";
 import authRoutes from "./routes/auth.js";
@@ -51,7 +52,7 @@ export function createApp() {
         database,
         // Which optional integrations are actually configured — the fastest
         // way to explain "why is the agent replying in English".
-        anthropic: Boolean(process.env.ANTHROPIC_API_KEY),
+        llm: hasLLM() ? providerName() : false,
         whatsapp: Boolean(process.env.WHATSAPP_APP_SECRET && process.env.WHATSAPP_ACCESS_TOKEN),
       },
     });

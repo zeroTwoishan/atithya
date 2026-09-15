@@ -15,14 +15,16 @@ A village host sends one WhatsApp message. Our agent interviews them, writes the
 
 ## Stack
 
-React 19 + Vite + Tailwind v4 + Phosphor Icons · Node.js 20 + Express 5 · LangGraph.js + Anthropic Claude · PostgreSQL 16 + pgvector · WhatsApp Cloud API.
+React 19 + Vite + Tailwind v4 + Phosphor Icons · Node.js 20 + Express 5 · LangGraph.js (Claude / Gemini / Groq — whichever key is set) · PostgreSQL 16 + pgvector · WhatsApp Cloud API.
 
 Four agents under one LangGraph supervisor — onboarding, verification, planning, re-planning ([`server/src/agents/`](server/src/agents/)). No ORM: eleven frozen tables, hand-written parameterised SQL.
 
 ## Getting started
 
 ```bash
-# 1. Database — Postgres 16 with pgvector
+# 1. Database — Postgres 16 with pgvector.
+# Either `docker compose up -d` for a local one, or a free Neon/Supabase
+# project; put its connection string in DATABASE_URL.
 docker compose up -d
 
 # 2. Backend
@@ -51,7 +53,7 @@ Only two variables are required. Everything else degrades rather than failing.
 |---|---|---|
 | `DATABASE_URL` | **yes** | Nothing works; `/health` returns 503 and says so |
 | `JWT_SECRET` | **yes** | Sign-in throws on first use |
-| `ANTHROPIC_API_KEY` | no | Agents run their deterministic paths — itineraries still build and book, you just lose the generated prose |
+| `ANTHROPIC_API_KEY` **or** `GOOGLE_API_KEY` **or** `GROQ_API_KEY` | no | Agents run their deterministic paths — itineraries still build and book, you just lose the generated prose. Set any one; Gemini and Groq are free and need no card. `LLM_PROVIDER` forces the choice, `LLM_MODEL` the model |
 | `WHATSAPP_APP_SECRET` | no | The webhook rejects every inbound message (it fails closed by design) |
 | `WHATSAPP_ACCESS_TOKEN`, `WHATSAPP_PHONE_NUMBER_ID` | no | Replies are logged to the console instead of sent; photos are not downloaded |
 | `WHATSAPP_VERIFY_TOKEN` | no | Meta's subscription handshake fails |
@@ -67,7 +69,7 @@ cd server && npm test
 
 Runs the whole demo script — plan a trip, book it, re-plan it, read the host and government dashboards, onboard a listing over WhatsApp — against Postgres running **in-process** (PGlite), so it needs no Docker and no network. Also covers the access-control paths: another tourist's trip 404s, another host's dashboard 403s, government endpoints reject tourists.
 
-Two caveats, both in [`server/test/loop.test.js`](server/test/loop.test.js): PGlite ships no pgvector, so the embedding columns become `text` there, and the LangGraph checkpointer falls back to in-memory. Both need verifying against a real Postgres.
+Two things the suite cannot cover, both noted in [`server/test/loop.test.js`](server/test/loop.test.js): PGlite ships no pgvector, so the embedding columns become `text` there, and the LangGraph checkpointer falls back to in-memory. Both have since been verified by hand against a real Neon database — `CREATE EXTENSION vector` applies, and `PostgresSaver` writes checkpoints per WhatsApp thread.
 
 ## WhatsApp onboarding (the differentiator)
 

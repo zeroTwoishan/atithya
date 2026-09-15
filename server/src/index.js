@@ -1,5 +1,6 @@
 import { createApp } from "./app.js";
 import { query } from "./db/index.js";
+import { hasLLM, providerName, MODEL } from "./agents/llm.js";
 
 const port = Number(process.env.PORT ?? 8000);
 
@@ -20,8 +21,10 @@ async function reportEnvironment() {
   }
 
   // Both optional: the app degrades instead of failing (docs/TRD.md §3).
-  if (!process.env.ANTHROPIC_API_KEY) {
-    console.warn("[startup] no ANTHROPIC_API_KEY — agents run their deterministic paths, no generated prose");
+  if (hasLLM()) {
+    console.log(`[startup] llm: ${providerName()} (${MODEL()})`);
+  } else {
+    console.warn("[startup] no LLM key — agents run their deterministic paths, no generated prose");
   }
   if (!process.env.WHATSAPP_APP_SECRET) {
     console.warn("[startup] no WHATSAPP_APP_SECRET — the webhook will reject every inbound message");
