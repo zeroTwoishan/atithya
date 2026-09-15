@@ -22,7 +22,7 @@ const PROVIDERS = [
   {
     name: "gemini",
     key: "GOOGLE_API_KEY",
-    defaultModel: "gemini-2.0-flash",
+    defaultModel: "gemini-3.6-flash",
     build: (model) => new ChatGoogleGenerativeAI({ model, maxOutputTokens: 2048 }),
   },
   {

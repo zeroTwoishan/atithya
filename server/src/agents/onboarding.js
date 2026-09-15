@@ -20,14 +20,22 @@ import { checkpointer } from "./checkpointer.js";
 /** A listing cannot be published without these. Everything else is optional. */
 const REQUIRED = ["offering_type", "title", "price_amount", "region"];
 
+// Keep this schema to plain optional fields of plain types. Gemini's
+// response-schema API accepts only a subset of JSON Schema, and the two
+// things it rejects are exactly what zod emits by default:
+//   `.nullable()`  -> type: ["string","null"]  -> "Proto field is not repeating"
+//   `.positive()`  -> exclusiveMinimum         -> "Cannot find field"
+// Both fail the whole call, and the agent then silently extracts nothing.
+// Constraints belong in the merge below, where they are enforced for every
+// provider rather than only the ones that support the keyword.
 const draftSchema = z.object({
-  offering_type: z.enum(Object.values(OFFERING_TYPE)).nullable(),
-  title: z.string().nullable().describe("a short listing title, in English"),
-  description: z.string().nullable().describe("2-3 sentences, in English, from what the host said"),
-  price_amount: z.number().positive().nullable().describe("rupees, as a number"),
-  price_unit: z.enum(Object.values(PRICE_UNIT)).nullable(),
-  region: z.string().nullable().describe('e.g. "Tirthan Valley, HP"'),
-  language: z.string().nullable().describe("ISO code of the language the host wrote in, e.g. hi, en, pa"),
+  offering_type: z.enum(Object.values(OFFERING_TYPE)).optional(),
+  title: z.string().optional().describe("a short listing title, in English"),
+  description: z.string().optional().describe("2-3 sentences, in English, from what the host said"),
+  price_amount: z.number().optional().describe("rupees, as a number, greater than zero"),
+  price_unit: z.enum(Object.values(PRICE_UNIT)).optional(),
+  region: z.string().optional().describe('e.g. "Tirthan Valley, HP"'),
+  language: z.string().optional().describe("ISO code of the language the host wrote in, e.g. hi, en, pa"),
 });
 
 const State = new StateSchema({
@@ -79,15 +87,19 @@ async function extractFields(state) {
   const extracted = await extract(
     draftSchema,
     "Extract tourism-listing fields from a WhatsApp message written by a rural Indian host, in any " +
-      "language (Hindi, Hinglish, Punjabi, English...). Return null for anything not stated — never " +
-      "guess a price or a place. Write title and description in English even when the host writes in " +
-      "another language; record which language they used.",
+      "language (Hindi, Hinglish, Punjabi, English...). Leave a field out entirely if the host has not " +
+      "stated it — never guess a price or a place. Write title and description in English even when " +
+      "the host writes in another language; record which language they used.",
     `Known so far: ${JSON.stringify(base)}\nNew message: ${state.body}`,
   );
 
   const draft = { ...base };
   for (const [key, value] of Object.entries(extracted ?? {})) {
-    if (value !== null && value !== undefined && value !== "") draft[key] = value;
+    if (value === null || value === undefined || value === "") continue;
+    // The constraints the schema cannot carry (see above). A model that
+    // hallucinates a price of 0 must not publish a free homestay.
+    if (key === "price_amount" && !(Number(value) > 0)) continue;
+    draft[key] = value;
   }
   if (state.mediaIds.length) {
     // Ids only at this stage — fetching photos for a conversation that never
