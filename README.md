@@ -1,44 +1,83 @@
 # Atithya
 
-An agentic AI platform to digitize India's invisible tourism economy — Smart India Hackathon, Problem Statement 26204 (AICTE).
+Hospitality every village already has. A market it has never reached.
+
+A village host sends one WhatsApp message. Our agent interviews them, writes the listing, publishes it — then sells it to tourists. Smart India Hackathon 2026, Problem Statement 26204 (AICTE), Theme: Travel & Tourism. Team **Claude Can Code**.
 
 ## Docs
 
+- [`.agent/Design12.pdf`](.agent/Design12.pdf) — the submitted deck. **Source of truth** when anything disagrees.
 - [`docs/PRD.md`](docs/PRD.md) — product requirements
-- [`docs/TRD.md`](docs/TRD.md) — technical requirements & architecture
-- [`docs/BACKEND_SCHEMA.md`](docs/BACKEND_SCHEMA.md) — data model (ERD + `schema.sql` + data-access notes)
-- [`docs/UI_UX_DESIGN.md`](docs/UI_UX_DESIGN.md) — design system + screen mockups (`docs/screens/`)
-- [`docs/BUILD_PLAN.md`](docs/BUILD_PLAN.md) — 36-hour hackathon build plan
+- [`docs/TRD.md`](docs/TRD.md) — architecture, the four agents, API surface
+- [`docs/BACKEND_SCHEMA.md`](docs/BACKEND_SCHEMA.md) — ERD and data-access notes (the DDL itself is [`server/src/db/schema.sql`](server/src/db/schema.sql))
+- [`docs/UI_UX_DESIGN.md`](docs/UI_UX_DESIGN.md) — design tokens, layout and navigation rules
+- [`docs/BUILD_PLAN.md`](docs/BUILD_PLAN.md) — 36-hour plan, roles, cut order
 
 ## Stack
 
-React 19 + Vite + Tailwind v4 + Phosphor Icons (frontend) · Node.js 20 + Express 5 (backend) · LangGraph.js + Anthropic Claude (agents) · PostgreSQL 16 + pgvector · WhatsApp Cloud API.
+React 19 + Vite + Tailwind v4 + Phosphor Icons · Node.js 20 + Express 5 · LangGraph.js + Anthropic Claude · PostgreSQL 16 + pgvector · WhatsApp Cloud API.
 
-The repo is scaffolded (`server/`, `client/`) — real feature work (agents, wired-up screens, seed data) happens on hackathon day, see `docs/BUILD_PLAN.md` for the hour-by-hour plan.
+Four agents under one LangGraph supervisor — onboarding, verification, planning, re-planning ([`server/src/agents/`](server/src/agents/)). No ORM: eleven frozen tables, hand-written parameterised SQL.
 
-## Getting Started
+## Getting started
 
 ```bash
-# Database (Postgres + pgvector)
+# 1. Database — Postgres 16 with pgvector
 docker compose up -d
 
-# Backend
+# 2. Backend
 cd server
 npm install
-cp .env.example .env    # fill in real keys before hackathon day
-npm run db:init         # applies src/db/schema.sql (drops and recreates)
-npm run db:seed         # demo users + known sites + listings + history
-npm run dev
+cp .env.example .env    # see "Environment" below
+npm run db:init         # applies src/db/schema.sql — DROPS everything first
+npm run db:seed         # demo users, known sites, listings, booking history
+npm run dev             # http://localhost:8000
 
-# Frontend (separate terminal)
+# 3. Frontend (separate terminal)
 cd client
 npm install
-cp .env.example .env
-npm run dev
+npm run dev             # http://localhost:5173
 ```
 
-Backend on `http://localhost:8000`, frontend on `http://localhost:5173`.
+Sign in as **`tourist_demo`**, **`host_demo`** or **`gov_demo`** — password matches the username.
+
+Check `curl localhost:8000/api/v1/health` first if anything looks wrong: it reports database reachability and which integrations are configured, and needs no auth.
+
+## Environment
+
+Only two variables are required. Everything else degrades rather than failing.
+
+| Variable | Required | Without it |
+|---|---|---|
+| `DATABASE_URL` | **yes** | Nothing works; `/health` returns 503 and says so |
+| `JWT_SECRET` | **yes** | Sign-in throws on first use |
+| `ANTHROPIC_API_KEY` | no | Agents run their deterministic paths — itineraries still build and book, you just lose the generated prose |
+| `WHATSAPP_APP_SECRET` | no | The webhook rejects every inbound message (it fails closed by design) |
+| `WHATSAPP_ACCESS_TOKEN`, `WHATSAPP_PHONE_NUMBER_ID` | no | Replies are logged to the console instead of sent; photos are not downloaded |
+| `WHATSAPP_VERIFY_TOKEN` | no | Meta's subscription handshake fails |
+| `PUBLIC_BASE_URL` | no | Defaults to `http://localhost:$PORT` for photo URLs — set it when tunnelling |
+
+Never commit `.env`. Share real keys over a password manager, not the repo.
+
+## Tests
+
+```bash
+cd server && npm test
+```
+
+Runs the whole demo script — plan a trip, book it, re-plan it, read the host and government dashboards, onboard a listing over WhatsApp — against Postgres running **in-process** (PGlite), so it needs no Docker and no network. Also covers the access-control paths: another tourist's trip 404s, another host's dashboard 403s, government endpoints reject tourists.
+
+Two caveats, both in [`server/test/loop.test.js`](server/test/loop.test.js): PGlite ships no pgvector, so the embedding columns become `text` there, and the LangGraph checkpointer falls back to in-memory. Both need verifying against a real Postgres.
+
+## WhatsApp onboarding (the differentiator)
+
+1. Create a Meta app, add the WhatsApp product, and copy the test number's `phone_number_id` and access token.
+2. Expose the local server: `ngrok http 8000`.
+3. In the Meta console set the callback to `https://<tunnel>/webhooks/whatsapp` with your `WHATSAPP_VERIFY_TOKEN`, and subscribe to `messages`.
+4. Register every phone that will message it — a test number only talks to 5 pre-registered recipients.
+
+The webhook verifies `X-Hub-Signature-256` against `WHATSAPP_APP_SECRET` over the raw request body, and **fails closed**: with no secret configured, nothing is accepted.
 
 ## Original problem statement
 
-[`.agent/Atithya_SIH_Project_Document.md`](.agent/Atithya_SIH_Project_Document.md)
+[`.agent/Design12.pdf`](.agent/Design12.pdf)

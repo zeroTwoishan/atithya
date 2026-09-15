@@ -105,6 +105,24 @@ test("schema applies and the seed populates every table the demo reads", async (
   assert.equal(Number(row.advisories), 4);
 });
 
+test("the freshly seeded host portal matches the deck", async (t) => {
+  // Slide 3/5: four properties, two live, one in review, occupancy in the
+  // mid-eighties. The seed targets the *rate*, not the absolute stay count —
+  // two rooms cannot sell 48 nights by the 15th (see TARGET_OCCUPANCY in
+  // src/db/seed.js) — so this runs before anything else books a room.
+  const { access, user } = await login("host_demo");
+  const { data } = await call("GET", `/hosts/${user.id}/dashboard`, { token: access });
+
+  assert.equal(data.listings.total, 4);
+  assert.ok(
+    data.this_month.occupancy_rate >= 78 && data.this_month.occupancy_rate <= 90,
+    `seeded occupancy ${data.this_month.occupancy_rate}% is outside the demo band`,
+  );
+  t.diagnostic(
+    `${data.this_month.nights_sold} nights · ₹${data.this_month.gross_payout} · ${data.this_month.occupancy_rate}%`,
+  );
+});
+
 test("the three demo accounts sign in and a wrong password does not", async () => {
   for (const username of ["tourist_demo", "host_demo", "gov_demo"]) {
     const { user, access } = await login(username);
@@ -202,11 +220,16 @@ test("host dashboard reports real occupancy, payouts and the review flag", async
   const { status, data } = await call("GET", `/hosts/${user.id}/dashboard`, { token: access });
   assert.equal(status, 200, JSON.stringify(data));
 
-  assert.equal(data.listings.total, 4); // the deck's four-property host
+  // Structure only. The exact occupancy is asserted right after seeding,
+  // before any test in this file books anything — bookings made here land on
+  // the demo host's rooms and legitimately move the number.
+  assert.equal(data.listings.total, 4);
   assert.equal(data.listings.live, 2);
   assert.equal(data.listings.needs_review, 1);
-  assert.ok(data.this_month.gross_payout >= 0);
-  assert.ok(data.this_month.occupancy_rate >= 0 && data.this_month.occupancy_rate <= 100);
+  assert.equal(data.listings.pending_verification, 1);
+  assert.ok(data.this_month.nights_sold > 0);
+  assert.ok(data.this_month.gross_payout > 0);
+  assert.ok(data.this_month.occupancy_rate > 0);
   assert.ok(data.payouts.length > 0);
 });
 

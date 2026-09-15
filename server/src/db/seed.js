@@ -181,6 +181,65 @@ async function seed() {
     }
   }
 
+  // The demo host's current month, tuned to the deck's portal (slide 3/5):
+  // ~84.5% occupancy, and a payout on the same scale as its ₹1,18,400.
+  //
+  // The deck's three figures (48 stays, 84.5%, ₹1,18,400) are only mutually
+  // consistent at the end of a month — two live rooms cannot sell 48 nights by
+  // the 15th. So this targets the *rate* and lets the totals follow the date:
+  // demo on the 28th and you land on the deck's numbers, demo on the 10th and
+  // you get a believable third of them, either way the tile reads like a
+  // working homestay rather than a number someone typed in.
+  const TARGET_OCCUPANCY = 0.845;
+  const demoHostId = users.get("host_demo");
+  const demoRooms = listings.filter(
+    (listing) => listing.host_user_id === demoHostId && listing.status === LISTING_STATUS.LIVE,
+  );
+  const elapsed = new Date().getDate();
+
+  const sold = await query(
+    `SELECT coalesce(sum(b.quantity), 0)::int AS nights
+       FROM bookings b JOIN listings l ON l.id = b.listing_id
+      WHERE l.host_user_id = $1 AND b.created_at >= date_trunc('month', now())`,
+    [demoHostId],
+  );
+  let shortfall = Math.round(TARGET_OCCUPANCY * demoRooms.length * elapsed) - sold.rows[0].nights;
+
+  // Fill from the priciest room down, so the payout tile reflects the rooms a
+  // host would actually sell first.
+  for (const room of [...demoRooms].sort((a, b) => b.price_amount - a.price_amount)) {
+    let day = 1;
+    while (shortfall > 0 && day <= elapsed) {
+      const nights = Math.min(2 + (day % 2), shortfall, elapsed - day + 1);
+      const startedDaysAgo = elapsed - day;
+      const { rows: tripRows } = await query(
+        `INSERT INTO trips (tourist_user_id, budget, interests, start_date, end_date, status, created_at)
+           VALUES ($1,$2,$3,$4,$5,$6, now() - ($7 || ' days')::interval) RETURNING id`,
+        [touristId, 15000, ["mountains", "homestays"], daysAgo(startedDaysAgo + nights), daysAgo(startedDaysAgo),
+         startedDaysAgo > 2 ? TRIP_STATUS.COMPLETED : TRIP_STATUS.CONFIRMED, String(startedDaysAgo)],
+      );
+      const { rows: bookingRows } = await query(
+        `INSERT INTO bookings (trip_id, listing_id, quantity, unit_price, total_price, status, created_at)
+           VALUES ($1,$2,$3,$4,$5,$6, now() - ($7 || ' days')::interval) RETURNING id`,
+        [tripRows[0].id, room.id, nights, room.price_amount, room.price_amount * nights,
+         startedDaysAgo > 2 ? BOOKING_STATUS.COMPLETED : BOOKING_STATUS.CONFIRMED, String(startedDaysAgo)],
+      );
+      await query(
+        "INSERT INTO wallet_transactions (tourist_user_id, trip_id, amount, type) VALUES ($1,$2,$3,'debit')",
+        [touristId, tripRows[0].id, room.price_amount * nights],
+      );
+      if (day % 2 === 0) {
+        await query(
+          "INSERT INTO reviews (booking_id, listing_id, rating, comment) VALUES ($1,$2,$3,$4)",
+          [bookingRows[0].id, room.id, 5, REVIEW_COMMENTS[day % REVIEW_COMMENTS.length]],
+        );
+      }
+      shortfall -= nights;
+      bookingCount++;
+      day += nights + 1;
+    }
+  }
+
   // Payouts: one settled row per host per past month, one pending for this one.
   for (const host of USERS.filter((user) => user.role === ROLE.HOST)) {
     const hostId = users.get(host.username);

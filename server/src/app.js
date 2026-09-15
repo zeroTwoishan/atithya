@@ -4,6 +4,7 @@ import express from "express";
 import cors from "cors";
 
 import { fail } from "./http.js";
+import { query } from "./db/index.js";
 import { requireAuth } from "./auth.js";
 import { MEDIA_DIR } from "./media.js";
 import authRoutes from "./routes/auth.js";
@@ -28,7 +29,33 @@ export function createApp() {
   // rather than guessable media ids.
   app.use("/media", express.static(fileURLToPath(MEDIA_DIR), { maxAge: "1h", index: false }));
 
-  app.get("/api/v1/health", (req, res) => res.json({ data: { status: "ok" } }));
+  // Unauthenticated on purpose: it is what you curl when something is wrong,
+  // and it must answer even when auth or the database is the thing that broke.
+  app.get("/api/v1/health", async (req, res) => {
+    let database = "ok";
+    if (!process.env.DATABASE_URL) {
+      database = "DATABASE_URL is not set";
+    } else {
+      try {
+        await query("SELECT 1");
+      } catch (error) {
+        // pg's connection errors often carry a code and an empty message —
+        // reporting "" tells the person curling this nothing at all.
+        database = error.message || error.code || String(error);
+      }
+    }
+    const status = database === "ok" ? 200 : 503;
+    res.status(status).json({
+      data: {
+        status: status === 200 ? "ok" : "degraded",
+        database,
+        // Which optional integrations are actually configured — the fastest
+        // way to explain "why is the agent replying in English".
+        anthropic: Boolean(process.env.ANTHROPIC_API_KEY),
+        whatsapp: Boolean(process.env.WHATSAPP_APP_SECRET && process.env.WHATSAPP_ACCESS_TOKEN),
+      },
+    });
+  });
   app.use("/api/v1/auth", authRoutes);
   app.use("/api/v1", requireAuth, listingRoutes);
   app.use("/api/v1", requireAuth, tripRoutes);
